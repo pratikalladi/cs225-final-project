@@ -16,11 +16,11 @@
 	Our plan is to distribute work at each of our team meetings. We will come up with specific tasks to be completed and then evenly distribute them among team members. If any team member feels they are having trouble completing their task, we will meet and discuss how we can make the team member feel more comfortable with their workload.
 
 5. **Time Commitment**  
-Team members should each dedicate 2-4 hours every week to this project. However, there may be week to week variance in this workload which will be communicated in our group chat.
+	To avoid conflict, team members are expected to respond in a timely manner to texts and should have clear knowledge of what their expected tasks and roles are. If there is a conflict, we plan to solve it by majority vote. If we are deadlocked, we will take our issue to our team mentor for advice. If still unresolved, we will use a game of chance to resolve the issue.
 
 6. **Conflict Resolution** 
-To avoid conflict, team members are expected to respond in a timely manner to texts and should have clear knowledge of what their expected tasks and roles are. 
+	To avoid conflict, team members are expected to respond in a timely manner to texts and should have clear knowledge of what their expected tasks and roles are. 
 
 ## Signatures
 
-Pratik Alladi (palladi2), William Deng (wd10), Max Jing (maxdj2), Yifen Lin (ytlin4)
+	Pratik Alladi (palladi2), William Deng (wd10), Max Jing (maxdj2), Yifen Lin (ytlin4)
