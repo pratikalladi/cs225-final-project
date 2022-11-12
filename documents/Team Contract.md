@@ -23,4 +23,4 @@
 
 ## Signatures
 
-	Pratik Alladi (palladi2), William Deng (wd10), Max Jing (maxdj2), Yifen Lin (ytlin4)
+	Pratik Alladi (palladi2), William Deng (wd10), Max Jing (maxdj2)

@@ -17,3 +17,25 @@
 
 ## Optional: Questions for mentor
 	N/A
+
+***
+# Development Log (Date: 11/04/22 -- 11/11/22)
+
+## Weekly Goals
+	Our goals this week were to clean up our dataset
+
+## Specific Tasks Completed (and by who)
+
+	Unfortunately we did not get much done this week as we all had many other commitments. However, we all came together to update our proposal and implement the changes our mentor mentioned. Additionally, we better split our work up so we have clearer goals for the upcoming week.
+
+## Problems Encountered 
+	As we did not get much done, there were not many issues. We plan to address the issue of getting more work done by more clearly detailing our plans.
+
+## Plans for next week
+	
+	Our goals for next week are to work on the project's dataset and create the barebones of the project such as the makefile.  Pratik will work on adapting the Makefile from a previous MP or lab to one that will work for our project. Max and William will write a program to read the dataset into a graph with a Node structure as described in the proposal. Additionally, they will begin work on the BFS graph traversal.
+
+## Optional: Questions for mentor
+
+	Is the Landmark Path algorithm sufficient for a 3rd algorithm, or should we pivot to our alternate PageRank algorithm?
+
