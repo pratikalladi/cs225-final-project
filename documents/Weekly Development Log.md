@@ -19,6 +19,7 @@
 	N/A
 
 ***
+
 # Development Log (Date: 11/04/22 -- 11/11/22)
 
 ## Weekly Goals
@@ -38,4 +39,23 @@
 ## Optional: Questions for mentor
 
 	Is the Landmark Path algorithm sufficient for a 3rd algorithm, or should we pivot to our alternate PageRank algorithm?
+
+***
+
+# Development Log (Date: 11/11/22 -- 11/18/22)
+
+## Weekly Goals
+	Our goals this week were to create a makefile to compile the project code and work on the project's dataset, as well as start work on our BFS algorithm.
+
+## Specific Tasks Completed (and by who)
+	Pratik created the makefile for the project and added the basic structure. William made the struct to store the data from the dataset. He also started working on BFS for the graph structure.
+
+## Problems Encountered 
+	There were still some issues with organization as many people had commitments and there was just one group meeting.
+
+## Plans for next week
+Our goals for next week are to begin work on our other algorithms and finish BFS. We do plan to work a bit over Thanksgiving break. We plan to get the barebones of all the algorithms done by next week. We also plan to have more group meetings.		
+
+## Optional: Questions for mentor
+	N/A
 
