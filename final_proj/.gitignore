@@ -1,0 +1,14 @@
+.vscode
+
+*.swp
+*.swo
+*.swn
+*.swm
+
+*DS_Store
+
+# Compiler output
+*.o
+*.d
+.objs/
+test
