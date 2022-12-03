@@ -59,3 +59,22 @@ Our goals for next week are to begin work on our other algorithms and finish BFS
 ## Optional: Questions for mentor
 	N/A
 
+***
+# Development Log (Date: 11/25/22 -- 12/02/22)
+
+## Weekly Goals
+	Our goals this week were to create the structure for our graph, work on unfinished algorithms such as BFS, and complete as much other work as we could
+
+## Specific Tasks Completed (and by who)
+	Pratik uploaded the modified makefile for the project. He also wrote a file ingest algorithm to take the .dat file and turn it into an adjacency matrix. William and Max completed the BFS algorithm and Djikstra’s algorithm.
+
+## Problems Encountered 
+	We were too busy over Thanksgiving break to meet. We hope to correct that this week.
+
+## Plans for next week
+Our goals for next week are to write test cases and finish PageRank. Also, we need to work on the presentation video.		
+
+## Optional: Questions for mentor
+	N/A
+
+
