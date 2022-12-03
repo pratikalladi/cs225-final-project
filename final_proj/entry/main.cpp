@@ -12,7 +12,7 @@
 
 #include "graph.h"
 #include "algo.h"
-#include "ingest.h"
+#include "ScanGraph.h"
 #include "BFS.h"
 
 using namespace std;
