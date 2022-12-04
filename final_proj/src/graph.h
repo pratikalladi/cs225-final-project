@@ -55,6 +55,7 @@ class Graph {
         
         vector<vector<Edge *>> adjList;  
         vector<vector<int>> adjMatrix;  
+        map<string, Node*> abbrNodeMap; 
 
     public:
         Graph();
@@ -69,6 +70,8 @@ class Graph {
         void addEdge(Edge* e);
         double distance(Node* src, Node* dest);
         void BFS(string src, string dest);
+        bool exists(string abbr);
+        Node* abbr_to_Node(string abbr);
 
         double PageRankofNode(int o,vector<double> &p);
 

@@ -12,3 +12,4 @@
 *.d
 .objs/
 test
+build

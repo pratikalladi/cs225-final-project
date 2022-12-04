@@ -34,6 +34,10 @@ void Graph::addEdge(Edge* e) {
     edgeCount ++;  
 }
 
+bool Graph::exists(string abbr) {
+    return abbrNodeMap.count(abbr) ? true : false;
+}
+
 vector<vector<int>> Graph :: getAdjMatrix(){
     int n = adjSize;
     adjMatrix.resize(n+1, vector<int>(n+1));
@@ -121,6 +125,11 @@ double Graph :: PageRankofNode(int o,vector<double> &p){
         }
     }
     return a;
+}
+
+Graph::Node* Graph::abbr_to_Node(string abbr){
+    return abbrNodeMap.at(abbr);
+
 }
 
 //function to get a list of all neighbors
