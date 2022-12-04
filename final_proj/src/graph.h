@@ -72,8 +72,7 @@ class Graph {
         
         void addNode(Node* n);
         void addEdge(Edge* e);
-        double computeDist(Node* src, Node* dest);
-        Node* abbr_to_Node(string abbr);
+        double distance(Node* src, Node* dest);
         bool exists(string abbr);
         void BFS(string src, string dest);
 

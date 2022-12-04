@@ -38,43 +38,29 @@ void Graph::addEdge(Edge* e) {
 
 vector<vector<int>> Graph :: getAdjMatrix(){
     int n = adjSize;
-    adjMatrix.resize(n+1,vector<int> (n+1));
-    for(int i=0; i<n; i++){
+    adjMatrix.resize(n+1, vector<int>(n+1));
+    for(int i=0; i < n; i++){
         for(Edge * e : adjList[i]){
-            int dist = computeDist(e->source,e->dest);
+            int dist = distance(e->source,e->dest);
             adjMatrix[e->source->index][e->dest->index] = dist;
         }
     }
     return adjMatrix;
 }
 
-Graph::Node* Graph::abbr_to_Node(string abbr){
-    try {
-        return abbrNodeMap.at(abbr);
-    } catch (out_of_range& e){
-        cerr << e.what() << endl;
-        cout << "abbr: " << abbr << endl;
-        throw std::runtime_error("there was an error");
-    }
-}
-
 bool Graph::exists(string abbr) {
     return abbrNodeMap.count(abbr) ? true : false;
 }
 
-double Graph::computeDist(Node* src, Node* dest){
-    double latSrc = (src->latitude)*M_PI/180.0; 
-    double latDest = (dest->latitude)*M_PI/180.0;
-    double lonSrc = (src->longitude)*M_PI / 180.0;
-    double lonDest = (dest->longitude)*M_PI / 180.0;
-
-    double lat_diff = latDest-latSrc;
-    double lon_diff = lonSrc - lonDest; 
+double Graph::distance(Node* src, Node* dest){
+    double source_lat = (src->latitude)*M_PI/180.0; 
+    double dest_lat = (dest->latitude)*M_PI/180.0;
+    double source_long = (src->longitude)*M_PI / 180.0;
+    double dest_long = (dest->longitude)*M_PI / 180.0;
     
-    double a = pow(sin(lat_diff/2.0),2) + cos(latSrc)*cos(latDest)*pow(sin(lon_diff/2.0),2); 
-    double c = 2.0 * asin(sqrt(a));
-    double final_distance = Earth_radius * c;
-    return final_distance;
+    double a = pow(sin((dest_lat-source_lat)/2.0),2) + cos(source_lat)*cos(dest_lat)*pow(sin((source_long - dest_long)/2.0),2); 
+    double finaldist = Earth_radius * asin(sqrt(a)) * 2.0;
+    return finaldist;
 }
 
 vector<vector<Graph::Edge *>> Graph::getAdjList() {
@@ -82,46 +68,7 @@ vector<vector<Graph::Edge *>> Graph::getAdjList() {
 }
 
 void Graph::BFS(string src, string dest) {
-    queue<string> q;
-    unordered_set<string> visited;
-    map<string, string> predecessor;
-    q.push(src);
-    visited.insert(src);
-    while (!q.empty()) {
-        string cur = q.front();  
-        q.pop();
-        if (cur == dest) {
-            break;
-        }
-        Node * curAbbr = abbr_to_Node(cur);
-        for (Edge* e: adjList[curAbbr->index]) {
-            if (visited.count(e->dest->abbr) == 0) { // not visited
-                visited.insert(e->dest->abbr);
-                q.push(e->dest->abbr);
-                predecessor[e->dest->abbr] = curAbbr->abbr;
-            }
-        }
-    }
-    vector<string> res;
-    string cur = dest;
-    res.push_back(cur);
-    while (predecessor.count(cur)) {
-        cur = predecessor[cur];
-        res.push_back(cur);
-    }
-    reverse(res.begin(), res.end());
 
-    cout << "START BFS SHORTEST PATH SEARCH" << endl;
-    cout << "==========================================" << endl;        
-    for (size_t i = 0; i < res.size(); i++) {
-        if (i != res.size() - 1) {
-            cout << res[i] << " " << ">>";
-        }
-        else {
-            cout << res[i];
-        }
-    }
-    cout << endl;
 }
 
 double Graph :: Win(int m,int o){
