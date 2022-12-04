@@ -12,11 +12,8 @@
 #include <fstream>
 using namespace std;
 
+//adjacency list implementation of a graph
 class Graph {
-
-
-
-
     public:
         struct Node {
             int index;
@@ -28,6 +25,7 @@ class Graph {
             Node() {
 
             }
+
             Node(int index, double latitude, double longitude, string name, string abbr) 
                 : index(index), latitude(latitude), longitude(longitude), name(name), abbr(abbr) 
             {}
@@ -54,16 +52,14 @@ class Graph {
     
     private:
         int adjSize;
+        
         map<int, Node*> idNodeMap; 
         map<string, Node*> abbrNodeMap; 
+
         vector<vector<Edge *>> adjList;  
         string pathString;
         vector<Node*> nodeList;
         vector<vector<int>> adjMatrix;  
-
-
-
-
 
     public:
         Graph();
@@ -71,6 +67,9 @@ class Graph {
         vector<Node*> all_node;  
         vector<vector<Graph::Edge *>> getAdjList();
         vector<vector<int>> getAdjMatrix();
+        
+        vector<Graph::Edge*> getNeighbors(Node* source); //added
+        
         void addNode(Node* n);
         void addEdge(Edge* e);
         double computeDist(Node* src, Node* dest);
@@ -89,7 +88,5 @@ class Graph {
             bool operator()(const Node*node1, const Node*node2){
                 return node1->fscore < node2->fscore;
             }
-        }Comparator;
-
-      
+        } Comparator;
 };

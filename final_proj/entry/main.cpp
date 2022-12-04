@@ -19,5 +19,39 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello" << endl; 
+
+    cout <<"testing functions using basic graph: a cyclic 3 node graph" << endl;
+    Graph::Node* node_a = new Graph::Node(0, 0.001, 0.001, "airport a", "aa") ;
+    Graph::Node* node_b = new Graph::Node(1, 0.001, 0.001, "airport b", "bb") ;
+    Graph::Node* node_c= new Graph::Node(2, 0.001, 0.001, "airport c", "cc") ;
+
+    //edge from a to b
+    Graph::Edge* edge_a_b = new Graph::Edge(node_a, node_b);
+
+    //edge from a to b
+    Graph::Edge* edge_c_a = new Graph::Edge(node_a, node_c);
+
+    //edge from b to c
+    Graph::Edge* edge_b_c = new Graph::Edge(node_b, node_c);
+
+
+
+    //add values to graph
+    Graph test_graph_1;
+    test_graph_1.addNode(node_a);
+    test_graph_1.addNode(node_b);
+    test_graph_1.addNode(node_c);
+
+    test_graph_1.addEdge(edge_a_b);
+    test_graph_1.addEdge(edge_b_c);
+    test_graph_1.addEdge(edge_c_a);
+
+    cout << "testing get neighbors function" << endl;
+    vector<Graph::Edge*> result_of_getNeighbors = test_graph_1.getNeighbors(node_c);
+    for(Graph::Edge* edge : result_of_getNeighbors) {
+        cout  << edge->source->name << "->" << edge->dest->name << endl;
+    }
+
+
+
 }

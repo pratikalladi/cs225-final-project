@@ -6,6 +6,7 @@
 #define Earth_radius 6371e3
 using namespace std;
 
+
 Graph::Graph() {
     adjSize = 0;
     edgeCount = 0;
@@ -27,16 +28,18 @@ void Graph::addNode(Node* n) {
 
 void Graph::addEdge(Edge* e) {
     adjList[e->source->index].push_back(e);
+
+
+    //Graph::Edge* opposite_edge = new Graph::Edge(e->dest, e->source); //this code only should be uncommented if the intended graph is not directed since this effectively adds an edge back to the source
+    //adjList[opposite_edge->source->index].push_back(opposite_edge); //this code only should be uncommented if the intended graph is not directed since this effectively adds an edge back to the source
+    
     edgeCount ++;  
 }
-
-
-
 
 vector<vector<int>> Graph :: getAdjMatrix(){
     int n = adjSize;
     adjMatrix.resize(n+1,vector<int> (n+1));
-    for(int i=0;i<n;i++){
+    for(int i=0; i<n; i++){
         for(Edge * e : adjList[i]){
             int dist = computeDist(e->source,e->dest);
             adjMatrix[e->source->index][e->dest->index] = dist;
@@ -45,22 +48,15 @@ vector<vector<int>> Graph :: getAdjMatrix(){
     return adjMatrix;
 }
 
-
-
-
-
 Graph::Node* Graph::abbr_to_Node(string abbr){
     try {
         return abbrNodeMap.at(abbr);
     } catch (out_of_range& e){
         cerr << e.what() << endl;
         cout << "abbr: " << abbr << endl;
+        throw std::runtime_error("there was an error");
     }
 }
-
-
-
-
 
 bool Graph::exists(string abbr) {
     return abbrNodeMap.count(abbr) ? true : false;
@@ -128,8 +124,6 @@ void Graph::BFS(string src, string dest) {
     cout << endl;
 }
 
-
-
 double Graph :: Win(int m,int o){
     int k = 0;
     for(int i=0;i<adjSize;i++){
@@ -186,4 +180,12 @@ double Graph :: PageRankofNode(int o,vector<double> &p){
         }
     }
     return a;
+}
+
+//function to get a list of all neighbors
+vector<Graph::Edge*> Graph::getNeighbors(Graph::Node* source) {
+
+    int list_index = source->index;
+
+    return adjList[list_index];
 }
