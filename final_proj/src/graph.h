@@ -54,8 +54,6 @@ class Graph {
         int adjSize;
         
         vector<vector<Edge *>> adjList;  
-        string pathString;
-        vector<Node*> nodeList;
         vector<vector<int>> adjMatrix;  
 
     public:

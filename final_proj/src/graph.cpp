@@ -47,10 +47,10 @@ vector<vector<int>> Graph :: getAdjMatrix(){
 }
 
 double Graph::distance(Node* src, Node* dest){
-    double source_lat = (src->latitude)*M_PI/180.0; 
-    double dest_lat = (dest->latitude)*M_PI/180.0;
     double source_long = (src->longitude)*M_PI / 180.0;
     double dest_long = (dest->longitude)*M_PI / 180.0;
+    double source_lat = (src->latitude)*M_PI/180.0; 
+    double dest_lat = (dest->latitude)*M_PI/180.0;
     
     double a = pow(sin((dest_lat-source_lat)/2.0),2) + cos(source_lat)*cos(dest_lat)*pow(sin((source_long - dest_long)/2.0),2); 
     double finaldist = er * asin(sqrt(a)) * 2.0;
