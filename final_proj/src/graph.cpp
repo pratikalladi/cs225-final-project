@@ -3,7 +3,7 @@
 #include <cmath>
 #include "Graph.h"
 #include<bits/stdc++.h>
-#define Earth_radius 6371e3
+#define er 6371000
 using namespace std;
 
 
@@ -20,8 +20,6 @@ void Graph::addNode(Node* n) {
     n->modifyIndex(adjSize);   
     vector<Edge *> tmp;
     adjList.push_back(tmp); 
-    idNodeMap[adjSize] = n;   
-    abbrNodeMap[n->abbr] = n; 
     adjSize += 1;            
     all_node.push_back(n);
 }
@@ -48,10 +46,6 @@ vector<vector<int>> Graph :: getAdjMatrix(){
     return adjMatrix;
 }
 
-bool Graph::exists(string abbr) {
-    return abbrNodeMap.count(abbr) ? true : false;
-}
-
 double Graph::distance(Node* src, Node* dest){
     double source_lat = (src->latitude)*M_PI/180.0; 
     double dest_lat = (dest->latitude)*M_PI/180.0;
@@ -59,7 +53,7 @@ double Graph::distance(Node* src, Node* dest){
     double dest_long = (dest->longitude)*M_PI / 180.0;
     
     double a = pow(sin((dest_lat-source_lat)/2.0),2) + cos(source_lat)*cos(dest_lat)*pow(sin((source_long - dest_long)/2.0),2); 
-    double finaldist = Earth_radius * asin(sqrt(a)) * 2.0;
+    double finaldist = er * asin(sqrt(a)) * 2.0;
     return finaldist;
 }
 

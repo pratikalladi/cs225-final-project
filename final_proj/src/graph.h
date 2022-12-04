@@ -53,9 +53,6 @@ class Graph {
     private:
         int adjSize;
         
-        map<int, Node*> idNodeMap; 
-        map<string, Node*> abbrNodeMap; 
-
         vector<vector<Edge *>> adjList;  
         string pathString;
         vector<Node*> nodeList;
@@ -73,7 +70,6 @@ class Graph {
         void addNode(Node* n);
         void addEdge(Edge* e);
         double distance(Node* src, Node* dest);
-        bool exists(string abbr);
         void BFS(string src, string dest);
 
         double PageRankofNode(int o,vector<double> &p);
