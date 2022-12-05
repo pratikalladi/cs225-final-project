@@ -13,7 +13,20 @@ Graph::Graph() {
 };
 
 Graph::~Graph() {
+    for (auto const &pair: abbrNodeMap) {
+        Node* to_delete = pair.second;
+        delete to_delete;
+        to_delete = nullptr;
+    } 
 
+    //delete all allocated edges
+    for(auto subvec: adjList) {
+        for(Edge * e: subvec) {
+            Edge* to_delete = e;
+            delete to_delete;
+            to_delete = nullptr;
+        }
+    }
 };
 
 void Graph::addNode(Node* n) {
