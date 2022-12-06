@@ -9,12 +9,12 @@
 
 using namespace std;
 
-class parseGraph {
+class ScanGraph {
     public:
        
-        void parseCSV(Graph &g, ifstream &airport_ifs, ifstream &route_ifs);
+        void scanCSV(Graph &g, ifstream &airport_ifs, ifstream &route_ifs);
 
     private:
            
-        vector<string> delimit(string str_, string delimiter);
+        vector<string> splitpart(string str_, string delimiter);
 };

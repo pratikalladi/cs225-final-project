@@ -52,6 +52,23 @@ int main()
         cout  << edge->source->name << "->" << edge->dest->name << endl;
     }
 
+    Graph g;
+    ScanGraph sg;
+    string airport = "../data/airports_test.dat";
+    string routes = "../data/routes_test.dat";
+    ifstream airport_ifs(airport);
+    ifstream route_ifs(routes);
+
+    sg.scanCSV(g, airport_ifs, route_ifs);
+
+    for (std::vector<int> output : g.getAdjMatrix()) {
+        for (unsigned i = 0; i < output.size(); i++) {
+            std::cout << output.at(i) << ' ';
+        }
+        std::cout << '\n' << std::endl;
+    }
+
+
 
 
 }

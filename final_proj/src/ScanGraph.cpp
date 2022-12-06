@@ -1,7 +1,7 @@
 #include "ScanGraph.h"
 
 
-vector<string> parseGraph::delimit(string str_, string delimiter) {
+vector<string> ScanGraph::splitpart(string str_, string delimiter) {
     vector<string> res;
     size_t pos_start = 0;
     size_t pos_end = delimiter.length();
@@ -21,12 +21,12 @@ vector<string> parseGraph::delimit(string str_, string delimiter) {
     return res;
 }
 
-void parseGraph::parseCSV(Graph &g, ifstream &airport_ifs, ifstream &route_ifs) {
+void ScanGraph::scanCSV(Graph &g, ifstream &airport_ifs, ifstream &route_ifs) {
     string line, tmp;
     int index = 0;
     if (airport_ifs.is_open()) {
         while (getline(airport_ifs, line)) {
-            vector<string> vec = delimit(line, ",");
+            vector<string> vec = splitpart(line, ",");
             string airportName = vec[1];
             airportName = airportName.substr(1,airportName.size()-2);
             string airportAbbr;
@@ -46,7 +46,7 @@ void parseGraph::parseCSV(Graph &g, ifstream &airport_ifs, ifstream &route_ifs) 
     }
     if (route_ifs.is_open()) {
         while(getline(route_ifs, line)) {
-            vector<string> vec = delimit(line, ",");
+            vector<string> vec = splitpart(line, ",");
             string source = vec[2];
             string dest = vec[4];
             if (g.exists(source) && g.exists(dest)){
