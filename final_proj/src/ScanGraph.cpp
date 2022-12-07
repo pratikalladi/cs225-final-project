@@ -1,5 +1,11 @@
 #include "ScanGraph.h"
 
+void ScanGraph::scanCSV(Graph &g, string airport_ifs, string route_ifs) {
+    ifstream airports{airport_ifs} ;
+    ifstream routes{route_ifs};
+
+    scanCSV_helper(g, airports, routes);
+}
 
 vector<string> ScanGraph::splitpart(string str_, string delimiter) {
     vector<string> res;
@@ -21,7 +27,7 @@ vector<string> ScanGraph::splitpart(string str_, string delimiter) {
     return res;
 }
 
-void ScanGraph::scanCSV(Graph &g, ifstream &airport_ifs, ifstream &route_ifs) {
+void ScanGraph::scanCSV_helper(Graph &g, ifstream &airport_ifs, ifstream &route_ifs) {
     string line, tmp;
     int index = 0;
     if (airport_ifs.is_open()) {

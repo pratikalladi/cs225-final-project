@@ -6,6 +6,7 @@
 #include <string>
 
 #include "graph.h"
+#include "ScanGraph.h"
 #include "algo.h"
 
 #include <chrono>
@@ -179,5 +180,14 @@ TEST_CASE("test case 3: dijkstra's algorithm on a doubly cyclic graph") {
     REQUIRE(test->dijkstra_A_find_shortest_distance("0", "7") == -1);
 
     delete test;
+}
+  
+TEST_CASE("test 1 on the whole dataset ") {
+    Graph g;
+    string airport_path =" /workspaces/cs225env/cs225-final-project/final_proj/data/airports.dat";
+    string flights = "/workspaces/cs225env/cs225-final-project/final_proj/data/routes_test.dat";
+
+    ScanGraph sg;
+    sg.scanCSV(g, airport_path, flights);
 }
   

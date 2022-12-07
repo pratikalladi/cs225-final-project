@@ -11,10 +11,12 @@ using namespace std;
 
 class ScanGraph {
     public:
-       
-        void scanCSV(Graph &g, ifstream &airport_ifs, ifstream &route_ifs);
+       void scanCSV(Graph &g, string airport_ifs, string route_ifs);
+        
 
     private:
            
         vector<string> splitpart(string str_, string delimiter);
+
+        void scanCSV_helper(Graph &g, ifstream &airport_ifs, ifstream &route_ifs);
 };
