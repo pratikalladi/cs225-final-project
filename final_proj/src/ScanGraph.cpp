@@ -27,6 +27,19 @@ vector<string> ScanGraph::splitpart(string str_, string delimiter) {
     return res;
 }
 
+//helper to determine if a string is a number
+bool is_number(string s){
+    for(unsigned int i = 0; i < s.size(); i++) {
+        char c = s.at(i);
+        if(!isdigit(c) && c != '-' && c != '.') { 
+            //extra quantifiers for negative numbers and decimals
+            return false;
+        }
+    }
+    return true;
+}
+
+
 void ScanGraph::scanCSV_helper(Graph &g, ifstream &airport_ifs, ifstream &route_ifs) {
     string line, tmp;
     int index = 0;
@@ -42,12 +55,18 @@ void ScanGraph::scanCSV_helper(Graph &g, ifstream &airport_ifs, ifstream &route_
                 airportAbbr = vec[4];
             }
             airportAbbr = airportAbbr.substr(1, airportAbbr.size() - 2);
-            double latitude = stod(vec[6]);
-            double longitude = stod(vec[7]);               
-            
-            Graph::Node *n = new Graph::Node(airportAbbr, airportName, index, latitude, longitude);
-            index += 1;
-            g.addNode(n);
+
+            //check if string is number before assigning
+            if(is_number(vec[6]) && is_number(vec[7])) {
+                double latitude = stod(vec[6]);
+                double longitude = stod(vec[7]);               
+                
+                Graph::Node *n = new Graph::Node(airportAbbr, airportName, index, latitude, longitude);
+                index += 1;
+                g.addNode(n);
+            } else {
+                cout << "invalid number values: " << vec[6] << "," << vec[7] << endl;
+            }
         }
     }
     if (route_ifs.is_open()) {
@@ -59,11 +78,10 @@ void ScanGraph::scanCSV_helper(Graph &g, ifstream &airport_ifs, ifstream &route_
                 Graph::Node* srcNode = g.abbr_to_Node(source);
                 Graph::Node* destNode = g.abbr_to_Node(dest);
 
-                double distance_to_add = distance(srcNode, destNode); //modified to calculate distance
+                double distance_to_add = abs(distance(srcNode, destNode)); //modified to calculate distance
                 Graph::Edge *e = new Graph::Edge(srcNode, destNode, distance_to_add);
                 g.addEdge(e);
             }
-       
         }
     }
 }

@@ -111,8 +111,11 @@ void Graph::construct_basic_graph(const V2D_strings &relations, const V2D_number
     }
 } //constructs an graph from a 2d vector of strings representing an adjacency list. Each row represents a node's connections, with the first element in each row being the actual node and the rest being nodes connected to it.  
 
-bool Graph::exists(string abbr) {
-    return nodeMap.count(abbr)!=0 ? true : false;
+bool Graph::exists(string abbr) { //checks if the id is already present
+    if(nodeMap.count(abbr) == 0) {
+        return false;
+    }
+    return true;
 }
 
 double Graph::distance(Node* src, Node* dest){
@@ -123,6 +126,8 @@ double Graph::distance(Node* src, Node* dest){
     
     double a = pow(sin((dest_lat-source_lat)/2.0),2) + cos(source_lat)*cos(dest_lat)*pow(sin((source_long - dest_long)/2.0),2); 
     double finaldist = er * asin(sqrt(a)) * 2.0;
+
+    //take absolute value to be safe
     return finaldist;
 }
 
