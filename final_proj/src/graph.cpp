@@ -110,14 +110,10 @@ void Graph::construct_basic_graph(const V2D_strings &relations, const V2D_number
         }
     }
 } //constructs an graph from a 2d vector of strings representing an adjacency list. Each row represents a node's connections, with the first element in each row being the actual node and the rest being nodes connected to it.  
-         
-
-
 
 bool Graph::exists(string abbr) {
     return nodeMap.count(abbr)!=0 ? true : false;
 }
-
 
 double Graph::distance(Node* src, Node* dest){
     double source_long = (src->longitude)*M_PI / 180.0;
