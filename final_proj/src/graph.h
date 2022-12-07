@@ -59,8 +59,6 @@ class Graph {
 
     
     private:
-        int adjSize;
-        
         unordered_map<string, vector<Edge*>> adjList;  //adjacency list in map: node id to . note that this is unordered and a hashmap, making lookup speed fast
         unordered_map<string, Node*> nodeMap; //map to nodes based on string id. note that this is unordered and a hashmap, making lookup speed fast
         vector<vector<Node*>> adjListVector; //adjacency list in vector form, where in each row, the first index represents a node, and then nodes that node is connected to
