@@ -21,18 +21,18 @@ int main()
 {
 
     cout <<"Test case 1: testing functions using basic graph: a cyclic 3 node graph" << endl;
-    Graph::Node* node_a = new Graph::Node(0, 0.001, 0.001, "airport a", "aa") ;
-    Graph::Node* node_b = new Graph::Node(1, 0.001, 0.001, "airport b", "bb") ;
-    Graph::Node* node_c= new Graph::Node(2, 0.001, 0.001, "airport c", "cc") ;
+    Graph::Node* node_a = new Graph::Node("a") ;
+    Graph::Node* node_b = new Graph::Node("b") ;
+    Graph::Node* node_c= new Graph::Node("c") ;
 
     //edge from a to b
-    Graph::Edge* edge_a_b = new Graph::Edge(node_a, node_b);
+    Graph::Edge* edge_a_b = new Graph::Edge(node_a, node_b, 4);
 
     //edge from a to c
-    Graph::Edge* edge_a_c = new Graph::Edge(node_a, node_c);
+    Graph::Edge* edge_a_c = new Graph::Edge(node_a, node_c, 3);
 
     //edge from b to c
-    Graph::Edge* edge_b_c = new Graph::Edge(node_b, node_c);
+    Graph::Edge* edge_b_c = new Graph::Edge(node_b, node_c, 3);
 
 
 
@@ -47,12 +47,14 @@ int main()
     test_graph_1.addEdge(edge_a_c);
 
     cout << "testing get neighbors function" << endl;
-    vector<Graph::Edge*> result_of_getNeighbors = test_graph_1.getNeighbors(node_c);
+    vector<Graph::Edge*> result_of_getNeighbors = test_graph_1.getEdgeNeighbors(node_c->id);
     for(Graph::Edge* edge : result_of_getNeighbors) {
         cout  << edge->source->name << "->" << edge->dest->name << endl;
     }
 
-    Graph g;
+    
+    //modify code
+/*     Graph g;
     ScanGraph sg;
     string airport = "../data/airports_test.dat";
     string routes = "../data/routes_test.dat";
@@ -66,7 +68,7 @@ int main()
             std::cout << output.at(i) << ' ';
         }
         std::cout << '\n' << std::endl;
-    }
+    } */
 
 
 

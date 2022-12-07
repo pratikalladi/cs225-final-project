@@ -39,7 +39,7 @@ void ScanGraph::scanCSV(Graph &g, ifstream &airport_ifs, ifstream &route_ifs) {
             double latitude = stod(vec[6]);
             double longitude = stod(vec[7]);               
             
-            Graph::Node *n = new Graph::Node(index, latitude, longitude, airportName, airportAbbr);
+            Graph::Node *n = new Graph::Node(airportAbbr, airportName, index, latitude, longitude);
             index += 1;
             g.addNode(n);
         }
@@ -52,7 +52,9 @@ void ScanGraph::scanCSV(Graph &g, ifstream &airport_ifs, ifstream &route_ifs) {
             if (g.exists(source) && g.exists(dest)){
                 Graph::Node* srcNode = g.abbr_to_Node(source);
                 Graph::Node* destNode = g.abbr_to_Node(dest);
-                Graph::Edge *e = new Graph::Edge(srcNode, destNode);
+
+                double distance_to_add = distance(srcNode, destNode); //modified to calculate distance
+                Graph::Edge *e = new Graph::Edge(srcNode, destNode, distance_to_add);
                 g.addEdge(e);
             }
        
