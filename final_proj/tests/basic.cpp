@@ -181,8 +181,38 @@ TEST_CASE("test case 3: dijkstra's algorithm on a doubly cyclic graph") {
 
     delete test;
 }
-  
-TEST_CASE("test 1: loading on the whole dataset ") {
+
+
+TEST_CASE("test 1: loading on a subset of dataset ") {
+    Graph g;
+    string airport_path ="../data/airports.dat";
+    string flights = "../data/routes.dat";
+
+    ScanGraph sg;
+    sg.scanCSV(g, airport_path, flights);
+
+    cout <<"graph has: " << g.getNodeCount() << " nodes" << endl;
+    cout <<"graph has: " << g.getEdgeCount() << " edges" << endl;
+
+    cout << "testing getting neighbors of JFK: " << endl;
+    auto n1 = g.getEdgeNeighbors("JFK");
+    for(Edge* x : n1) {
+        cout << x->dest->id <<"("<< x->weight<<") ";
+    } cout << endl;
+    
+    cout << "testing shortest distance between LAX and JFK: "<< g.dijkstra_A_find_shortest_distance("LAX", "JFK") << endl; //what unit would this be in
+    cout << "printing the shortest path taken in terms of connection by distance between LAX and JFK: ";
+    auto path = g.dijkstra_A_find_shortest_path("LAX", "JFK");
+    cout << "starting at LAX, ";
+    for(string x : path) {
+        cout << "->" << x; 
+    }
+    cout << endl;
+}
+
+
+
+TEST_CASE("test 2: loading on the whole dataset ") {
     Graph g;
     string airport_path ="../data/airports.dat";
     string flights = "../data/routes.dat";
