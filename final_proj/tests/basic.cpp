@@ -184,8 +184,8 @@ TEST_CASE("test case 3: dijkstra's algorithm on a doubly cyclic graph") {
   
 TEST_CASE("test 1: loading on the whole dataset ") {
     Graph g;
-    string airport_path ="/workspaces/cs225env/cs225-final-project/final_proj/data/airports.dat";
-    string flights = "/workspaces/cs225env/cs225-final-project/final_proj/data/routes.dat";
+    string airport_path ="../data/airports.dat";
+    string flights = "../data/routes.dat";
 
     ScanGraph sg;
     sg.scanCSV(g, airport_path, flights);

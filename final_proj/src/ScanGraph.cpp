@@ -1,8 +1,8 @@
 #include "ScanGraph.h"
 
 void ScanGraph::scanCSV(Graph &g, string airport_ifs, string route_ifs) {
-    ifstream airports{airport_ifs} ;
-    ifstream routes{route_ifs};
+    ifstream airports(airport_ifs);
+    ifstream routes(route_ifs);
 
     scanCSV_helper(g, airports, routes);
 }
