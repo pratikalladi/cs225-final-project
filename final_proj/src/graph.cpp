@@ -1,7 +1,7 @@
 #define _USE_MATH_DEFINES
 
 #include <cmath>
-#include "Graph.h"
+#include "graph.h"
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -135,7 +135,7 @@ double Graph::distance(Node* src, Node* dest){
 }
 
 
-std::vector<std::string> Graph::BFS(Graph::Node* source, Graph::Node* destination) {
+std::vector<std::string> Graph::BFS(Graph::Node* source) {
     std::vector<std::string> result;
     std::vector<bool> visited(14111, false);
     std::queue<Graph::Node*> bfs;
@@ -145,7 +145,7 @@ std::vector<std::string> Graph::BFS(Graph::Node* source, Graph::Node* destinatio
     while (!bfs.empty()) {
         current = bfs.front();
         result.push_back(current->name);
-        for (auto iter : getNodeNeighbors(current->name)) {//help fix this error. Dude look at the object you are currently on! Look at class definitions
+        for (auto iter : getNodeNeighbors(current->name)) {
             if (visited.at(iter->index) == false) {
                 bfs.push(iter);
                 visited.at(iter->index) = true;
