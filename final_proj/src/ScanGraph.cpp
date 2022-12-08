@@ -58,8 +58,8 @@ void ScanGraph::scanCSV_helper(Graph &g, ifstream &airport_ifs, ifstream &route_
 
             //check if string is number before assigning
             if(is_number(vec[6]) && is_number(vec[7])) {
-                double latitude = stod(vec[6]);
-                double longitude = stod(vec[7]);               
+                double latitude = std::stod(vec[6]);
+                double longitude = std::stod(vec[7]);               
                 
                 Graph::Node *n = new Graph::Node(airportAbbr, airportName, index, latitude, longitude);
                 index += 1;

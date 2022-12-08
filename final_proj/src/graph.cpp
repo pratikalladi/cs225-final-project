@@ -3,7 +3,6 @@
 #include <cmath>
 #include "Graph.h"
 #include<bits/stdc++.h>
-#define er 6371000 //earth radius
 using namespace std;
 
 
@@ -119,16 +118,20 @@ bool Graph::exists(string abbr) { //checks if the id is already present
 }
 
 double Graph::distance(Node* src, Node* dest){
-    double source_long = (src->longitude)*M_PI / 180.0;
-    double dest_long = (dest->longitude)*M_PI / 180.0;
-    double source_lat = (src->latitude)*M_PI/180.0; 
-    double dest_lat = (dest->latitude)*M_PI/180.0;
+    double source_long_rad = (src->longitude)/(180.0/57.29577951); //j\hard code 180/pi
+    double source_lat_rad = (src->latitude)/(180.0/57.29577951); 
+    double dest_long_rad = (dest->longitude)/(180.0 /57.29577951);
+    double dest_lat_rad = (dest->latitude)/(180.0/57.29577951);
+
+    double latsin = sin(source_lat_rad) * sin(dest_lat_rad);
+    double longdiff = cos(source_lat_rad) * cos(dest_lat_rad) * cos(dest_long_rad - source_long_rad);
+    double adder = latsin + longdiff;
     
-    double a = pow(sin((dest_lat-source_lat)/2.0),2) + cos(source_lat)*cos(dest_lat)*pow(sin((source_long - dest_long)/2.0),2); 
-    double finaldist = er * asin(sqrt(a)) * 2.0;
+    double halfway = acos(adder); 
+    double dist_out = 3963.0 * halfway * 1.609344; //to make km instead of miles
 
     //take absolute value to be safe
-    return finaldist;
+    return dist_out;
 }
 
 
