@@ -237,8 +237,7 @@ TEST_CASE("test case 5: BFS algorithm on a medium complexity graph") {
     //cout <<"printing out graph adjacency list: " << endl;
     //test->print_graph();
 
-    Node* source = test->getNodeMap()["8"];
-    auto results = test->BFS(source);
+    auto results = test->BFS("8");
 
     cout << "printing BFS result: " << endl;
     for (string s: results) {

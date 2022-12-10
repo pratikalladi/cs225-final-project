@@ -136,7 +136,9 @@ double Graph::getDistance(Node* src, Node* dest){
 }
 
 
-std::vector<std::string> Graph::BFS(Graph::Node* source) {
+std::vector<std::string> Graph::BFS(string src) {
+    Node* source = nodeMap[src];
+    
     std::vector<std::string> result;
     std::vector<bool> visited(14111, false);
     std::queue<Graph::Node*> bfs;

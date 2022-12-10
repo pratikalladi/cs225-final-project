@@ -91,7 +91,7 @@ class Graph {
         
         //algorithms
         double PageRankofNode(int o,vector<double> &p);
-        std::vector<std::string> BFS(Graph::Node* source);
+        std::vector<std::string> BFS(string src);
 
         vector<string> dijkstra_A_find_shortest_path(string start, string end); //returns the vector of the shortest path between any two given nodes in terms of the node id and distance. only works for graphs with weighted edges with doubles. Implementation of Dijkstra and A* algorithm. The size of the vector returned equals the number of edges traveled. The vector always includes the end node if it is not equal to the start.
         double dijkstra_A_find_shortest_distance (string start, string end); //returns the shortest possible distance between two nodes using dijkstra's algorithm. Returns -1 if the end node cannot be found.
