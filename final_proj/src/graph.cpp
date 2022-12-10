@@ -38,6 +38,17 @@ void Graph::addNode(Node* n) {
     new_nlist.push_back(n); 
     adjListVector.push_back(new_nlist); //insert into the index based adjacency list
 
+    
+    
+     //insert into the to map of cities to nodes
+    if(cityToNodes.count(n->location_city) == 0) { //if new, do something else
+        vector<Node*> new_city_list;
+        new_city_list.push_back(n);
+        cityToNodes.insert({n->location_city, new_city_list});
+    } else { //else, push back
+        cityToNodes[n->location_city].push_back(n);
+    }
+
     vector<Edge *> new_elist; 
     adjList.insert({n->id, new_elist});
 

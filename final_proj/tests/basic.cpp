@@ -34,6 +34,9 @@ TEST_CASE("test case 1: test distance function"){
     std::cout << "\n" << std::endl;
     bool out;
     REQUIRE(abs((d - 2886)) < 1);
+
+    //delete test graph
+    delete test;
 }
 
 
@@ -252,31 +255,32 @@ TEST_CASE("test case 6: loading on a subset of dataset ") {
     cout << "____________________________________________________________" << endl;
     cout << "test case 6: loading on a subset of dataset " << endl;
 
-    Graph g;
+    Graph* g = new Graph();
     string airport_path ="../data/airports_test.dat";
     string flights = "../data/routes_test.dat";
 
     ScanGraph sg;
     sg.scanCSV(g, airport_path, flights);
 
-    cout <<"graph has: " << g.getNodeCount() << " nodes" << endl;
-    cout <<"graph has: " << g.getEdgeCount() << " edges" << endl;
+    cout <<"graph has: " << g->getNodeCount() << " nodes" << endl;
+    cout <<"graph has: " << g->getEdgeCount() << " edges" << endl;
 
     cout << "testing getting neighbors of GKA: " << endl;
-    auto n1 = g.getEdgeNeighbors("GKA");
+    auto n1 = g->getEdgeNeighbors("GKA");
     for(Edge* x : n1) {
         cout << x->dest->id <<"("<< x->weight<<") ";
     } cout << endl;
     
-    cout << "testing shortest distance between GKA and MAG: "<< g.dijkstra_A_find_shortest_distance("GKA", "MAG") << endl; //what unit would this be in
+    cout << "testing shortest distance between GKA and MAG: "<< g->dijkstra_A_find_shortest_distance("GKA", "MAG") << endl; //what unit would this be in
     cout << "printing the shortest path taken in terms of connection by distance between GKA and MAG: ";
-    auto path = g.dijkstra_A_find_shortest_path("GKA", "MAG");
+    auto path = g->dijkstra_A_find_shortest_path("GKA", "MAG");
     cout << "starting at GKA, ";
     for(string x : path) {
         cout << "->" << x; 
     }
     cout << endl;
     cout << endl;
+    delete g;
 }
 
 
@@ -285,15 +289,15 @@ TEST_CASE("test case 7: loading on the whole dataset ") {
     cout << "____________________________________________________________" << endl;
     cout << "test case 7: loading on the whole dataset " << endl;
 
-    Graph g;
+    Graph* g = new Graph();
     string airport_path ="../data/airports.dat";
     string flights = "../data/routes.dat";
 
     ScanGraph sg;
     sg.scanCSV(g, airport_path, flights);
 
-    cout <<"graph has: " << g.getNodeCount() << " nodes" << endl;
-    cout <<"graph has: " << g.getEdgeCount() << " edges" << endl;
+    cout <<"graph has: " << g->getNodeCount() << " nodes" << endl;
+    cout <<"graph has: " << g->getEdgeCount() << " edges" << endl;
 
 /*     cout << "testing getting neighbors of LAX: " << endl;
     auto n1 = g.getEdgeNeighbors("LAX");
@@ -301,15 +305,16 @@ TEST_CASE("test case 7: loading on the whole dataset ") {
         cout << x->dest->id <<"("<< x->weight<<") ";
     } cout << endl; */
     
-    cout << "testing shortest distance between LAX and JFK: "<< g.dijkstra_A_find_shortest_distance("LAX", "JFK") << endl; //what unit would this be in
+    cout << "testing shortest distance between LAX and JFK: "<< g->dijkstra_A_find_shortest_distance("LAX", "JFK") << endl; //what unit would this be in
     cout << "printing the shortest path taken in terms of connection by distance between LAX and JFK: ";
-    auto path = g.dijkstra_A_find_shortest_path("LAX", "JFK");
+    auto path = g->dijkstra_A_find_shortest_path("LAX", "JFK");
     cout << "starting at LAX, ";
     for(string x : path) {
         cout << "->" << x; 
     }
     cout << endl; 
 
+    delete g;
 }
 
 
@@ -318,30 +323,31 @@ TEST_CASE("test case 8: loading on the whole dataset, connecting flights ") {
     cout << "____________________________________________________________" << endl;
     cout << "test case 8: loading on the whole dataset " << endl;
 
-    Graph g;
+    Graph* g = new Graph();
     string airport_path ="../data/airports.dat";
     string flights = "../data/routes.dat";
 
     ScanGraph sg;
     sg.scanCSV(g, airport_path, flights);
 
-    cout <<"graph has: " << g.getNodeCount() << " nodes" << endl;
-    cout <<"graph has: " << g.getEdgeCount() << " edges" << endl;
+    cout <<"graph has: " << g->getNodeCount() << " nodes" << endl;
+    cout <<"graph has: " << g->getEdgeCount() << " edges" << endl;
 
     cout << "testing getting neighbors of CMI: " << endl;
-    auto n1 = g.getEdgeNeighbors("CMI");
+    auto n1 = g->getEdgeNeighbors("CMI");
     for(Edge* x : n1) {
         cout << x->dest->id <<"("<< x->weight<<") ";
     } cout << endl;
     
-    cout << "testing shortest distance between CMI and SFO: "<< g.dijkstra_A_find_shortest_distance("CMI", "SFO") << endl; //what unit would this be in
+    cout << "testing shortest distance between CMI and SFO: "<< g->dijkstra_A_find_shortest_distance("CMI", "SFO") << endl; //what unit would this be in
     cout << "printing the shortest path taken in terms of connection by distance between LAX and JFK: ";
-    auto path = g.dijkstra_A_find_shortest_path("CMI", "SFO");
+    auto path = g->dijkstra_A_find_shortest_path("CMI", "SFO");
+    REQUIRE(g->dijkstra_A_find_shortest_path("CMI", "SFO") == vector<string>{"ORD","SFO"}); //this is the shortest path taken
     cout << "starting at CMI, ";
     for(string x : path) {
         cout << "->" << x; 
     }
     cout << endl; 
-
+    delete g;
 }
   

@@ -24,13 +24,15 @@ class Graph {
             int index = -1;
             double latitude = -1;
             double longitude = -1;
+            string location_city; //this, if available tells people the general city an airport is int
+            string location_country; //this, if available tells people the general country an airport is in
 
 
             ~Node() = default;
             Node() {}
 
-            Node(string abbr, string name, int index, double latitude, double longitude) 
-                : id(abbr), name(name), index(index), latitude(latitude), longitude(longitude)
+            Node(string abbr, string name, int index, double latitude, double longitude, string location_city, string location_country) 
+                : id(abbr), name(name), index(index), latitude(latitude), longitude(longitude), location_city(location_city), location_country(location_country)
             {}
 
             Node(string id) //simpler constructor mainly used for algorithm testing purposes
@@ -61,7 +63,9 @@ class Graph {
         unordered_map<string, vector<Edge*>> adjList;  //adjacency list in map: node id to . note that this is unordered and a hashmap, making lookup speed fast
         unordered_map<string, Node*> nodeMap; //map to nodes based on string id. note that this is unordered and a hashmap, making lookup speed fast
         vector<vector<Node*>> adjListVector; //adjacency list in vector form, where in each row, the first index represents a node, and then nodes that node is connected to
-                                            
+
+        unordered_map<string, vector<Node*>> cityToNodes; //map from a city location to nodes that represent airport(s) in a city
+                                 
         //basic stats
         int nodeCount = 0; //number of nodes
         int edgeCount = 0; //number of edges
@@ -83,6 +87,7 @@ class Graph {
         //getters
         unordered_map<string, Node*> getNodeMap() { return nodeMap; };
         unordered_map<string, vector<Edge *>> getAdjList() { return adjList; }; //function to get the adjacency list
+        unordered_map<string, vector<Node*>> getCityToNodes() { return cityToNodes; };
         vector<vector<Node*>> getAdjListVector () { return adjListVector; };
         int getNodeCount() { return nodeCount;};
         int getEdgeCount() { return edgeCount;};
