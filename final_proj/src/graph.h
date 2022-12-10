@@ -25,7 +25,6 @@ class Graph {
             double latitude = -1;
             double longitude = -1;
 
-            double fscore = -1;
 
             ~Node() = default;
             Node() {}
@@ -107,11 +106,6 @@ class Graph {
         double Win(int m,int o);
         double Wout(int m,int o);
 
-        typedef struct Compare{
-            bool operator()(const Node*node1, const Node*node2){
-                return node1->fscore < node2->fscore;
-            }
-        } Comparator;
 };
 typedef Graph::Edge Edge;
 typedef Graph::Node Node;

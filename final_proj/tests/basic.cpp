@@ -14,13 +14,12 @@
 using namespace std::chrono;
 using namespace std;
 
-TEST_CASE("sumDigits", "[valgrind][weight=1]"){
-    SECTION("Base cases work") {
-        REQUIRE(1 == 1);
-    }
-    SECTION("Multiple digits sum correctly") {
-        REQUIRE(9 == 9);
-    }
+TEST_CASE("test case 1: test distance function"){
+    Node* start = new Node("start");
+    Node* dest = new Node("end");
+    start->latitude = 0;
+    start->longitude = 0;
+    REQUIRE(9 == 9);
 }
 
 
