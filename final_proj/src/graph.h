@@ -101,11 +101,9 @@ class Graph {
 
         //helpers 
 
-        double distance(Node* src, Node* dest);
-
-        
+        double getDistance(Node* src, Node* dest);
         bool exists(string abbr);
-        Node* abbr_to_Node(string abbr);
+        Node* getNode(string abbr);
         double Win(int m,int o);
         double Wout(int m,int o);
 

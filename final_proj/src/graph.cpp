@@ -56,6 +56,7 @@ void Graph::addEdge(Edge* e) {
     edgeCount++;
 
     adjListVector[e->source->index].push_back(e->dest);
+    //e->weight = distance(e->source, e->dest);
 }
 
 //function to print out the graph's basic structure and edge weights
@@ -117,20 +118,20 @@ bool Graph::exists(string abbr) { //checks if the id is already present
     return true;
 }
 
-double Graph::distance(Node* src, Node* dest){
-    double source_long_rad = (src->longitude)/(180.0/57.29577951); //j\hard code 180/pi
-    double source_lat_rad = (src->latitude)/(180.0/57.29577951); 
-    double dest_long_rad = (dest->longitude)/(180.0 /57.29577951);
-    double dest_lat_rad = (dest->latitude)/(180.0/57.29577951);
+double Graph::getDistance(Node* src, Node* dest){
+    long double source_long_rad = (src->longitude)/(180.0/57.29577951); //j\hard code 180/pi
+    long double source_lat_rad = (src->latitude)/(180.0/57.29577951); 
+    long double dest_long_rad = (dest->longitude)/(180.0 /57.29577951);
+    long double dest_lat_rad = (dest->latitude)/(180.0/57.29577951);
 
-    double latsin = sin(source_lat_rad) * sin(dest_lat_rad);
-    double longdiff = cos(source_lat_rad) * cos(dest_lat_rad) * cos(dest_long_rad - source_long_rad);
-    double adder = latsin + longdiff;
+    long double latdiff = dest_lat_rad - source_lat_rad;
+    long double longdiff = dest_long_rad - source_long_rad;
+    long double adder = pow(sin(latdiff / 2.0), 2) + cos(source_lat_rad) * cos(dest_lat_rad) * pow(sin(longdiff / 2.0), 2);
     
-    double halfway = acos(adder); 
-    double dist_out = 3963.0 * halfway * 1.609344; //to make km instead of miles
+    long double halfway = 2 * asin(sqrt(adder)); 
+    long double dist_out = abs(6371.0 * halfway); //to make km instead of miles
 
-    //take absolute value to be safe
+    //take absolute value to be safe - no need, we square the number.
     return dist_out;
 }
 
@@ -215,7 +216,7 @@ double Graph :: Wout(int m,int o){
     return a;
 } */
 
-Graph::Node* Graph::abbr_to_Node(string abbr){
+Graph::Node* Graph::getNode(string abbr){
     return nodeMap[abbr];
 
 }

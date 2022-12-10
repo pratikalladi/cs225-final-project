@@ -185,8 +185,8 @@ TEST_CASE("test case 3: dijkstra's algorithm on a doubly cyclic graph") {
 
 TEST_CASE("test 1: loading on a subset of dataset ") {
     Graph g;
-    string airport_path ="../data/airports.dat";
-    string flights = "../data/routes.dat";
+    string airport_path ="../data/airports_test.dat";
+    string flights = "../data/routes_test.dat";
 
     ScanGraph sg;
     sg.scanCSV(g, airport_path, flights);
@@ -194,19 +194,20 @@ TEST_CASE("test 1: loading on a subset of dataset ") {
     cout <<"graph has: " << g.getNodeCount() << " nodes" << endl;
     cout <<"graph has: " << g.getEdgeCount() << " edges" << endl;
 
-    cout << "testing getting neighbors of JFK: " << endl;
-    auto n1 = g.getEdgeNeighbors("JFK");
+    cout << "testing getting neighbors of GKA: " << endl;
+    auto n1 = g.getEdgeNeighbors("GKA");
     for(Edge* x : n1) {
         cout << x->dest->id <<"("<< x->weight<<") ";
     } cout << endl;
     
-    cout << "testing shortest distance between LAX and JFK: "<< g.dijkstra_A_find_shortest_distance("LAX", "JFK") << endl; //what unit would this be in
-    cout << "printing the shortest path taken in terms of connection by distance between LAX and JFK: ";
-    auto path = g.dijkstra_A_find_shortest_path("LAX", "JFK");
-    cout << "starting at LAX, ";
+    cout << "testing shortest distance between GKA and MAG: "<< g.dijkstra_A_find_shortest_distance("GKA", "MAG") << endl; //what unit would this be in
+    cout << "printing the shortest path taken in terms of connection by distance between GKA and MAG: ";
+    auto path = g.dijkstra_A_find_shortest_path("GKA", "MAG");
+    cout << "starting at GKA, ";
     for(string x : path) {
         cout << "->" << x; 
     }
+    cout << endl;
     cout << endl;
 }
 
@@ -223,8 +224,8 @@ TEST_CASE("test 2: loading on the whole dataset ") {
     cout <<"graph has: " << g.getNodeCount() << " nodes" << endl;
     cout <<"graph has: " << g.getEdgeCount() << " edges" << endl;
 
-    cout << "testing getting neighbors of JFK: " << endl;
-    auto n1 = g.getEdgeNeighbors("JFK");
+    cout << "testing getting neighbors of LAX: " << endl;
+    auto n1 = g.getEdgeNeighbors("LAX");
     for(Edge* x : n1) {
         cout << x->dest->id <<"("<< x->weight<<") ";
     } cout << endl;

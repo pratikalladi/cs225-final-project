@@ -1,4 +1,5 @@
 #include "ScanGraph.h"
+#include "graph.h"
 
 void ScanGraph::scanCSV(Graph &g, string airport_ifs, string route_ifs) {
     ifstream airports(airport_ifs);
@@ -45,8 +46,10 @@ void ScanGraph::scanCSV_helper(Graph &g, ifstream &airport_ifs, ifstream &route_
     int index = 0;
     if (airport_ifs.is_open()) {
         while (getline(airport_ifs, line)) {
+            //vector<string> vec;
+            //SplitString(line, ',', vec);
             vector<string> vec = splitpart(line, ",");
-            string airportName = vec[1];
+            string airportName = Trim(vec[1]);
             airportName = airportName.substr(1,airportName.size()-2);
             string airportAbbr;
             if (vec[4] == "\\N") {
@@ -71,17 +74,45 @@ void ScanGraph::scanCSV_helper(Graph &g, ifstream &airport_ifs, ifstream &route_
     }
     if (route_ifs.is_open()) {
         while(getline(route_ifs, line)) {
+            //vector<string> vec;
+            //SplitString(line, ',', vec);
             vector<string> vec = splitpart(line, ",");
-            string source = vec[2];
-            string dest = vec[4];
-            if (g.exists(source) && g.exists(dest)){
-                Graph::Node* srcNode = g.abbr_to_Node(source);
-                Graph::Node* destNode = g.abbr_to_Node(dest);
+            string start = Trim(vec[2]);
+            string end = Trim(vec[4]);
+            if (g.exists(start) && g.exists(end)){
+                Graph::Node* srcNode = g.getNode(start);
+                Graph::Node* destNode = g.getNode(end);
 
-                double distance_to_add = abs(distance(srcNode, destNode)); //modified to calculate distance
+                double distance_to_add = g.getDistance(srcNode, destNode); //modified to calculate distance
                 Graph::Edge *e = new Graph::Edge(srcNode, destNode, distance_to_add);
                 g.addEdge(e);
             }
         }
     }
+}
+
+std::string ScanGraph::TrimRight(const std::string & str) {
+    std::string tmp = str;
+    return tmp.erase(tmp.find_last_not_of(" ") + 1);
+}
+
+std::string ScanGraph::TrimLeft(const std::string & str) {
+    std::string tmp = str;
+    return tmp.erase(0, tmp.find_first_not_of(" "));
+}
+
+std::string ScanGraph::Trim(const std::string & str) {
+    std::string tmp = str;
+    return TrimLeft(TrimRight(str));
+}
+
+int ScanGraph::SplitString(const std::string & str1, char sep, std::vector<std::string> &fields) {
+    std::string str = str1;
+    std::string::size_type pos;
+    while((pos=str.find(sep)) != std::string::npos) {
+        fields.push_back(str.substr(0,pos));
+        str.erase(0,pos+1);  
+    }
+    fields.push_back(str);
+    return fields.size();
 }
