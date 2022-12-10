@@ -262,10 +262,10 @@ double Graph :: PageRankofNode(string node){
 
 vector<pair<string, double>> Graph::PageRank(string input) {
     vector<pair<string, double>> output;
-    std::vector<string> allAirports = BFS(input);
-    for (string node : allAirports) {
-        double pscore = PageRankofNode(node);
-        pair<string, double> airport(node, pscore);
+    std::vector<std::pair<std::string, int>> allAirports = BFS(input);
+    for (unsigned i = 0; i < allAirports.size(); i++) {
+        double pscore = PageRankofNode(allAirports[i].first);
+        pair<string, double> airport(allAirports[i].first, pscore);
         output.push_back(airport);
     }
 
