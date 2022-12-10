@@ -265,8 +265,20 @@ vector<pair<string, double>> Graph::PageRank(string input) {
         pair<string, double> airport(node, pscore);
         output.push_back(airport);
     }
+
+    sort(output.begin(), output.end(), prcompare);
+    reverse(output.begin(), output.end());
     return output;
 }
+
+bool Graph::prcompare(pair<string, double> &p1, pair<string, double> &p2) {
+    if (p1.second < p2.second) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
 Graph::Node* Graph::getNode(string abbr){
     return nodeMap[abbr];

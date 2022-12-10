@@ -71,6 +71,7 @@ class Graph {
 
         unordered_map<string, vector<Node*>> cityToNodes; //map from a city location to nodes that represent airport(s) in a city
         unordered_map<int, string> airlinesMap; //map from a the number airline ids given in routes.dat to the actual airline name. This is basically a database of airlines.
+        bool prcompare(pair<string, double> &p1, pair<string, double> &p2);
         
 
 
@@ -117,8 +118,6 @@ class Graph {
         double getDistance(Node* src, Node* dest);
         bool exists(string abbr);
         Node* getNode(string abbr);
-        double Win(int m,int o);
-        double Wout(int m,int o);
 
 };
 typedef Graph::Edge Edge;
