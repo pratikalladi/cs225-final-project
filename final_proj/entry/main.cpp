@@ -237,10 +237,14 @@ void flights_subprogram(Graph* data) {
 }
 
 void data_subprogram(Graph* data) {
-    vector<pair<string, double>> pr = data->PageRank();
-    for (auto p : pr) {
-        std::cout << p.first << " -> " << p.second <<std::endl;
-    }
+    /* vector<pair<string, double>> pr = data->PageRank();
+    for (unsigned i = 0; i < 51; i++) {
+        std::cout << pr[i].first << " -> " << pr[i].second <<std::endl;
+    } */
+   // std::cout << "JFK -> " << data->PageRankofNode("JFK") << std::endl;
+    //std::cout << "LAX -> " << data->PageRankofNode("LAX") << std::endl;
+    //std::cout << "CMI -> " << data->PageRankofNode("CMI") << std::endl;
+    std::cout << "BOS -> " << data->PageRankofNode("BOS") << std::endl;
 }
 
 int main()

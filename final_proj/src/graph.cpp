@@ -243,21 +243,28 @@ double Graph :: Wout(int m,int o){
 double Graph :: PageRankofNode(string node){
     std::vector<Edge*> connections = getEdgeNeighbors(node);
     double weight = 0;
-    double pageRankScore = 0.85; //dampening factor
-    double numConnections = connections.size();
+    double outgoing = connections.size();
     double incoming = 0;
-    double outgoing = 0;
     for (Edge* e : connections) {
-        if (e->dest->id == node) {
-            incoming++;
-        } else {
-            outgoing++;
-        }
         weight += e->weight;
     }
-    double pageRankDiv = 0.85 * (weight * (incoming/outgoing));
-    pageRankScore += pageRankDiv;
-    return pageRankScore;
+    if (outgoing == 0) {
+        outgoing++;
+    }
+
+    vector<Node*> neighbors = getNodeNeighbors(node);
+    for (Node* n : neighbors) {
+        std::vector<Edge*> nc = getEdgeNeighbors(n->id);
+        for (Edge* e : nc) {
+            if ( e->dest->id == node) {
+                incoming++;
+                weight += e->weight;
+            }
+    }
+    }
+
+    double pageRankDiv =0.85 + 0.85 * (weight * (incoming/outgoing));
+    return pageRankDiv;
 }
 
 vector<pair<string, double>> Graph::PageRank() {
@@ -268,7 +275,6 @@ vector<pair<string, double>> Graph::PageRank() {
         pair<string, double> airport(allAirports[i].first, pscore);
         output.push_back(airport);
     }
-
     sort(output.begin(), output.end(), prcompare);
     reverse(output.begin(), output.end());
     return output;
