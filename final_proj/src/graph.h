@@ -48,13 +48,18 @@ class Graph {
             Node *source;
             Node *dest; 
 
+            
             double weight = -1; //this represents the distance between two nodes
+            int airline_code; //stores the airline making this connection, as represented by the openflights code that can be converted into a string by the airlines database.
 
             Edge() {}
 
             ~Edge() = default;
             
             Edge(Node* n1, Node* n2, double weight) : source(n1), dest(n2), weight(weight) {
+            }
+
+            Edge(Node* n1, Node* n2, double weight, int airline_code) : source(n1), dest(n2), weight(weight), airline_code(airline_code) {
             }
         };
 
@@ -65,7 +70,10 @@ class Graph {
         vector<vector<Node*>> adjListVector; //adjacency list in vector form, where in each row, the first index represents a node, and then nodes that node is connected to
 
         unordered_map<string, vector<Node*>> cityToNodes; //map from a city location to nodes that represent airport(s) in a city
-                                 
+        unordered_map<int, string> airlinesMap; //map from a the number airline ids given in routes.dat to the actual airline name. This is basically a database of airlines.
+        
+
+
         //basic stats
         int nodeCount = 0; //number of nodes
         int edgeCount = 0; //number of edges
@@ -77,18 +85,18 @@ class Graph {
 
         //basic constructors/destructor
         Graph() = default;
+        Graph(string airlines_path, string airports_path, string routes_path); //constructor to build a graph from openflights airline paths and initialize the airlines database.
         ~Graph();
-        void print_graph(); //function to print the graph out
+        void print_graph(); //function to print the graph out used for debugging
         void construct_basic_graph(const V2D_strings &relations, const V2D_numbers &weights); //constructs an graph from a 2d vector of strings representing an adjacency list. Each row represents a node's connections, with the first element in each row being the actual node and the rest being nodes connected to it.  
                                                         //the graph's weights are added by accepting a 2d vector of doubles with the same number elements in each row, column, and in total, as the original input in construct_basic_graph, with the part that displayed the nodes connected being replaced by the numerical weights of the corresponding edges. The first index of each row is ignored.     
-
-        vector<Node*> all_node;  
 
         //getters
         unordered_map<string, Node*> getNodeMap() { return nodeMap; };
         unordered_map<string, vector<Edge *>> getAdjList() { return adjList; }; //function to get the adjacency list
         unordered_map<string, vector<Node*>> getCityToNodes() { return cityToNodes; };
         vector<vector<Node*>> getAdjListVector () { return adjListVector; };
+        unordered_map<int, string> getAirlinesMap() {return airlinesMap; };
         int getNodeCount() { return nodeCount;};
         int getEdgeCount() { return edgeCount;};
         vector<Edge*> getEdgeNeighbors(string input); //find edges to neighbors based on the string id

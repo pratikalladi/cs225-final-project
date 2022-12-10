@@ -52,13 +52,11 @@ void validate_option(vector<string> options, string& input) {
 //handles the subprogram that allows airports to be searched and their destinations to be found. This is essentially a mini program of a similar format as the main
 void airports_subprogram(Graph* data) {
     vector<string> options = {"code", "city", "exit", };
-    
 
     bool program_finished = false; //sets if the program is finished or not
     while(!program_finished) {
         cout <<"_______________________________________________________________________________________________________________________________________________________" << endl;
         cout << "Find information about a certain airport: " << endl;
-        cout << "options:" << endl;
         cout << "type a listed option to begin:\n" << endl;
         print_options(options); 
         cout << "\nhere, it is possible to search by either IATA code, or the city an airport is in, or exit to menu" << endl;
@@ -77,7 +75,8 @@ void airports_subprogram(Graph* data) {
             }
             //get other information
             Node* info = data->getNodeMap()[id];
-            cout << endl << "This airport with code: " << id << " has the full name: " << info->name << endl << endl;
+            cout << "-------------------------------["<< info->name <<"(" << id << ")"<< " info" <<"]---------------------------------------------------" <<endl;
+            cout << endl << "This airport with code, " << id << ", has the full name: " << info->name << endl << endl;
             cout << "It is located in: " << info->location_city <<", "<< info->location_country <<endl;
 
             cout << "It has direct flights (with distance in km) to these airports: " << endl;
@@ -86,6 +85,7 @@ void airports_subprogram(Graph* data) {
                 Node* direct = x->dest;
                 cout << direct->id <<"["<< direct->name<<"] "<<"("<< x->weight<<") " << ", ";
             } cout << endl; 
+            cout << endl << "airport information for " << id << " printed above ^" << endl;
         }
         else if(input =="city") {
             string city;
@@ -111,6 +111,7 @@ void airports_subprogram(Graph* data) {
             }
             //get other information
             Node* info = data->getNodeMap()[id];
+            cout << "-------------------------------["<< info->name <<"(" << id << ")"<< " info" <<"]---------------------------------------------------" <<endl;
             cout << endl << "This airport with code: " << id << " has the full name: " << info->name << endl;
             cout << "It is located in: " << info->location_city <<", "<< info->location_country <<endl << endl;;
 
@@ -120,7 +121,8 @@ void airports_subprogram(Graph* data) {
                 Node* direct = x->dest;
                 cout << direct->id <<"["<< direct->name<<"] "<<"("<< x->weight<<") " << ", ";
             } cout << endl; 
-        
+
+            cout << endl << "airport information for " << id << " printed above ^" << endl;
         }
         else if(input == "exit") {
             program_finished = true; //end the program if exit is typed
@@ -146,6 +148,7 @@ void flights_subprogram(Graph* data) {
         while(data->getNodeMap().count(id1) == 0) {
             if(id1 == "exit") {
                 program_finished = true; //end the program if exit is typed
+                return;
             }
             cout << endl << "this airport code is not in our database, please try entering an airport's IATA code again: " << endl;
             cout << "If you do not know an airport's IATA code, go to the search option in menu to get help by exiting to menu anytime" << endl;
@@ -163,6 +166,7 @@ void flights_subprogram(Graph* data) {
         while(data->getNodeMap().count(id2) == 0 || id2 == id1) {
             if(id2 == "exit") {
                 program_finished = true; //end the program if exit is typed
+                return;
             }
             if (id2 == id1) {
                 cout <<  "you have entered a the same destination airport as your origin airport." << endl;
@@ -189,32 +193,59 @@ void flights_subprogram(Graph* data) {
                 direct_flight_exists = true;
                 //if a direct flight is found
                 cout << "a direct flight has been found to your destination airport " << id2 << endl;
-                cout << "flight distance in km is : " << n->weight << endl; 
+                cout << "The airline is : " << data->getAirlinesMap()[n->airline_code] << endl; 
+                cout << "The flight distance in km is : " << n->weight << endl << endl; 
             }
         }
 
         //if no direct flight exists, run Dijkstra's
         if(!direct_flight_exists) {
             auto path = data->dijkstra_A_find_shortest_path(id1, id2);
-            cout << "starting at the airport " << id1 << ", the shortest connection by distance is: " << endl;
-            for(string x : path) {
-                Node* connected_node = data->getNodeMap()[x];
-                cout << connected_node->id <<"["<< connected_node->name<<"] "<<"("<< connected_node->location_city <<") " << " -> ";
+            
+
+            cout << "Starting at your origin airport, here is the shortest sequence of connecting flights and airline options:" << endl;
+            //add the origin airport to the path
+            path.insert(path.begin(), id1);
+
+            //print out the shortest route and airline options in pairs
+            for(unsigned int i = 0; i < path.size() - 1; i++ ) {
+                cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+                cout << "connection " << i + 1 << " :" << endl;
+                //find the start and end nodes based on current index
+                Node* start = data->getNodeMap()[ path[i] ];
+                Node* end = data->getNodeMap()[ path[i+1] ];
+
+                
+                cout << start->id <<"["<< start->name<<"] "<<"("<< start->location_city <<") " << " -> ";
+                cout << end->id <<"["<< end->name<<"] "<<"("<< end->location_city <<") " << endl;
+                
+                cout << "airlines flying this route: " << endl << endl;
+                vector<Edge*> neighbors = data->getEdgeNeighbors(start->id);
+                Edge * connecting = nullptr;
+                for(Edge* n : neighbors) {
+                    if(n->dest->id == end->id) {
+                        cout << data->getAirlinesMap()[n->airline_code] << ", "; 
+                        connecting = n;
+                    }
+                }
+                cout << "flight distance in km is : " << connecting->weight << endl << endl; 
             }
             cout << endl; 
+            cout << "The least amount of connections possible is: " << path.size() - 1 << endl;
         }
     }
 }
 
 int main()
 {   
-    //scanning in data
-    Graph* data = new Graph();
-    string airport_path ="../data/airports.dat";
-    string flights = "../data/routes.dat";
 
-    ScanGraph sg;
-    sg.scanCSV(data, airport_path, flights);
+    string airlines_path ="../data/airlines.dat.txt";
+    string airports_path ="../data/airports.dat";
+    string flights_path = "../data/routes.dat";
+
+    //scanning in data
+    Graph* data = new Graph(airlines_path, airports_path, flights_path); //making new graph object
+
 
 
     //start of main programs

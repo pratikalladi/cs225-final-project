@@ -8,8 +8,28 @@ void ScanGraph::scanCSV(Graph* g, string airport_ifs, string route_ifs) {
     scanCSV_helper(g, airports, routes);
 }
 
+vector<string> ScanGraph::splitpart(string str_, string delimiter) {
+    vector<string> res;
+    size_t pos_start = 0;
+    size_t pos_end = delimiter.length();
+    string token;
+
+    while ((pos_end = str_.find(delimiter, pos_start)) != string::npos) {
+        if (pos_start > 0 && isalpha(str_.at(pos_start - 2)) && str_.at(pos_start) == ' ') {
+            pos_start = pos_end + delimiter.length();
+            continue;
+        } else {
+            token = str_.substr(pos_start, pos_end - pos_start);
+            pos_start = pos_end + delimiter.length();
+            res.push_back(token);
+        }
+    }
+    res.push_back(str_.substr(pos_start));
+    return res;
+}
+
 //helper to determine if a string is a number
-bool is_number(string s){
+bool ScanGraph::is_number(string s){
     for(unsigned int i = 0; i < s.size(); i++) {
         char c = s.at(i);
         if(!isdigit(c) && c != '-' && c != '.') { 
@@ -64,12 +84,20 @@ void ScanGraph::scanCSV_helper(Graph *g, ifstream &airport_ifs, ifstream &route_
             //vector<string> vec = splitpart(line, ",");
             string start = Trim(vec[2]);
             string end = Trim(vec[4]);
+
             if (g->exists(start) && g->exists(end)){
                 Graph::Node* sourceN = g->getNode(start);
                 Graph::Node* destN = g->getNode(end);
 
-                double route_dist = g->getDistance(sourceN, destN); //modified to calculate distance
-                Graph::Edge *e = new Graph::Edge(sourceN, destN, route_dist);
+
+                int airline_code = -1;
+                //check if this is a number
+                if(is_number(Trim(vec[1]))) {
+                    airline_code = std::stoi(Trim(vec[1]));
+                } 
+
+                double distance_to_add = g->getDistance(sourceN, destN); //modified to calculate distance
+                Graph::Edge *e = new Graph::Edge(sourceN, destN, distance_to_add, airline_code);
                 g->addEdge(e);
             }
         }
