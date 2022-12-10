@@ -119,19 +119,23 @@ bool Graph::exists(string abbr) { //checks if the id is already present
 }
 
 double Graph::getDistance(Node* src, Node* dest){
-    long double source_long_rad = (src->longitude)/(180.0/57.29577951); //j\hard code 180/pi
-    long double source_lat_rad = (src->latitude)/(180.0/57.29577951); 
-    long double dest_long_rad = (dest->longitude)/(180.0 /57.29577951);
-    long double dest_lat_rad = (dest->latitude)/(180.0/57.29577951);
+    long double radian_conversion = M_PI /180.0;
+
+
+    long double source_long_rad = (src->longitude) * radian_conversion; //j\hard code 180/pi
+    long double source_lat_rad = (src->latitude) * radian_conversion; 
+    long double dest_long_rad = (dest->longitude) * radian_conversion;
+    long double dest_lat_rad = (dest->latitude) * radian_conversion;
 
     long double latdiff = dest_lat_rad - source_lat_rad;
     long double longdiff = dest_long_rad - source_long_rad;
     long double adder = pow(sin(latdiff / 2.0), 2) + cos(source_lat_rad) * cos(dest_lat_rad) * pow(sin(longdiff / 2.0), 2);
     
     long double halfway = 2 * asin(sqrt(adder)); 
-    long double dist_out = abs(6371.0 * halfway); //to make km instead of miles
+    long double dist_out = abs(6371.0 * halfway); //to make km instead of miles 
 
     //take absolute value to be safe - no need, we square the number.
+
     return dist_out;
 }
 
