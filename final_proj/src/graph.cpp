@@ -172,7 +172,7 @@ std::vector<std::string> Graph::BFS(string src) {
     return result;
 }
 
-//no need for below code, keeping around as refernce until not needed
+//no need for below code, keeping around as reference until not needed
 
 /* 
 double Graph :: Wout(int m,int o){
@@ -201,12 +201,27 @@ double Graph :: PageRankofNode(string node){
     double weight = 0;
     double pageRankScore = 0.85; //dampening factor
     double numConnections = connections.size();
+    double incoming = 0;
+    double outgoing = 0;
     for (Edge* e : connections) {
+        if (e->dest->id == node) {
+            incoming++;
+        } else {
+            outgoing++;
+        }
         weight += e->weight;
     }
-    double pageRankDiv = 0.85 * (weight/(numConnections/2));
+    double pageRankDiv = 0.85 * (weight * (incoming/outgoing));
     pageRankScore += pageRankDiv;
     return pageRankScore;
+}
+
+unordered_map<std::string, double> Graph::PageRank(string input) {
+    unordered_map<std::string, double> output;
+    std::vector<string> allAirports = BFS(input);
+    for (string node : allAirports) {
+        double pscore = PageRankofNode(node);
+    }
 }
 
 Graph::Node* Graph::getNode(string abbr){
