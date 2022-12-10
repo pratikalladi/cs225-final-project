@@ -243,8 +243,8 @@ TEST_CASE("test case 5: BFS algorithm on a medium complexity graph") {
     auto results = test->BFS("8");
 
     cout << "printing BFS result: " << endl;
-    for (string s: results) {
-        cout << s << ", ";
+    for (auto p: results) {
+        cout << "id: " << p.first << "hops: " << p.second << ", ";
     }
     cout << endl;
 
