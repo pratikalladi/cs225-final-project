@@ -190,18 +190,19 @@ double Graph::getDistance(Node* src, Node* dest){
 }
 
 
-std::vector<std::string> Graph::BFS(string src) {
+std::vector<std::pair<std::string, int>> Graph::BFS(std::string src) {
     Node* source = nodeMap[src];
-    
-    std::vector<std::string> result;
+    std::vector<std::pair<std::string, int>> result;
     std::vector<bool> visited(14111, false);
     std::queue<Graph::Node*> bfs;
     bfs.push(source);
     Graph::Node* current = source;
     visited.at(current->index) = true;
+    int hops = 0;
     while (!bfs.empty()) {
         current = bfs.front();
-        result.push_back(current->id);
+        std::pair<std::string, int> temp(current->id, hops);
+        result.push_back(temp);
         for (auto iter : getNodeNeighbors(current->id)) {
             if (visited.at(iter->index) == false) {
                 bfs.push(iter);
@@ -209,9 +210,11 @@ std::vector<std::string> Graph::BFS(string src) {
             }
         }
         bfs.pop();
+        hops++;
     }
     return result;
 }
+
 
 //no need for below code, keeping around as reference until not needed
 
