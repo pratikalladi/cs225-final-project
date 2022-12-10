@@ -215,21 +215,18 @@ double Graph :: Wout(int m,int o){
 } */
 
 //adapt code
-/* double Graph :: PageRankofNode(int o,vector<double> &p){
-    double a = 0;
-    for(int i=0;i<adjSize;i++){
-        if(adjMatrix[i][o] != INT_MAX){
-            int k = 0;
-            for(int s=0;s<adjSize;s++){
-                if(adjMatrix[i][s] != INT_MAX){
-                    k++;
-                }
-            }
-            a += ((double)p[i]/k) * Win(i,o) * Wout(i,o);
-        }
+double Graph :: PageRankofNode(string node){
+    std::vector<Edge*> connections = getEdgeNeighbors(node);
+    double weight = 0;
+    double pageRankScore = 0.85; //dampening factor
+    double numConnections = connections.size();
+    for (Edge* e : connections) {
+        weight += e->weight;
     }
-    return a;
-} */
+    double pageRankDiv = 0.85 * (weight/(numConnections/2));
+    pageRankScore += pageRankDiv;
+    return pageRankScore;
+}
 
 Graph::Node* Graph::getNode(string abbr){
     return nodeMap[abbr];

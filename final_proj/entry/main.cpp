@@ -1,6 +1,6 @@
 /**
  * @file main.cpp
- * Contains code to test your recursion, stack, and queue problems.
+ * Contains code to run main
  */
 
 #include <unistd.h>
@@ -69,10 +69,10 @@ void airports_subprogram(Graph* data) {
 
         if(input == "code") {
             string id;
-            cout << "enter an airport's IATA code, (this should be a three letter code such as BOS: " <<endl;
+            cout << "enter an airport's IATA code, this should be a three letter code such as BOS (if the airport does not have an IATA code, please enter its 4 digit ICAO code): " <<endl;
             cin >> id;
             while(data->getNodeMap().count(id) == 0) {
-                cout << "this airport code is not in our database, please try entering an airport's IATA code again: " <<endl;
+                cout << "this airport code is not in our database, please try entering an airport's IATA/ICAO code again: " <<endl;
                 cin >> id;
             }
             //get other information

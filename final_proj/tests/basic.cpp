@@ -340,7 +340,7 @@ TEST_CASE("test case 8: loading on the whole dataset, connecting flights ") {
     } cout << endl;
     
     cout << "testing shortest distance between CMI and SFO: "<< g->dijkstra_A_find_shortest_distance("CMI", "SFO") << endl; //what unit would this be in
-    cout << "printing the shortest path taken in terms of connection by distance between LAX and JFK: ";
+    cout << "printing the shortest path taken in terms of connection by distance between CMI and SFO: ";
     auto path = g->dijkstra_A_find_shortest_path("CMI", "SFO");
     REQUIRE(g->dijkstra_A_find_shortest_path("CMI", "SFO") == vector<string>{"ORD","SFO"}); //this is the shortest path taken
     cout << "starting at CMI, ";

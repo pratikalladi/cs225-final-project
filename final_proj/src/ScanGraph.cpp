@@ -8,26 +8,6 @@ void ScanGraph::scanCSV(Graph* g, string airport_ifs, string route_ifs) {
     scanCSV_helper(g, airports, routes);
 }
 
-vector<string> ScanGraph::splitpart(string str_, string delimiter) {
-    vector<string> res;
-    size_t pos_start = 0;
-    size_t pos_end = delimiter.length();
-    string token;
-
-    while ((pos_end = str_.find(delimiter, pos_start)) != string::npos) {
-        if (pos_start > 0 && isalpha(str_.at(pos_start - 2)) && str_.at(pos_start) == ' ') {
-            pos_start = pos_end + delimiter.length();
-            continue;
-        } else {
-            token = str_.substr(pos_start, pos_end - pos_start);
-            pos_start = pos_end + delimiter.length();
-            res.push_back(token);
-        }
-    }
-    res.push_back(str_.substr(pos_start));
-    return res;
-}
-
 //helper to determine if a string is a number
 bool is_number(string s){
     for(unsigned int i = 0; i < s.size(); i++) {
@@ -42,22 +22,22 @@ bool is_number(string s){
 
 
 void ScanGraph::scanCSV_helper(Graph *g, ifstream &airport_ifs, ifstream &route_ifs) {
-    string line, tmp;
+    std::string line;
     int index = 0;
     if (airport_ifs.is_open()) {
         while (getline(airport_ifs, line)) {
-            //vector<string> vec;
-            //SplitString(line, ',', vec);
-            vector<string> vec = splitpart(line, ",");
+            vector<string> vec;
+            SplitString(line, ',', vec);
+            //vector<string> vec = splitpart(line, ",");
             string airportName = Trim(vec[1]);
             airportName = airportName.substr(1,airportName.size()-2);
-            string airportAbbr;
+            string airportCode;
             if (vec[4] == "\\N") {
-                airportAbbr = vec[5];
+                airportCode = vec[5];
             } else {
-                airportAbbr = vec[4];
+                airportCode = vec[4];
             }
-            airportAbbr = airportAbbr.substr(1, airportAbbr.size() - 2); //remove parentheses
+            airportCode = airportCode.substr(1, airportCode.size() - 2); //remove parentheses
 
             //check if string is number before assigning
             if(is_number(vec[6]) && is_number(vec[7])) {
@@ -68,32 +48,35 @@ void ScanGraph::scanCSV_helper(Graph *g, ifstream &airport_ifs, ifstream &route_
                 string city_location = vec[2].substr(1, vec[2].size() - 2);
                 string country_location = vec[3].substr(1, vec[3].size() - 2);
                 
-                Graph::Node *n = new Graph::Node(airportAbbr, airportName, index, latitude, longitude, city_location, country_location);
-                index += 1;
+                Graph::Node *n = new Graph::Node(airportCode, airportName, index, latitude, longitude, city_location, country_location);
+                index++;
                 g->addNode(n);
             } else {
                 cout << "invalid number values: " << vec[6] << "," << vec[7] << endl;
             }
         }
     }
+
     if (route_ifs.is_open()) {
         while(getline(route_ifs, line)) {
-            //vector<string> vec;
-            //SplitString(line, ',', vec);
-            vector<string> vec = splitpart(line, ",");
+            vector<string> vec;
+            SplitString(line, ',', vec);
+            //vector<string> vec = splitpart(line, ",");
             string start = Trim(vec[2]);
             string end = Trim(vec[4]);
             if (g->exists(start) && g->exists(end)){
-                Graph::Node* srcNode = g->getNode(start);
-                Graph::Node* destNode = g->getNode(end);
+                Graph::Node* sourceN = g->getNode(start);
+                Graph::Node* destN = g->getNode(end);
 
-                double distance_to_add = g->getDistance(srcNode, destNode); //modified to calculate distance
-                Graph::Edge *e = new Graph::Edge(srcNode, destNode, distance_to_add);
+                double route_dist = g->getDistance(sourceN, destN); //modified to calculate distance
+                Graph::Edge *e = new Graph::Edge(sourceN, destN, route_dist);
                 g->addEdge(e);
             }
         }
     }
 }
+
+//from mp_schedule
 
 std::string ScanGraph::TrimRight(const std::string & str) {
     std::string tmp = str;
