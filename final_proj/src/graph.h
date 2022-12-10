@@ -71,7 +71,6 @@ class Graph {
 
         unordered_map<string, vector<Node*>> cityToNodes; //map from a city location to nodes that represent airport(s) in a city
         unordered_map<int, string> airlinesMap; //map from a the number airline ids given in routes.dat to the actual airline name. This is basically a database of airlines.
-        bool prcompare(pair<string, double> &p1, pair<string, double> &p2);
         
 
 
@@ -105,7 +104,7 @@ class Graph {
         
         //algorithms
         double PageRankofNode(string node);
-        std::vector<std::pair<std::string, int>> Graph::BFS(std::string src);
+        std::vector<std::pair<std::string, int>> BFS(std::string src);
         vector<pair<string, double>> PageRank();
 
         vector<string> dijkstra_A_find_shortest_path(string start, string end); //returns the vector of the shortest path between any two given nodes in terms of the node id and distance. only works for graphs with weighted edges with doubles. Implementation of Dijkstra and A* algorithm. The size of the vector returned equals the number of edges traveled. The vector always includes the end node if it is not equal to the start.
@@ -122,3 +121,4 @@ class Graph {
 };
 typedef Graph::Edge Edge;
 typedef Graph::Node Node;
+bool prcompare(const pair<string, double> &p1, const pair<string, double> &p2);

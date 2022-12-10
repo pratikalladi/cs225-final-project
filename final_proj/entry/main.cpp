@@ -238,6 +238,9 @@ void flights_subprogram(Graph* data) {
 
 void data_subprogram(Graph* data) {
     vector<pair<string, double>> pr = data->PageRank();
+    for (auto p : pr) {
+        std::cout << p.first << " -> " << p.second <<std::endl;
+    }
 }
 
 int main()
@@ -271,7 +274,7 @@ int main()
         else if(input == "flights") {
             flights_subprogram(data);
         } 
-        else if(input == "data") {
+        else if(input == "stats") {
             //will display interesting statistics using pagerank and BFS algorithms
             data_subprogram(data);
         }

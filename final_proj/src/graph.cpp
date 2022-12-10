@@ -274,7 +274,7 @@ vector<pair<string, double>> Graph::PageRank() {
     return output;
 }
 
-bool Graph::prcompare(pair<string, double> &p1, pair<string, double> &p2) {
+bool prcompare(const pair<string, double> &p1, const pair<string, double> &p2) {
     if (p1.second < p2.second) {
         return true;
     } else {
