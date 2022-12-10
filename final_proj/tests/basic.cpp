@@ -295,16 +295,49 @@ TEST_CASE("test case 7: loading on the whole dataset ") {
     cout <<"graph has: " << g.getNodeCount() << " nodes" << endl;
     cout <<"graph has: " << g.getEdgeCount() << " edges" << endl;
 
-    cout << "testing getting neighbors of LAX: " << endl;
+/*     cout << "testing getting neighbors of LAX: " << endl;
     auto n1 = g.getEdgeNeighbors("LAX");
     for(Edge* x : n1) {
         cout << x->dest->id <<"("<< x->weight<<") ";
-    } cout << endl;
+    } cout << endl; */
     
     cout << "testing shortest distance between LAX and JFK: "<< g.dijkstra_A_find_shortest_distance("LAX", "JFK") << endl; //what unit would this be in
     cout << "printing the shortest path taken in terms of connection by distance between LAX and JFK: ";
     auto path = g.dijkstra_A_find_shortest_path("LAX", "JFK");
     cout << "starting at LAX, ";
+    for(string x : path) {
+        cout << "->" << x; 
+    }
+    cout << endl; 
+
+}
+
+
+
+TEST_CASE("test case 8: loading on the whole dataset, connecting flights ") {
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 8: loading on the whole dataset " << endl;
+
+    Graph g;
+    string airport_path ="../data/airports.dat";
+    string flights = "../data/routes.dat";
+
+    ScanGraph sg;
+    sg.scanCSV(g, airport_path, flights);
+
+    cout <<"graph has: " << g.getNodeCount() << " nodes" << endl;
+    cout <<"graph has: " << g.getEdgeCount() << " edges" << endl;
+
+    cout << "testing getting neighbors of CMI: " << endl;
+    auto n1 = g.getEdgeNeighbors("CMI");
+    for(Edge* x : n1) {
+        cout << x->dest->id <<"("<< x->weight<<") ";
+    } cout << endl;
+    
+    cout << "testing shortest distance between CMI and SFO: "<< g.dijkstra_A_find_shortest_distance("CMI", "SFO") << endl; //what unit would this be in
+    cout << "printing the shortest path taken in terms of connection by distance between LAX and JFK: ";
+    auto path = g.dijkstra_A_find_shortest_path("CMI", "SFO");
+    cout << "starting at CMI, ";
     for(string x : path) {
         cout << "->" << x; 
     }
