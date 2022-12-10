@@ -8,6 +8,7 @@ void ScanGraph::scanCSV(Graph* g, string airport_ifs, string route_ifs) {
     scanCSV_helper(g, airports, routes);
 }
 
+
 vector<string> ScanGraph::splitpart(string str_, string delimiter) {
     vector<string> res;
     size_t pos_start = 0;
@@ -29,7 +30,7 @@ vector<string> ScanGraph::splitpart(string str_, string delimiter) {
 }
 
 //helper to determine if a string is a number
-bool is_number(string s){
+bool ScanGraph::is_number(string s){
     for(unsigned int i = 0; i < s.size(); i++) {
         char c = s.at(i);
         if(!isdigit(c) && c != '-' && c != '.') { 
@@ -83,12 +84,20 @@ void ScanGraph::scanCSV_helper(Graph *g, ifstream &airport_ifs, ifstream &route_
             vector<string> vec = splitpart(line, ",");
             string start = Trim(vec[2]);
             string end = Trim(vec[4]);
+
             if (g->exists(start) && g->exists(end)){
                 Graph::Node* srcNode = g->getNode(start);
                 Graph::Node* destNode = g->getNode(end);
 
+
+                int airline_code = -1;
+                //check if this is a number
+                if(is_number(Trim(vec[1]))) {
+                    airline_code = std::stoi(Trim(vec[1]));
+                } 
+
                 double distance_to_add = g->getDistance(srcNode, destNode); //modified to calculate distance
-                Graph::Edge *e = new Graph::Edge(srcNode, destNode, distance_to_add);
+                Graph::Edge *e = new Graph::Edge(srcNode, destNode, distance_to_add, airline_code);
                 g->addEdge(e);
             }
         }

@@ -2,8 +2,49 @@
 
 #include <cmath>
 #include "graph.h"
+#include "ScanGraph.h"
+#include <fstream>
 #include<bits/stdc++.h>
 using namespace std;
+
+Graph::Graph(string airlines_path, string airports_path, string routes_path) { //constructor to build a graph from openflights airline paths and initialize the airlines database
+ 
+    //scan in the airline database
+    ifstream airlines{airlines_path};
+
+    unordered_map<int, string> local;
+    string line, tmp;
+    if (airlines.is_open()) {
+        while (getline(airlines, line)) {
+            vector<string> vec;
+            size_t pos_start = 0;
+            size_t pos_end = 1;
+            string token;
+
+            while ((pos_end = line.find(",", pos_start)) != string::npos) {
+                if (pos_start > 0 && isalpha(line.at(pos_start - 2)) && line.at(pos_start) == ' ') {
+                    pos_start = pos_end + 1;
+                    continue;
+                } else {
+                    token = line.substr(pos_start, pos_end - pos_start);
+                    pos_start = pos_end + 1;
+                    vec.push_back(token);
+                }
+            }
+            vec.push_back(line.substr(pos_start));
+
+            string airline_name = vec[1]; //airline nam    
+            airline_name = airline_name.substr(1, airline_name.size() - 2); //remove parentheses
+
+            //check if string is number before assigning
+            int code = std::stoi(vec[0]);
+            airlinesMap.insert({code, airline_name});
+        }
+    }
+
+    ScanGraph sg; //scan in the routes and rest
+    sg.scanCSV(this, airports_path, routes_path); 
+} 
 
 
 Graph::~Graph() {
