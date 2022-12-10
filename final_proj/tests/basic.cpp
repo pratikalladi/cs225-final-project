@@ -15,11 +15,21 @@ using namespace std::chrono;
 using namespace std;
 
 TEST_CASE("test case 1: test distance function"){
+    Graph* test = new Graph();
     Node* start = new Node("start");
     Node* dest = new Node("end");
-    start->latitude = 0;
-    start->longitude = 0;
-    REQUIRE(9 == 9);
+    start->latitude = 36.12;
+    start->longitude = -86.67;
+    dest->latitude = 33.94;
+    dest->longitude = -118.40;
+    test->addNode(start);
+    test->addNode(dest);
+
+    double d = test->getDistance(start, dest);
+    std::cout << d << std::endl;
+    std::cout << "\n" << std::endl;
+    bool out;
+    REQUIRE(abs((d - 2886)) < 1);
 }
 
 
