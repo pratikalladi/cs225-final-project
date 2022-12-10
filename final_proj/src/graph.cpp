@@ -145,8 +145,8 @@ std::vector<std::string> Graph::BFS(Graph::Node* source) {
     visited.at(current->index) = true;
     while (!bfs.empty()) {
         current = bfs.front();
-        result.push_back(current->name);
-        for (auto iter : getNodeNeighbors(current->name)) {
+        result.push_back(current->id);
+        for (auto iter : getNodeNeighbors(current->id)) {
             if (visited.at(iter->index) == false) {
                 bfs.push(iter);
                 visited.at(iter->index) = true;
