@@ -15,12 +15,9 @@ class ScanGraph {
 
     private:
            
-        vector<string> splitpart(string str_, string delimiter);
-
         void scanCSV_helper(Graph *g, ifstream &airport_ifs, ifstream &route_ifs);
 
         bool is_number(string s);
-
 
         std::string TrimRight(const std::string & str);
         std::string TrimLeft(const std::string & str);

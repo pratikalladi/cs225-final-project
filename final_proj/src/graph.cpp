@@ -257,12 +257,13 @@ double Graph :: PageRankofNode(string node){
     return pageRankScore;
 }
 
-unordered_map<std::string, double> Graph::PageRank(string input) {
-    unordered_map<std::string, double> output;
+vector<pair<string, double>> Graph::PageRank(string input) {
+    vector<pair<string, double>> output;
     std::vector<string> allAirports = BFS(input);
     for (string node : allAirports) {
         double pscore = PageRankofNode(node);
     }
+    return output;
 }
 
 Graph::Node* Graph::getNode(string abbr){
