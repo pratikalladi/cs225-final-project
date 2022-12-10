@@ -172,28 +172,9 @@ std::vector<std::string> Graph::BFS(string src) {
     return result;
 }
 
-//adapt code
-/* double Graph :: Win(int m,int o){
-    int k = 0;
-    for(int i=0;i<adjSize;i++){
-        if(adjMatrix[i][m] != INT_MAX){
-            k++;
-        }
-    }
-    int l = 0;
-    for(int i=0;i<adjSize;i++){
-        if(adjMatrix[o][i] != INT_MAX){
-            for(int j=0;j<adjSize;j++){
-                if(adjMatrix[j][i] != INT_MAX){
-                    l++;
-                }
-            }
-        }
-    }
-    return (double)k/(double)l;
-}
+//no need for below code, keeping around as refernce until not needed
 
-
+/* 
 double Graph :: Wout(int m,int o){
     int k = 0;
     for(int i=0;i<adjSize;i++){
