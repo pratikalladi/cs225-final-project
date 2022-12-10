@@ -237,7 +237,7 @@ void flights_subprogram(Graph* data) {
 }
 
 void data_subprogram(Graph* data) {
-    
+    vector<pair<string, double>> pr = data->PageRank();
 }
 
 int main()
