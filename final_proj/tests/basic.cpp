@@ -15,6 +15,10 @@ using namespace std::chrono;
 using namespace std;
 
 TEST_CASE("test case 1: test distance function"){
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 1: test distance function" << endl;
+
+
     Graph* test = new Graph();
     Node* start = new Node("start");
     Node* dest = new Node("end");
@@ -33,7 +37,10 @@ TEST_CASE("test case 1: test distance function"){
 }
 
 
-TEST_CASE("test case 1: dijkstra's algorithm on a basic graph") {
+TEST_CASE("test case 2: dijkstra's algorithm on a basic graph") {
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 2: dijkstra's algorithm on a basic graph" << endl;
+
     const V2D_strings adjacency_list = {
         {"1", "6", "3", "2"},
         {"2", "1", "3", "4"}, 
@@ -73,7 +80,10 @@ TEST_CASE("test case 1: dijkstra's algorithm on a basic graph") {
     delete test;
 }
 
-TEST_CASE("test case 2: dijkstra's algorithm on a medium complexity graph") {
+TEST_CASE("test case 3: dijkstra's algorithm on a medium complexity graph") {
+     cout << "____________________________________________________________" << endl;
+    cout << "test case 3: dijkstra's algorithm on a medium complexity graph" << endl;
+
     const V2D_strings adjacency_list = {
         {"0", "1", "7"},
         {"1", "0", "2", "7"},
@@ -148,7 +158,11 @@ TEST_CASE("test case 2: dijkstra's algorithm on a medium complexity graph") {
     delete test;
 }
 
-TEST_CASE("test case 3: dijkstra's algorithm on a doubly cyclic graph") {
+TEST_CASE("test case 4: dijkstra's algorithm on a doubly cyclic graph") {
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 4: dijkstra's algorithm on a doubly cyclic graph" << endl;
+
+
     const V2D_strings adjacency_list = {
         {"0", "1", "2"},
         {"1", "0", "3"},
@@ -191,8 +205,54 @@ TEST_CASE("test case 3: dijkstra's algorithm on a doubly cyclic graph") {
     delete test;
 }
 
+TEST_CASE("test case 5: BFS algorithm on a medium complexity graph") {
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 5: BFS algorithm on a medium complexity graph" << endl;
 
-TEST_CASE("test 1: loading on a subset of dataset ") {
+    const V2D_strings adjacency_list = {
+        {"0", "1", "7"},
+        {"1", "0", "2", "7"},
+        {"2", "1", "8", "5", "3"}, 
+        {"3", "2", "5", "4"}, 
+        {"4", "3", "5"}, ///////////////////
+        {"5", "3", "4", "2", "6"}, 
+        {"6", "5", "7", "8"}, 
+        {"7", "0", "1", "8", "6"}, 
+        {"8", "2", "7", "6"} 
+    };
+
+    const V2D_numbers num_weights = {
+        {0.0, 4.0, 8.0},
+        {1.0, 4.0, 8.0, 11.0},
+        {2.0, 8.0, 2.0, 4.0, 7.0}, 
+        {3.0, 7.0, 4.0, 9.0}, 
+        {4.0, 9.0, 10.0}, 
+        {5.0, 14.0, 10.0, 4.0, 2.0}, 
+        {6.0, 2.0 , 1.0, 6.0},
+        {7.0, 8.0, 11.0, 7.0, 1.0},
+        {8.0, 2.0, 7.0, 6.0}
+    };
+    Graph* test = new Graph();
+    test->construct_basic_graph(adjacency_list, num_weights);
+    //cout <<"printing out graph adjacency list: " << endl;
+    //test->print_graph();
+
+    Node* source = test->getNodeMap()["8"];
+    auto results = test->BFS(source);
+
+    cout << "printing BFS result: " << endl;
+    for (string s: results) {
+        cout << s << ", ";
+    }
+    cout << endl;
+
+    delete test;
+}
+
+TEST_CASE("test case 6: loading on a subset of dataset ") {
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 6: loading on a subset of dataset " << endl;
+
     Graph g;
     string airport_path ="../data/airports_test.dat";
     string flights = "../data/routes_test.dat";
@@ -222,7 +282,10 @@ TEST_CASE("test 1: loading on a subset of dataset ") {
 
 
 
-TEST_CASE("test 2: loading on the whole dataset ") {
+TEST_CASE("test case 7: loading on the whole dataset ") {
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 7: loading on the whole dataset " << endl;
+
     Graph g;
     string airport_path ="../data/airports.dat";
     string flights = "../data/routes.dat";
@@ -246,7 +309,7 @@ TEST_CASE("test 2: loading on the whole dataset ") {
     for(string x : path) {
         cout << "->" << x; 
     }
-    cout << endl;
+    cout << endl; 
 
 }
   
