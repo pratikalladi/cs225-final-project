@@ -249,7 +249,7 @@ void flights_subprogram(Graph* data) {
 
 void data_subprogram(Graph* data) {
 
-    vector<string> options = {"city", "most important", "exit", };
+    vector<string> options = {"city", "important", "exit", };
     vector<pair<string, double>> pr = data->PageRank();
     
 
@@ -265,7 +265,7 @@ void data_subprogram(Graph* data) {
         getline(cin, input); //update input
         validate_option(options, input); //exit sequence after input is validated
 
-        if(input == "code") {
+        if(input == "city") {
             string id;
             cout << "enter an airport's IATA code, this should be a three letter code such as BOS (if the airport does not have an IATA code, please enter its 4 digit ICAO code): " <<endl;
             cin >> id;
@@ -289,14 +289,10 @@ void data_subprogram(Graph* data) {
         cout << "This ranks it " << count << " out of " << pr.size() << " total airports." << endl;
         }
 
-        else if(input =="city") {
+        else if(input =="important") {
             string city;
-            cout << "Enter an airport's city location fully, (for example, JFK is in New York)" << endl;
-            getline(cin, city);
-            while(data->getCityToNodes().count(city) == 0) {
-                cout << "Spelling is incorrect or this city is not in our database, please try entering an airport's city again, using proper capitalization: " <<endl;
-                getline(cin, city);
-            }
+            cout << "Listed below are the 50 most important airports in our dataset using our PageRank Algorithm: " << endl;
+             cout << "\n" << endl;
 
             for (unsigned i = 0; i < 51; i++) {
                 std::cout << pr[i].first << " -> " << pr[i].second <<std::endl;
