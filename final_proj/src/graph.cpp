@@ -15,25 +15,19 @@ Graph::Graph(string airlines_path, string airports_path, string routes_path) { /
     string line, tmp;
     if (airlines.is_open()) {
         while (getline(airlines, line)) {
+            
+            //from mp schedule SplitString()
             vector<string> vec;
-            size_t pos_start = 0;
-            size_t pos_end = 1;
-            string token;
-
-            while ((pos_end = line.find(",", pos_start)) != string::npos) {
-                if (pos_start > 0 && isalpha(line.at(pos_start - 2)) && line.at(pos_start) == ' ') {
-                    pos_start = pos_end + 1;
-                    continue;
-                } else {
-                    token = line.substr(pos_start, pos_end - pos_start);
-                    pos_start = pos_end + 1;
-                    vec.push_back(token);
-                }
+            char sep = ',';
+            std::string::size_type pos;
+            while((pos=line.find(sep)) != std::string::npos) {
+                vec.push_back(line.substr(0,pos));
+                line.erase(0,pos+1);  
             }
-            vec.push_back(line.substr(pos_start));
+            vec.push_back(line);
 
-            string airline_name = vec[1]; //airline nam    
-            airline_name = airline_name.substr(1, airline_name.size() - 2); //remove parentheses
+            string airline_name = vec[1]; //airline name  
+            airline_name = airline_name.substr(1, airline_name.size() - 2); //remove parentheses and quotation marks
 
             //check if string is number before assigning
             int code = std::stoi(vec[0]);

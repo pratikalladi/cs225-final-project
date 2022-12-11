@@ -368,7 +368,7 @@ void flights_subprogram(Graph* data) {
 }
 
 void data_subprogram(Graph* data) {
-    cout << "loading data: " << endl;
+    cout << "Loading data, please be patient (this may take up to 60 seconds): " << endl;
     //loading in needed data
     vector<pair<unsigned int, string>> num_international_destinations; //stores the information as int to a string value id
     vector<pair<unsigned int, string>> num_total_destinations; //stores the information as int to a string value id
@@ -572,9 +572,9 @@ int main()
     bool program_finished = false; //sets if the program is finished or not
     while(!program_finished) {
         string input;
-        cout << "_______+++++++++++<^>++++++++++++________________________________________________________________________________________________________________________________" << endl;
-        cout << "       Welcome to FastPairFinders" << endl;
-        cout << "_______+++++++++++<*>++++++++++++________________________________________________________________________________________________________________________________" << endl;
+        cout << "_______++++++++++++++++++++<^>++++++++++++++++++++++_____________________________________________________________________________________________________________" << endl;
+        cout << "       Welcome to FastPairFinders Aviation Explorer" << endl;
+        cout << "_______++++++++++++++++++++<*>++++++++++++++++++++++_____________________________________________________________________________________________________________" << endl;
         cout << "options:" << endl;
         cout << "type a listed option to begin:\n" << endl;
         print_options(main_options);
