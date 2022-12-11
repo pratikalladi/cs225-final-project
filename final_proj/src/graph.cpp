@@ -284,8 +284,8 @@ double Graph :: Wout(int m,int o){
 double Graph :: PageRankofNode(string node){
     std::vector<Edge*> connections = getEdgeNeighbors(node);
     double weight = 0;
-    double outgoing = connections.size();
-    double incoming = 0;
+    double outgoing = connections.size() + 1;
+    double incoming = 1;
     for (Edge* e : connections) {
         double temp = e->weight;
         temp = temp/13000 * 100;
@@ -303,10 +303,6 @@ double Graph :: PageRankofNode(string node){
                 weight += temp;
             }
     }
-    }
-
-    if (outgoing == 0) {
-        outgoing++;
     }
 
     double pageRankDiv = (weight * (incoming/outgoing));
