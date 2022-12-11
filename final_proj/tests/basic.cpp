@@ -386,11 +386,12 @@ TEST_CASE("test case 2: check pagerank importance algorithm") {
 
     vector<pair<string, double>> pr = g->PageRank();
 
+    REQUIRE(pr.size() == 3);
+
     cout << "These are the importance of the airports in the pagerank test database" << endl;
     for (auto a : pr) {
         cout << a.first << " -> " << a.second << endl;
     }
-
-    //REQUIRE(pr[0].first == "MAG");
+    REQUIRE(pr[0].first == "MAG");
 }
   
