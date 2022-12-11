@@ -67,10 +67,10 @@ void airports_subprogram(Graph* data) {
 
         if(input == "code") {
             string id;
-            cout << "enter an airport's IATA code, this should be a three letter code such as BOS (if the airport does not have an IATA code, please enter its 4 digit ICAO code): " <<endl;
+            cout << "Enter an airport's IATA code, this should be a three letter code such as BOS (if the airport does not have an IATA code, please enter its 4 digit ICAO code): " <<endl;
             cin >> id;
             while(data->getNodeMap().count(id) == 0) {
-                cout << "this airport code is not in our database, please try entering an airport's IATA/ICAO code again: " <<endl;
+                cout << "This airport code is not in our database, please try entering an airport's IATA/ICAO code again: " <<endl;
                 cin >> id;
             }
             //get other information
@@ -112,7 +112,7 @@ void airports_subprogram(Graph* data) {
             cout << "enter one of the airport's IATA code, (this is the three letter code in brackets) " << endl;
             cin >> id;
             while(data->getNodeMap().count(id) == 0) {
-                cout << "this airport code is not in our database, please try entering an airport's IATA code again: " << endl;
+                cout << "This airport code is not in our database, please try entering an airport's IATA/ICAO code again: " << endl;
                 cin >> id;
             }
             //get other information
@@ -161,7 +161,7 @@ void flights_subprogram(Graph* data) {
                 program_finished = true; //end the program if exit is typed
                 return;
             }
-            cout << endl << "this airport code is not in our database, please try entering an airport's IATA code again: " << endl;
+            cout << endl << "This airport code is not in our database, please try entering an airport's IATA/ICAO code again: " << endl;
             cout << "If you do not know an airport's IATA code, go to the search option in menu to get help by exiting to menu anytime" << endl;
             cin >> id1;
         }
@@ -184,7 +184,7 @@ void flights_subprogram(Graph* data) {
                 cout <<  "please enter another airport such as SFO" << endl;
                 cin >> id2;
             } else {
-                cout << endl << "this airport code is not in our database, please try entering an airport's IATA code again: " << endl;
+                cout << endl << "This airport code is not in our database, please try entering an airport's IATA/ICAO code again: " << endl;
                 cout << "If you do not know an airport's IATA code, go to the search option in menu to get help by exiting to menu anytime" << endl;
                 cin >> id2;
             }
@@ -249,15 +249,69 @@ void flights_subprogram(Graph* data) {
 
 void data_subprogram(Graph* data) {
 
-    std::cout << "JFK -> " << data->PageRankofNode("JFK") << std::endl;
+    vector<string> options = {"city", "most important", "exit", };
+    vector<pair<string, double>> pr = data->PageRank();
+    
+
+    bool program_finished = false; //sets if the program is finished or not
+    while(!program_finished) {
+        cout <<"_______________________________________________________________________________________________________________________________________________________" << endl;
+        cout << "Find the importance rank of different airports: " << endl;
+        cout << "Type a listed option to begin:\n" << endl;
+        print_options(options); 
+        cout << "\nHere, it is possible to search by either IATA code, view the 50 most important airports by PageRank, or exit to menu" << endl;
+
+        string input;
+        getline(cin, input); //update input
+        validate_option(options, input); //exit sequence after input is validated
+
+        if(input == "code") {
+            string id;
+            cout << "enter an airport's IATA code, this should be a three letter code such as BOS (if the airport does not have an IATA code, please enter its 4 digit ICAO code): " <<endl;
+            cin >> id;
+            while(data->getNodeMap().count(id) == 0) {
+                cout << "This airport code is not in our database, please try entering an airport's IATA/ICAO code again: " <<endl;
+                cin >> id;
+            }
+            double pr_selection = data->PageRankofNode(id);
+            int count = 0;
+             pair<string, double> finder;
+            for (unsigned i = 0; i < pr.size(); i++) {
+                if (pr[i].first == id) {
+                    count = i + 1;
+                    finder = pr[i];
+                    i = pr.size();
+                }
+            }
+
+        cout << "Your selected airport, " << id << " , has a PageRank score of: " << finder.second << endl;
+        cout << "\n" << endl;
+        cout << "This ranks it " << count << " out of " << pr.size() << " total airports." << endl;
+        }
+
+        else if(input =="city") {
+            string city;
+            cout << "Enter an airport's city location fully, (for example, JFK is in New York)" << endl;
+            getline(cin, city);
+            while(data->getCityToNodes().count(city) == 0) {
+                cout << "Spelling is incorrect or this city is not in our database, please try entering an airport's city again, using proper capitalization: " <<endl;
+                getline(cin, city);
+            }
+
+            for (unsigned i = 0; i < 51; i++) {
+                std::cout << pr[i].first << " -> " << pr[i].second <<std::endl;
+            }
+
+        }
+        else if(input == "exit") {
+            program_finished = true; //end the program if exit is typed
+        }
+    }
+
+    /* std::cout << "JFK -> " << data->PageRankofNode("JFK") << std::endl;
     std::cout << "LAX -> " << data->PageRankofNode("LAX") << std::endl;
     std::cout << "CMI -> " << data->PageRankofNode("CMI") << std::endl;
-    std::cout << "BOS -> " << data->PageRankofNode("BOS") << std::endl;
-
-    vector<pair<string, double>> pr = data->PageRank();
-    for (unsigned i = 0; i < 51; i++) {
-        std::cout << pr[i].first << " -> " << pr[i].second <<std::endl;
-    }
+    std::cout << "BOS -> " << data->PageRankofNode("BOS") << std::endl; */
 }
 
 int main()
