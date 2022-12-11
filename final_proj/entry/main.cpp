@@ -246,7 +246,7 @@ void flights_subprogram(Graph* data) {
 
 void data_subprogram(Graph* data) {
 
-    vector<string> options = {"city", "important", "exit", };
+    vector<string> options = {"code", "important", "exit", };
     vector<pair<string, double>> pr = data->PageRank();
     
 
@@ -262,7 +262,7 @@ void data_subprogram(Graph* data) {
         getline(cin, input); //update input
         validate_option(options, input); //exit sequence after input is validated
 
-        if(input == "city") {
+        if(input == "code") {
             string id;
             cout << "enter an airport's IATA code, this should be a three letter code such as BOS (if the airport does not have an IATA code, please enter its 4 digit ICAO code): " <<endl;
             cin >> id;
