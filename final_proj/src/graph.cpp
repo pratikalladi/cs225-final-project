@@ -189,9 +189,9 @@ double Graph::getDistance(Node* src, Node* dest){
 }
 
 
-std::vector<std::pair<std::string, int>> Graph::BFS(std::string src) {
+std::vector<std::pair<int, std::string>> Graph::BFS(std::string src) {
     Node* source = nodeMap[src];
-    std::vector<std::pair<std::string, int>> result;
+    std::vector<std::pair<int, std::string>> result;
     std::vector<bool> visited(14111, false);
     std::queue<Node*> bfs;
     bfs.push(source);
@@ -199,9 +199,10 @@ std::vector<std::pair<std::string, int>> Graph::BFS(std::string src) {
     visited.at(current->index) = true;
     int hops = 0;
     auto x = bfs.back();
+
     while (!bfs.empty()) {
         current = bfs.front();
-        std::pair<std::string, int> temp(current->id, hops);
+        std::pair<int, std::string> temp(hops, current->id);
         result.push_back(temp);
         for (auto iter : getNodeNeighbors(current->id)) {
             if (visited.at(iter->index) == false) {
@@ -218,7 +219,49 @@ std::vector<std::pair<std::string, int>> Graph::BFS(std::string src) {
     return result;
 }
 
+//version of BFS that only finds the list of nodes that are a certain amount of edges (hops) from the source. Better for runtime in cases where all nodes for example, that are at most two edges from the source.
+std::vector<std::pair<int, std::string>> Graph::BFS(std::string src, int limit) {
+    std::vector<std::pair<int, std::string>> result;
+    //if there are no neighbors, return the map with only one node right now
+    if(getNodeNeighbors(src).empty()) {
+        result.push_back({0,src});
+        return result;
+    }
+    
+    Node* source = nodeMap[src];
+    
+    std::vector<bool> visited(14111, false);
+    std::queue<Node*> bfs;
+    bfs.push(source);
+    Graph::Node* current = source;
+    visited.at(current->index) = true;
+    int hops = 0;
+    auto x = bfs.back();
 
+
+
+    while (!bfs.empty()) {
+        current = bfs.front();
+        if(hops > limit) {
+            return result;
+        } else if(hops == limit) {
+            std::pair<int, std::string> temp(hops, current->id);
+            result.push_back(temp);
+        }
+        for (auto iter : getNodeNeighbors(current->id)) {
+            if (visited.at(iter->index) == false) {
+                bfs.push(iter);
+                visited.at(iter->index) = true;
+            }
+        }
+        if (x == bfs.front()) {
+            x = bfs.back();
+            hops++;
+        }
+        bfs.pop();
+    }
+    return result;
+}
 
 //no need for below code, keeping around as reference until not needed
 

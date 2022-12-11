@@ -207,9 +207,9 @@ TEST_CASE("test case 4: dijkstra's algorithm on a doubly cyclic graph") {
     delete test;
 }
 
-TEST_CASE("test case 5: BFS algorithm on a medium complexity graph") {
+TEST_CASE("test case 5: BFS algorithms on a medium complexity graph") {
     cout << "____________________________________________________________" << endl;
-    cout << "test case 5: BFS algorithm on a medium complexity graph" << endl;
+    cout << "test case 5: BFS algorithms on a medium complexity graph" << endl;
 
     const V2D_strings adjacency_list = {
         {"0", "1", "7"},
@@ -239,11 +239,19 @@ TEST_CASE("test case 5: BFS algorithm on a medium complexity graph") {
     //cout <<"printing out graph adjacency list: " << endl;
     //test->print_graph();
 
-    auto results = test->BFS("8");
+    auto results = test->BFS("8"); //testing the basic BFS
 
     cout << "printing BFS result: " << endl;
     for (auto p: results) {
-        cout << "id: " << p.first << ", hops: " << p.second << "; ";
+        cout << "(hops: " << p.first << ", id: " << p.second << "), ";
+    }
+    cout << endl;
+
+    //testing the BFS that only returns nodes that are n edges (hops) away from the source
+    results = test->BFS("8",1);
+    cout << "printing BFS result: " << endl;
+    for (auto p: results) {
+        cout << "(hops: " << p.first << ", id: " << p.second << "), ";
     }
     cout << endl;
 
@@ -350,9 +358,9 @@ TEST_CASE("test case 8: loading on the whole dataset, connecting flights ") {
     delete g;
 }
 
-TEST_CASE("test case 1: check number of pagerank airports") {
+TEST_CASE("test case 9: check number of pagerank airports") {
     cout << "____________________________________________________________" << endl;
-    cout << "test case 1: check number of pagerank airports" << endl;
+    cout << "test case 9: check number of pagerank airports" << endl;
     
     Graph* g = new Graph();
     string airport_path ="../data/airports.dat";
@@ -371,9 +379,9 @@ TEST_CASE("test case 1: check number of pagerank airports") {
     REQUIRE(bfssize == pgsize);
 }
 
-TEST_CASE("test case 2: check pagerank importance algorithm") {
+TEST_CASE("test case 9: check pagerank importance algorithm") {
     cout << "____________________________________________________________" << endl;
-    cout << "test case 2: check pagerank importance algorithm" << endl;
+    cout << "test case 9: check pagerank importance algorithm" << endl;
     
     Graph* g = new Graph();
     string airport_path ="../data/airports_pagerank_test.dat";
