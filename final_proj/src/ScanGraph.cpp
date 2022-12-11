@@ -28,7 +28,6 @@ void ScanGraph::scanCSV_helper(Graph *g, ifstream &airport_ifs, ifstream &route_
         while (getline(airport_ifs, line)) {
             vector<string> vec;
             SplitString(line, ',', vec);
-            //vector<string> vec = splitpart(line, ",");
             string airportName = Trim(vec[1]);
             airportName = airportName.substr(1,airportName.size()-2);
             string airportCode;
@@ -61,7 +60,6 @@ void ScanGraph::scanCSV_helper(Graph *g, ifstream &airport_ifs, ifstream &route_
         while(getline(route_ifs, line)) {
             vector<string> vec;
             SplitString(line, ',', vec);
-            //vector<string> vec = splitpart(line, ",");
             string start = Trim(vec[2]);
             string end = Trim(vec[4]);
 

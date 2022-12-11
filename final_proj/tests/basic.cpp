@@ -395,4 +395,59 @@ TEST_CASE("test case 10: check pagerank importance algorithm") {
     }
     REQUIRE(pr[0].first == "MAG");
 }
+
+TEST_CASE("test case 11: check airport scanned successfully") {
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 11: check airport scanned successfully" << endl;
+    
+    Graph* g = new Graph();
+    string airport_path ="../data/airports_test.dat";
+    string flights = "../data/routes_test.dat";
+
+    ScanGraph sg;
+    sg.scanCSV(g, airport_path, flights);
+
+    Node* tester = g->getNode("MAG");
+
+    REQUIRE(tester->id == "MAG");
+
+    cout << "There exists an airport MAG in: " << tester->location_city << ", " << tester->location_country << endl;
+    cout << "Airport MAG scanned into graph successfully" << endl;
+}
+
+TEST_CASE("test case 12: check flight route scanned successfully") {
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 12: check flight route scanned successfully" << endl;
+    
+    Graph* g = new Graph();
+    string airport_path ="../data/airports_test.dat";
+    string flights = "../data/routes_test.dat";
+
+    ScanGraph sg;
+    sg.scanCSV(g, airport_path, flights);
+
+    int tester = g->getEdgeCount();
+
+    REQUIRE(tester == 1);
+
+    cout << "There exists a route to MAG, scanned into graph successfully" << endl;
+}
+
+TEST_CASE("test case 13: check flight route validation") {
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 13: check flight route validation" << endl;
+    
+    Graph* g = new Graph();
+    string airport_path ="../data/airports_test.dat";
+    string flights = "../data/routes_cycle.dat";
+
+    ScanGraph sg;
+    sg.scanCSV(g, airport_path, flights);
+
+    int tester = g->getEdgeCount();
+
+    REQUIRE(tester == 0);
+
+    cout << "There are no routes to MAG, as the only one in the CSV was cyclic" << endl;
+}
   
