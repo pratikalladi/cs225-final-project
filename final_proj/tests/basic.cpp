@@ -4,13 +4,12 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <fstream>
 
 #include "graph.h"
 #include "ScanGraph.h"
 
-#include <chrono>
-#include <fstream>
-using namespace std::chrono;
+
 using namespace std;
 
 TEST_CASE("test case 1: test distance function"){

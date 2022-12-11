@@ -186,7 +186,7 @@ double Graph::getDistance(Node* src, Node* dest){
 std::vector<std::pair<int, std::string>> Graph::BFS(std::string src) {
     Node* source = nodeMap[src];
     std::vector<std::pair<int, std::string>> result;
-    std::vector<bool> visited(14111, false);
+    std::vector<bool> visited(nodeMap.size(), false);
     std::queue<Node*> bfs;
     bfs.push(source);
     Graph::Node* current = source;
@@ -214,38 +214,31 @@ std::vector<std::pair<int, std::string>> Graph::BFS(std::string src) {
 }
 
 //version of BFS that only finds the list of nodes that are a certain amount of edges (hops) from the source. Better for runtime in cases where all nodes for example, that are at most two edges from the source.
-std::vector<std::pair<int, std::string>> Graph::BFS(std::string src, int limit) {
+std::vector<std::pair<int, std::string>> Graph::BFS(std::string src, unsigned int limit) {
     std::vector<std::pair<int, std::string>> result;
-    //if there are no neighbors, return the map with only one node right now
-    if(getNodeNeighbors(src).empty()) {
-        result.push_back({0,src});
-        return result;
-    }
     
     Node* source = nodeMap[src];
     
-    std::vector<bool> visited(14111, false);
+    vector<bool> visited(nodeMap.size(), false);  //if a node's index is visited, it will be present in this set
     std::queue<Node*> bfs;
     bfs.push(source);
     Graph::Node* current = source;
-    visited.at(current->index) = true;
-    int hops = 0;
+    visited[current->index] = true; //insert int
+    
+    unsigned int hops = 0;
     auto x = bfs.back();
-
-
 
     while (!bfs.empty()) {
         current = bfs.front();
         if(hops > limit) {
             return result;
         } else if(hops == limit) {
-            std::pair<int, std::string> temp(hops, current->id);
-            result.push_back(temp);
+            result.push_back({hops, current->id}); //append only if the number of hops is the same as the limit
         }
         for (auto iter : getNodeNeighbors(current->id)) {
-            if (visited.at(iter->index) == false) {
+            if (visited[iter->index] == false) {
                 bfs.push(iter);
-                visited.at(iter->index) = true;
+                visited[iter->index] = true;
             }
         }
         if (x == bfs.front()) {

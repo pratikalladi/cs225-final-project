@@ -12,6 +12,8 @@
 #include "graph.h"
 #include "ScanGraph.h"
 
+#include <chrono>
+using namespace std::chrono;
 using namespace std;
 
 //prints possible options in a options vector
@@ -48,7 +50,7 @@ void validate_option(vector<string> options, string& input) {
 
 //function to print the list of destinations of an airport such as printing direct destinations.
 void print_destinations(unordered_map<string, Edge*> direct_destinations, unordered_map<string, Edge*> international_destinations) {
-    cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+    cout << "-----------------------------------------------------------------------------------------------------------------------" << endl;
     cout <<"domestic destinations: " << endl;
     for(auto pair : direct_destinations) {
         //only print if the destination is not international
@@ -61,7 +63,7 @@ void print_destinations(unordered_map<string, Edge*> direct_destinations, unorde
     
     //print international destinations if there are any
     if(international_destinations.size() != 0) {
-        cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+        cout << "-----------------------------------------------------------------------------------------------------------------------" << endl;
         cout <<"international destinations: " << endl;
         for(auto pair : international_destinations) {
             //only print if the destination is not international
@@ -369,7 +371,8 @@ void flights_subprogram(Graph* data) {
 
 void data_subprogram(Graph* data) {
     cout << "Loading data, please be patient (this may take up to 60 seconds): " << endl;
-    //loading in needed data
+    //loading in required data
+    auto start = high_resolution_clock::now();
     vector<pair<unsigned int, string>> num_international_destinations; //stores the information as int to a string value id
     vector<pair<unsigned int, string>> num_total_destinations; //stores the information as int to a string value id
     vector<pair<unsigned int, string>> num_one_stop_destinations; //stores the number of destinations from each airport that is only one connection away but not a direct flight
@@ -382,15 +385,16 @@ void data_subprogram(Graph* data) {
             unordered_set<string> international_destinations; //this is needed so no new duplicate destination is inserted
             unordered_set<string> total_destinations; //this is needed so no new duplicate destination is inserted
             for(Edge* e : all_connections) { //remove duplicate destinations which correspond to different airlines.
+                Node* dest = e->dest;
                 //if the the destinations country does not match the current country, add it
-                if(e->dest->location_country != current_country) {
-                    international_destinations.insert(e->dest->id); //maps by city
+                if(dest->location_country != current_country) {
+                    international_destinations.insert(dest->id); //maps by city
                 }
-                total_destinations.insert(e->dest->id); //add all
+                total_destinations.insert(dest->id); //add all
             } 
             
             //run BFS on current airport find the number of airports connected to this airport in some way and to find the number of connections available to this airport and the number of airports that are connected by only one connection or two flights. 
-            vector<std::pair<int, string>> all_BFS_2_connections = data->BFS(current_id, 2); //since all commerical airports are regarded as being connected, these airports are essentially all commerical airports in the world. It is found that the size of this does not depend on which airport is the origin, but the number of hops in a graph of course changes.
+            vector<std::pair<int, string>> all_BFS_2_connections = data->BFS(current_id,2); //since all commerical airports are regarded as being connected, these airports are essentially all commerical airports in the world. It is found that the size of this does not depend on which airport is the origin, but the number of hops in a graph of course changes.
 
             num_one_stop_destinations.push_back({all_BFS_2_connections.size(), current_id});
             num_international_destinations.push_back({international_destinations.size(), current_id});//append
@@ -404,6 +408,12 @@ void data_subprogram(Graph* data) {
     vector<string> options = {"1","2","3","4","5","exit"}; //initial options
     vector<pair<string, double>> pr = data->PageRank(); //stores pagerank info
 
+    auto stop = high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<microseconds>(stop - start);
+
+    double runtime = duration.count();
+    cout << endl << "average runtime loading this data: " << runtime / (double) 1000000 << " seconds" << endl << endl;
+
     bool program_finished = false; //sets if the program is finished or not
     while(!program_finished) {
         cout <<"____________________________________________________________________________________________________________________" << endl;
@@ -412,8 +422,8 @@ void data_subprogram(Graph* data) {
         cout << "_______++++++++++++++++<*>++++++++++++++++________________________________________________________________________________________________________________________________" << endl;
         cout << "Find information for the rankings of all major airports or a single airport: " << endl;
         cout << "Type the number of a listed option to begin:\n" << endl;
-        cout << "|-------------(1)-------------|--------(2)----------|--------------------(3)-----------------|---------------(4)---------------|-------------(5)----------|-----(exit)----|" <<endl;
-        cout << "|1: Find an Airport's PageRank|2: top 50 by PageRank|3: top 100 by international destinations|4: top 100 by total destinations |5: top 100 most connected |6: exit to menu|" <<endl << endl;
+        cout << "|-------------(1)-------------|--------(2)----------|--------------------(3)-----------------|---------------(4)---------------|-------------(5)----------|------(exit)------|" <<endl;
+        cout << "|1: Find an Airport's PageRank|2: top 50 by PageRank|3: top 100 by international destinations|4: top 100 by total destinations |5: top 100 most connected |exit: exit to menu|" <<endl << endl;
 
         cout <<"type exit to exit to menu" << endl;
 
@@ -461,10 +471,10 @@ void data_subprogram(Graph* data) {
             cout << "Listed below are the 50 most important airports in our dataset using our PageRank Algorithm: " << endl;
             cout << endl;
 
-            cout << "Airport code and Name | PageRank" << endl; 
+            cout << "Airport code and name | PageRank" << endl; 
             for (unsigned i = 0; i < 50; i++) {
                 Node* curr = data->getNodeMap()[pr[i].first];
-                std::cout << "#"<<i+1<< ": "<<pr[i].first << "[" << curr->name << "] |"<< pr[i].second << std::endl;
+                std::cout << "#"<<i+1<< ": "<<pr[i].first << "[" << curr->name << "] | "<< pr[i].second << std::endl;
             }
 
             //asks to exit or not
@@ -488,7 +498,7 @@ void data_subprogram(Graph* data) {
             for (unsigned i = 0; i < 100; i++) {
                 auto pair = num_international_destinations[i];
                 Node* curr = data->getNodeMap()[pair.second];
-                std::cout << "#"<<i+1<< ": "<< curr->id << "[" << curr->name << "] |"<< pair.first << std::endl;
+                std::cout << "#"<<i+1<< ": "<< curr->id << "[" << curr->name << "] | "<< pair.first << std::endl;
             }
 
             //asks to exit or not
@@ -504,14 +514,14 @@ void data_subprogram(Graph* data) {
         }
         else if(input == "4") {
             cout <<"_______________________________________________________________________________________________________________________________________________________" << endl;
-            cout << "Listed below are the 100 top airports by number of direct flights: " << endl;
+            cout << "Listed below are the 100 top airports by number of direct destinations: " << endl;
             cout << endl;
 
-            cout << "Airport code and Name | Number of direct flights" << endl; 
+            cout << "Airport code and Name | Number of direct destinations" << endl; 
             for (unsigned i = 0; i < 100; i++) {
                 auto pair = num_total_destinations[i];
                 Node* curr = data->getNodeMap()[pair.second];
-                std::cout << "#"<<i+1<< ": "<< curr->id << "[" << curr->name << "] |"<< pair.first << std::endl;
+                std::cout << "#"<<i+1<< ": "<< curr->id << "[" << curr->name << "] | "<< pair.first << std::endl;
             }
                         
             //asks to exit or not
@@ -538,7 +548,7 @@ void data_subprogram(Graph* data) {
                 Node* curr = data->getNodeMap()[pair.second];
 
                 int connectivity = pair.first + data->getNodeNeighbors(curr->name).size(); 
-                std::cout << "#"<<i+1<< ": "<< curr->id << "[" << curr->name << "] |"<< connectivity << std::endl;
+                std::cout << "#"<<i+1<< ": "<< curr->id << "[" << curr->name << "] | "<< connectivity << std::endl;
             }
                         
             //asks to exit or not
