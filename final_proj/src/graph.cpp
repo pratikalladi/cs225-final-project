@@ -262,8 +262,8 @@ double Graph :: PageRankofNode(string node){
             }
     }
     }
-
-    double pageRankDiv =0.85 + 0.85 * (weight * (incoming/outgoing));
+    weight = weight / 13000 * 100;
+    double pageRankDiv = (weight * (incoming/outgoing));
     return pageRankDiv;
 }
 
