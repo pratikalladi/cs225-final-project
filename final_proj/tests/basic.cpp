@@ -28,10 +28,11 @@ TEST_CASE("test case 1: test distance function"){
     test->addNode(start);
     test->addNode(dest);
 
-    double d = test->getDistance(start, dest);
+/*     
     std::cout << d << std::endl;
     std::cout << "\n" << std::endl;
-    bool out;
+    bool out; */
+    double d = test->getDistance(start, dest);
     REQUIRE(abs((d - 2886)) < 1);
 
     //delete test graph
@@ -125,7 +126,6 @@ TEST_CASE("test case 3: dijkstra's algorithm on a medium complexity graph") {
     REQUIRE(test->dijkstra_A_find_shortest_distance("0", "7") == 8);
     REQUIRE(test->dijkstra_A_find_shortest_distance("0", "8") == 14);
     REQUIRE(test->dijkstra_A_find_shortest_distance("1", "6") == 12);
-    REQUIRE(test->dijkstra_A_find_shortest_distance("0", "fuck") == -1); //testing invalid inputs
     
     //test the find exact paths
     REQUIRE(test->dijkstra_A_find_shortest_path("1", "1").size() == 0);
@@ -142,27 +142,12 @@ TEST_CASE("test case 3: dijkstra's algorithm on a medium complexity graph") {
     REQUIRE(test->dijkstra_A_find_shortest_path("0", "7") == vector<string>{"7"}); // the 
     REQUIRE(test->dijkstra_A_find_shortest_path("0", "8") == vector<string>{"1","2","8"}); // the 
 
-    auto start = high_resolution_clock::now();
-    int n = 5000;
-    for(int i = 0; i < n; i++) { //run the longest path n times and the shortest path n times as well
-        test->dijkstra_A_find_shortest_distance("0", "1");
-        test->dijkstra_A_find_shortest_distance("1", "5");
-        test->dijkstra_A_find_shortest_distance("1", "6");
-    }
-    auto stop = high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<microseconds>(stop - start);
-
-    double runtime = duration.count();
-    double average_runtime = runtime / ((double) n);
-    cout << endl << "average dijkstra's algorithm runtime for test case 2: " << average_runtime << " microseconds" << endl << endl;
-
-
     delete test;
 }
 
-TEST_CASE("test case 4: dijkstra's algorithm on a doubly cyclic graph") {
+TEST_CASE("test case 4: Dijkstra's algorithm and BFS algorithms on a doubly cyclic graph") {
     cout << "____________________________________________________________" << endl;
-    cout << "test case 4: dijkstra's algorithm on a doubly cyclic graph" << endl;
+    cout << "test case 4: Dijkstra's algorithm on a doubly cyclic graph" << endl;
 
 
     const V2D_strings adjacency_list = {
@@ -201,8 +186,9 @@ TEST_CASE("test case 4: dijkstra's algorithm on a doubly cyclic graph") {
     REQUIRE(test->dijkstra_A_find_shortest_distance("0", "4") == 17);
     REQUIRE(test->dijkstra_A_find_shortest_distance("0", "5") == 22);
     REQUIRE(test->dijkstra_A_find_shortest_distance("0", "6") == 19);
-    //testing for a completely unconnected component
-    REQUIRE(test->dijkstra_A_find_shortest_distance("0", "7") == -1);
+
+    //testing BFS on to find just the neighboring nodes
+    REQUIRE(test->BFS("3",1) == vector<pair<int, string>>{{1,"1"},{1, "2"},{1,"4"},{1,"5"}});
 
     delete test;
 }
@@ -239,21 +225,29 @@ TEST_CASE("test case 5: BFS algorithms on a medium complexity graph") {
     //cout <<"printing out graph adjacency list: " << endl;
     //test->print_graph();
 
-    auto results = test->BFS("8"); //testing the basic BFS
-
+/*     auto results = test->BFS("8"); //testing the basic BFS
     cout << "printing BFS result: " << endl;
     for (auto p: results) {
         cout << "(hops: " << p.first << ", id: " << p.second << "), ";
     }
     cout << endl;
+ */
+    
+    REQUIRE(test->BFS("8") == vector<pair<int, string>>{{0,"8"},{1, "2"},{1,"7"},{1,"6"},{2,"1"},{2,"5"},{2,"3"},{2,"0"},{3,"4"}});
+
 
     //testing the BFS that only returns nodes that are n edges (hops) away from the source
-    results = test->BFS("8",1);
+    REQUIRE(test->BFS("8",1) == vector<pair<int, string>>{{1,"2"},{1, "7"},{1,"6"}});
+    REQUIRE(test->BFS("8",2) == vector<pair<int, string>>{{2, "1"},{2,"5"},{2, "3"},{2,"0"}});
+    REQUIRE(test->BFS("8",3) == vector<pair<int, string>>{{3, "4"}});
+    REQUIRE(test->BFS("8",4) == vector<pair<int, string>>{});
+
+/*     results = test->BFS("8",4);
     cout << "printing BFS result: " << endl;
     for (auto p: results) {
         cout << "(hops: " << p.first << ", id: " << p.second << "), ";
     }
-    cout << endl;
+    cout << endl; */
 
     delete test;
 }
@@ -281,6 +275,7 @@ TEST_CASE("test case 6: loading on a subset of dataset ") {
     cout << "testing shortest distance between GKA and MAG: "<< g->dijkstra_A_find_shortest_distance("GKA", "MAG") << endl; //what unit would this be in
     cout << "printing the shortest path taken in terms of connection by distance between GKA and MAG: ";
     auto path = g->dijkstra_A_find_shortest_path("GKA", "MAG");
+    REQUIRE(g->dijkstra_A_find_shortest_path("GKA", "MAG") == vector<string>{"MAG"});
     cout << "starting at GKA, ";
     for(string x : path) {
         cout << "->" << x; 
@@ -311,7 +306,7 @@ TEST_CASE("test case 7: loading on the whole dataset ") {
     for(Edge* x : n1) {
         cout << x->dest->id <<"("<< x->weight<<") ";
     } cout << endl; */
-    
+    REQUIRE(g->dijkstra_A_find_shortest_path("LAX", "JFK") == vector<string>{"JFK"}); //this is the shortest path taken
     cout << "testing shortest distance between LAX and JFK: "<< g->dijkstra_A_find_shortest_distance("LAX", "JFK") << endl; //what unit would this be in
     cout << "printing the shortest path taken in terms of connection by distance between LAX and JFK: ";
     auto path = g->dijkstra_A_find_shortest_path("LAX", "JFK");
@@ -379,9 +374,9 @@ TEST_CASE("test case 9: check number of pagerank airports") {
     REQUIRE(bfssize == pgsize);
 }
 
-TEST_CASE("test case 9: check pagerank importance algorithm") {
+TEST_CASE("test case 10: check pagerank importance algorithm") {
     cout << "____________________________________________________________" << endl;
-    cout << "test case 9: check pagerank importance algorithm" << endl;
+    cout << "test case 10: check pagerank importance algorithm" << endl;
     
     Graph* g = new Graph();
     string airport_path ="../data/airports_pagerank_test.dat";
