@@ -7,7 +7,6 @@
 
 #include "graph.h"
 #include "ScanGraph.h"
-#include "algo.h"
 
 #include <chrono>
 #include <fstream>

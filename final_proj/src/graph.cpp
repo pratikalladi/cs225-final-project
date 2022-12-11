@@ -4,7 +4,6 @@
 #include "graph.h"
 #include "ScanGraph.h"
 #include <fstream>
-#include<bits/stdc++.h>
 using namespace std;
 
 Graph::Graph(string airlines_path, string airports_path, string routes_path) { //constructor to build a graph from openflights airline paths and initialize the airlines database
