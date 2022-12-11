@@ -194,11 +194,12 @@ std::vector<std::pair<std::string, int>> Graph::BFS(std::string src) {
     Node* source = nodeMap[src];
     std::vector<std::pair<std::string, int>> result;
     std::vector<bool> visited(14111, false);
-    std::queue<Graph::Node*> bfs;
+    std::queue<Node*> bfs;
     bfs.push(source);
     Graph::Node* current = source;
     visited.at(current->index) = true;
     int hops = 0;
+    auto x = bfs.back();
     while (!bfs.empty()) {
         current = bfs.front();
         std::pair<std::string, int> temp(current->id, hops);
@@ -209,11 +210,15 @@ std::vector<std::pair<std::string, int>> Graph::BFS(std::string src) {
                 visited.at(iter->index) = true;
             }
         }
+        if (x == bfs.front()) {
+            x = bfs.back();
+            hops++;
+        }
         bfs.pop();
-        hops++;
     }
     return result;
 }
+
 
 
 //no need for below code, keeping around as reference until not needed
