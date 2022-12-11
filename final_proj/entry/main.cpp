@@ -37,13 +37,30 @@ void validate_option(vector<string> options, string& input) {
             }
         }
         //if a valid option is not found
-        cout << "try again: please enter a valid option" << endl;
+        cout << "try again: please enter a valid option or type exit to exit the program" << endl;
         getline(cin, input); //update input
 
-        if(input == "EXIT") {
+        if(input == "exit") {
             break;
         }
     }
+}
+
+//function to print details of a certain airport, such as the list of destinations 
+void print_details(Graph *data, string id) {
+    cout << "It has direct flights (with distance in km) to these ";
+    auto n1 = data->getEdgeNeighbors(id);
+    unordered_map<string, Edge*> filteredMap1; //this is needed so no new duplicate destination is inserted
+    for(Edge* x : n1) { //remove duplicate destinations which correspond to different airlines.
+        filteredMap1.insert({x->dest->id, x});
+    } 
+    cout << filteredMap1.size() << " airports: " << endl;
+    for(auto pair : filteredMap1) {
+        Edge* x = pair.second;
+        Node* direct = x->dest;
+        cout << direct->id <<"["<< direct->name<<"] "<<"("<< x->weight<<") " << ", ";
+    } cout << endl; 
+    cout << endl << "airport information for " << id << " printed above ^" << endl;
 }
 
 //handles the subprogram that allows airports to be searched and their destinations to be found. This is essentially a mini program of a similar format as the main
@@ -76,19 +93,34 @@ void airports_subprogram(Graph* data) {
             cout << endl << "This airport with code, " << id << ", has the full name: " << info->name << endl;
             cout << "It is located in: " << info->location_city <<", "<< info->location_country <<endl << endl;
 
-            cout << "It has direct flights (with distance in km) to these ";
-            auto n1 = data->getEdgeNeighbors(id);
-            unordered_map<string, Edge*> filteredMap1; //this is needed so no new duplicate destination is inserted
-            for(Edge* x : n1) { //remove duplicate destinations which correspond to different airlines.
-                filteredMap1.insert({x->dest->id, x});
-            } 
-            cout << filteredMap1.size() << " airports: " << endl;
-            for(auto pair : filteredMap1) {
-                Edge* x = pair.second;
-                Node* direct = x->dest;
-                cout << direct->id <<"["<< direct->name<<"] "<<"("<< x->weight<<") " << ", ";
-            } cout << endl; 
-            cout << endl << "airport information for " << id << " printed above ^" << endl;
+            //print details if the user chooses
+            string command;
+            cout << "type y to see a list of destinations or type e to exit" << endl;
+            cin >> command;
+            do {
+                if(command == "e") {
+                    break;
+                } else if (command == "y") {
+                    print_details(data, id);
+                    break;
+                } else {
+                    cout <<"invalid option: type y to see a list of destinations or type e to exit" << endl;
+                    cin >> command;
+                }
+            } while(command != "e" || command != "y");
+
+
+            //asks to exit or not
+            cout << "press e to exit after viewing info" <<endl;
+            cin >> command;
+            do {
+                if(command == "e") {
+                    break;
+                } else {
+                    cout <<"invalid option: type e to exit" << endl;
+                    cin >> command;
+                }
+            } while(command != "e");
         }
         else if(input =="city") {
             string city;
@@ -118,19 +150,34 @@ void airports_subprogram(Graph* data) {
             cout << endl << "This airport with code: " << id << " has the full name: " << info->name << endl;
             cout << "It is located in: " << info->location_city <<", "<< info->location_country <<endl << endl;
 
-            cout << "It has direct flights (with distance in km) to these ";
-            auto n1 = data->getEdgeNeighbors(id);
-            unordered_map<string, Edge*> filteredMap1; //this is needed so no new duplicate destination is inserted
-            for(Edge* x : n1) { //remove duplicate destinations which correspond to different airlines.
-                filteredMap1.insert({x->dest->id, x});
-            } 
-            cout << filteredMap1.size() << " airports: " << endl;
-            for(auto pair : filteredMap1) {
-                Edge* x = pair.second;
-                Node* direct = x->dest;
-                cout << direct->id <<"["<< direct->name<<"] "<<"("<< x->weight<<") " << ", ";
-            } cout << endl; 
-            cout << endl << "airport information for " << id << " printed above ^" << endl;
+
+            //print details if the user chooses
+            string command;
+            cout << "type y to see a list of destinations or type e to exit" << endl;
+            cin >> command;
+            do {
+                if(command == "e") {
+                    break;
+                } else if (command == "y") {
+                    print_details(data, id);
+                    break;
+                } else {
+                    cout <<"invalid option: type y to see a list of destinations or type e to exit" << endl;
+                    cin >> command;
+                }
+            } while(command != "e" || command != "y");
+        
+            //asks to exit or not
+            cout << "press e to exit after viewing info" <<endl;
+            cin >> command;
+            do {
+                if(command == "e") {
+                    break;
+                } else {
+                    cout <<"invalid option: type e to exit" << endl;
+                    cin >> command;
+                }
+            } while(command != "e");  
         }
         else if(input == "exit") {
             program_finished = true; //end the program if exit is typed
@@ -281,9 +328,22 @@ void data_subprogram(Graph* data) {
                 }
             }
 
-        cout << "Your selected airport, " << id << " , has a PageRank score of: " << finder.second << endl;
-        cout << "\n" << endl;
-        cout << "This ranks it " << count << " out of " << pr.size() << " total airports." << endl;
+            cout << "Your selected airport, " << id << ", has a PageRank score of: " << finder.second << endl;
+            cout << "\n" << endl;
+            cout << "This ranks it " << count << " out of " << pr.size() << " total airports." << endl;
+
+            //asks to exit or not
+            string command;
+            cout << "press e to exit after viewing info" <<endl;
+            cin >> command;
+            do {
+                if(command == "e") {
+                    break;
+                } else {
+                    cout <<"invalid option: type e to exit" << endl;
+                    cin >> command;
+                }
+            } while(command != "e"); 
         }
 
         else if(input =="important") {
@@ -294,6 +354,18 @@ void data_subprogram(Graph* data) {
             for (unsigned i = 0; i < 51; i++) {
                 std::cout << pr[i].first << " -> " << pr[i].second <<std::endl;
             }
+            //asks to exit or not
+            string command;
+            cout << "press e to exit after viewing info" <<endl;
+            cin >> command;
+            do {
+                if(command == "e") {
+                    break;
+                } else {
+                    cout <<"invalid option: type e to exit" << endl;
+                    cin >> command;
+                }
+            } while(command != "e"); 
 
         }
         else if(input == "exit") {
@@ -309,7 +381,6 @@ void data_subprogram(Graph* data) {
 
 int main()
 {   
-
     string airlines_path ="../data/airlines.dat.txt";
     string airports_path ="../data/airports.dat";
     string flights_path = "../data/routes.dat";
