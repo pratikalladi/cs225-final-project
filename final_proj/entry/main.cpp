@@ -39,7 +39,7 @@ void validate_option(vector<string> options, string& input) {
             }
         }
         //if a valid option is not found
-        cout << "try again: please enter a valid option or type exit to exit the program" << endl;
+        cout << "Try again: please enter a valid option or type exit to exit the program" << endl;
         getline(cin, input); //update input
 
         if(input == "exit") {
@@ -50,8 +50,13 @@ void validate_option(vector<string> options, string& input) {
 
 //function to print the list of destinations of an airport such as printing direct destinations.
 void print_destinations(unordered_map<string, Edge*> direct_destinations, unordered_map<string, Edge*> international_destinations) {
+<<<<<<< HEAD
     cout << "-----------------------------------------------------------------------------------------------------------------------" << endl;
     cout <<"domestic destinations: " << endl;
+=======
+    cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+    cout <<"Domestic destinations: " << endl;
+>>>>>>> 677916ddc0db8c098a433400324fe9e8099b25b4
     for(auto pair : direct_destinations) {
         //only print if the destination is not international
         Edge* x = pair.second;
@@ -63,8 +68,13 @@ void print_destinations(unordered_map<string, Edge*> direct_destinations, unorde
     
     //print international destinations if there are any
     if(international_destinations.size() != 0) {
+<<<<<<< HEAD
         cout << "-----------------------------------------------------------------------------------------------------------------------" << endl;
         cout <<"international destinations: " << endl;
+=======
+        cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+        cout <<"International destinations: " << endl;
+>>>>>>> 677916ddc0db8c098a433400324fe9e8099b25b4
         for(auto pair : international_destinations) {
             //only print if the destination is not international
             Edge* x = pair.second;
@@ -127,7 +137,7 @@ void airports_subprogram_handle_details(Graph *data, string id) {
 
     //print details if the user chooses
     string command;
-    cout << "type y to see the list of direct destinations or type n to not see more." << endl;
+    cout << "Type y to see the list of direct destinations or type n to not see more." << endl;
     cin >> command;
     do {
         if(command == "n") { //no option
@@ -137,12 +147,12 @@ void airports_subprogram_handle_details(Graph *data, string id) {
             cout << endl;
             break;
         } else {
-            cout << "invalid input: type y to see a list of destinations or type n to not see more." << endl;
+            cout << "Invalid input: type y to see a list of destinations or type n to not see more." << endl;
             cin >> command;
         }
     } while(command != "y" || command != "n");
 
-    cout << "type y to see the list of indirect routes with only one stopover or type n to not see more." << endl;
+    cout << "Type y to see the list of indirect routes with only one stopover or type n to not see more." << endl;
     cin >> command;
     do {
         if(command == "n") { //no option
@@ -152,12 +162,12 @@ void airports_subprogram_handle_details(Graph *data, string id) {
             cout << endl;
             break;
         } else {
-            cout << "invalid input: type y to see a list of destinations or type n to not see more." << endl;
+            cout << "Invalid input: type y to see a list of destinations or type n to not see more." << endl;
             cin >> command;
         }
     } while(command != "y" || command != "n");
 
-    cout << endl << "airport information for " << id << " printed above ^" << endl << endl;
+    cout << endl << "Airport information for " << id << " printed above ^" << endl << endl;
     cout <<"_______________________________________________________________________________________________________________________________________________________" << endl;
 }
 
@@ -193,20 +203,20 @@ void airports_subprogram(Graph* data) {
 
             //asks to exit or not
             string command;
-            cout << "press e to exit after viewing info" <<endl;
+            cout << "Press e to exit after viewing info" <<endl;
             cin >> command;
             do {
                 if(command == "e") {
                     break;
                 } else {
-                    cout <<"invalid option: type e to exit" << endl;
+                    cout <<"Invalid option: type e to exit" << endl;
                     cin >> command;
                 }
             } while(command != "e");
         }
         else if(input =="city") {
             string city;
-            cout << "enter an airport's city location fully, (for example, JFK is in New York)" << endl;
+            cout << "Enter an airport's city location fully, (for example, JFK is in New York)" << endl;
             getline(cin, city);
             while(data->getCityToNodes().count(city) == 0) {
                 cout << "Spelling is incorrect or this city is not in our database, please try entering an airport's city again, using proper capitalization: " <<endl;
@@ -220,7 +230,7 @@ void airports_subprogram(Graph* data) {
             }
             
             string id;
-            cout << "enter one of the airport's IATA code, (this is the three letter code in brackets) " << endl;
+            cout << "Enter one of the airport's IATA code, (this is the three letter code in brackets) " << endl;
             cin >> id;
             while(data->getNodeMap().count(id) == 0) {
                 cout << "This airport code is not in our database, please try entering an airport's IATA/ICAO code again: " << endl;
@@ -232,13 +242,13 @@ void airports_subprogram(Graph* data) {
 
             //asks to exit or not
             string command;
-            cout << "press e to exit after viewing info" <<endl;
+            cout << "Press e to exit after viewing info" <<endl;
             cin >> command;
             do {
                 if(command == "e") {
                     break;
                 } else {
-                    cout <<"invalid option: type e to exit" << endl;
+                    cout <<"Invalid option: type e to exit" << endl;
                     cin >> command;
                 }
             } while(command != "e");  
@@ -263,7 +273,7 @@ void flights_subprogram(Graph* data) {
         cout << "Find possible flights between two airports: " << endl;
         cout << "To exit to menu, type exit" << endl << endl;
         string id1;
-        cout << "enter the starting airport's IATA code, (this should be a three letter code such as BOS) ";
+        cout << "Enter the starting airport's IATA code, (this should be a three letter code such as BOS) ";
         cout << "If you do not know an airport's IATA code, go to the search option in menu to get help by exiting to menu anytime" << endl;
         cin >> id1;
         while(data->getNodeMap().count(id1) == 0) {
@@ -281,7 +291,7 @@ void flights_subprogram(Graph* data) {
 
 
         string id2;
-        cout << "enter the destination airport's IATA code, (this should be a three letter code such as JFK: ";
+        cout << "Enter the destination airport's IATA code, (this should be a three letter code such as JFK: ";
         cout << "If you do not know an airport's IATA code, go to the search option in menu to get help by exiting to menu anytime" << endl;
         cin >> id2;
         while(data->getNodeMap().count(id2) == 0 || id2 == id1) {
@@ -290,8 +300,8 @@ void flights_subprogram(Graph* data) {
                 return;
             }
             if (id2 == id1) {
-                cout <<  "you have entered a the same destination airport as your origin airport." << endl;
-                cout <<  "please enter another airport such as SFO" << endl;
+                cout <<  "You have entered a the same destination airport as your origin airport." << endl;
+                cout <<  "Please enter another airport such as SFO" << endl;
                 cin >> id2;
             } else {
                 cout << endl << "This airport code is not in our database, please try entering an airport's IATA/ICAO code again: " << endl;
@@ -313,7 +323,7 @@ void flights_subprogram(Graph* data) {
             if(n->dest->id == id2) {
                 direct_flight_exists = true;
                 //if a direct flight is found
-                cout << "a direct flight has been found to your destination airport " << id2 << endl;
+                cout << "A direct flight has been found to your destination airport " << id2 << endl;
                 cout << "The airline is : " << data->getAirlinesMap()[n->airline_code] << endl; 
                 cout << "The flight distance in km is : " << n->weight << endl << endl; 
             }
@@ -331,7 +341,7 @@ void flights_subprogram(Graph* data) {
             //print out the shortest route and airline options in pairs
             for(unsigned int i = 0; i < path.size() - 1; i++ ) {
                 cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
-                cout << "connection " << i + 1 << " :" << endl;
+                cout << "Connection " << i + 1 << " :" << endl;
                 //find the start and end nodes based on current index
                 Node* start = data->getNodeMap()[ path[i] ];
                 Node* end = data->getNodeMap()[ path[i+1] ];
@@ -340,7 +350,7 @@ void flights_subprogram(Graph* data) {
                 cout << start->id <<"["<< start->name<<"] "<<"("<< start->location_city <<") " << " -> ";
                 cout << end->id <<"["<< end->name<<"] "<<"("<< end->location_city <<") " << endl;
                 
-                cout << "airlines flying this route: " << endl << endl;
+                cout << "Airlines flying this route: " << endl << endl;
                 vector<Edge*> neighbors = data->getEdgeNeighbors(start->id);
                 Edge * connecting = nullptr;
                 for(Edge* n : neighbors) {
@@ -349,20 +359,20 @@ void flights_subprogram(Graph* data) {
                         connecting = n;
                     }
                 }
-                cout << "flight distance in km is : " << connecting->weight << endl << endl; 
+                cout << "Flight distance in km is : " << connecting->weight << endl << endl; 
             }
             cout << endl; 
             cout << "The least amount of connections possible is: " << path.size() - 1 << endl;
         }
 
         string command;
-        cout << "press e to exit after viewing info" <<endl;
+        cout << "Press e to exit after viewing info" <<endl;
         cin >> command;
         do {
             if(command == "e") {
                 break;
             } else {
-                cout <<"invalid option: type e to exit" << endl;
+                cout <<"Invalid option: type e to exit" << endl;
                 cin >> command;
             }
         } while(command != "e");
@@ -425,7 +435,7 @@ void data_subprogram(Graph* data) {
         cout << "|-------------(1)-------------|--------(2)----------|--------------------(3)-----------------|---------------(4)---------------|-------------(5)----------|------(exit)------|" <<endl;
         cout << "|1: Find an Airport's PageRank|2: top 50 by PageRank|3: top 100 by international destinations|4: top 100 by total destinations |5: top 100 most connected |exit: exit to menu|" <<endl << endl;
 
-        cout <<"type exit to exit to menu" << endl;
+        cout <<"Type exit to exit to menu" << endl;
 
         string input;
         getline(cin, input); //update input
@@ -434,7 +444,7 @@ void data_subprogram(Graph* data) {
         if(input == "1") {
             cout <<"_______________________________________________________________________________________________________________________________________________________" << endl;
             string id;
-            cout << "enter an airport's IATA code, this should be a three letter code such as BOS (if the airport does not have an IATA code, please enter its 4 digit ICAO code): " <<endl;
+            cout << "Enter an airport's IATA code, this should be a three letter code such as BOS (if the airport does not have an IATA code, please enter its 4 digit ICAO code): " <<endl;
             cin >> id;
             while(data->getNodeMap().count(id) == 0) {
                 cout << "This airport code is not in our database, please try entering an airport's IATA/ICAO code again: " <<endl;
@@ -456,12 +466,12 @@ void data_subprogram(Graph* data) {
             cout << "This ranks it " << count << " out of " << pr.size() << " total airports." << endl << endl;
 
             //asks to exit or not
-            string command; cout << "press e to exit after viewing info" <<endl; cin >> command;
+            string command; cout << "Press e to exit after viewing info" <<endl; cin >> command;
             do {
                 if(command == "e") {
                     break;
                 } else {
-                    cout <<"invalid option: type e to exit" << endl;
+                    cout <<"Invalid option: type e to exit" << endl;
                     cin >> command;
                 }
             } while(command != "e"); 
@@ -478,12 +488,12 @@ void data_subprogram(Graph* data) {
             }
 
             //asks to exit or not
-            string command; cout << "press e to exit after viewing info" <<endl; cin >> command;
+            string command; cout << "Press e to exit after viewing info" <<endl; cin >> command;
             do {
                 if(command == "e") {
                     break;
                 } else {
-                    cout <<"invalid option: type e to exit" << endl;
+                    cout <<"Invalid option: type e to exit" << endl;
                     cin >> command;
                 }
             } while(command != "e"); 
@@ -502,12 +512,12 @@ void data_subprogram(Graph* data) {
             }
 
             //asks to exit or not
-            string command; cout << "press e to exit after viewing info" <<endl; cin >> command;
+            string command; cout << "Press e to exit after viewing info" <<endl; cin >> command;
             do {
                 if(command == "e") {
                     break;
                 } else {
-                    cout <<"invalid option: type e to exit" << endl;
+                    cout <<"Invalid option: type e to exit" << endl;
                     cin >> command;
                 }
             } while(command != "e"); 
@@ -525,12 +535,12 @@ void data_subprogram(Graph* data) {
             }
                         
             //asks to exit or not
-            string command; cout << "press e to exit after viewing info" <<endl; cin >> command;
+            string command; cout << "Press e to exit after viewing info" <<endl; cin >> command;
             do {
                 if(command == "e") {
                     break;
                 } else {
-                    cout <<"invalid option: type e to exit" << endl;
+                    cout <<"Invalid option: type e to exit" << endl;
                     cin >> command;
                 }
             } while(command != "e"); 
@@ -552,12 +562,12 @@ void data_subprogram(Graph* data) {
             }
                         
             //asks to exit or not
-            string command; cout << "press e to exit after viewing info" <<endl; cin >> command;
+            string command; cout << "Press e to exit after viewing info" <<endl; cin >> command;
             do {
                 if(command == "e") {
                     break;
                 } else {
-                    cout <<"invalid option: type e to exit" << endl;
+                    cout <<"Invalid option: type e to exit" << endl;
                     cin >> command;
                 }
             } while(command != "e"); 
@@ -585,10 +595,10 @@ int main()
         cout << "_______++++++++++++++++++++<^>++++++++++++++++++++++_____________________________________________________________________________________________________________" << endl;
         cout << "       Welcome to FastPairFinders Aviation Explorer" << endl;
         cout << "_______++++++++++++++++++++<*>++++++++++++++++++++++_____________________________________________________________________________________________________________" << endl;
-        cout << "options:" << endl;
-        cout << "type a listed option to begin:\n" << endl;
+        cout << "Options:" << endl;
+        cout << "Type a listed option to begin:\n" << endl;
         print_options(main_options);
-        cout << "\nhere, it is possible explore information about airports, find flights, get statistics such as the most important airports, or exit this program." << endl;
+        cout << "\nHere, it is possible explore information about airports, find flights, get statistics such as the most important airports, or exit this program." << endl;
         getline(cin, input); //update input
         validate_option(main_options, input); //exit sequence after input is validated
 
