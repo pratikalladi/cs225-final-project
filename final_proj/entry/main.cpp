@@ -50,13 +50,8 @@ void validate_option(vector<string> options, string& input) {
 
 //function to print the list of destinations of an airport such as printing direct destinations.
 void print_destinations(unordered_map<string, Edge*> direct_destinations, unordered_map<string, Edge*> international_destinations) {
-<<<<<<< HEAD
-    cout << "-----------------------------------------------------------------------------------------------------------------------" << endl;
-    cout <<"domestic destinations: " << endl;
-=======
     cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
     cout <<"Domestic destinations: " << endl;
->>>>>>> 677916ddc0db8c098a433400324fe9e8099b25b4
     for(auto pair : direct_destinations) {
         //only print if the destination is not international
         Edge* x = pair.second;
@@ -68,13 +63,8 @@ void print_destinations(unordered_map<string, Edge*> direct_destinations, unorde
     
     //print international destinations if there are any
     if(international_destinations.size() != 0) {
-<<<<<<< HEAD
-        cout << "-----------------------------------------------------------------------------------------------------------------------" << endl;
-        cout <<"international destinations: " << endl;
-=======
         cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
         cout <<"International destinations: " << endl;
->>>>>>> 677916ddc0db8c098a433400324fe9e8099b25b4
         for(auto pair : international_destinations) {
             //only print if the destination is not international
             Edge* x = pair.second;
