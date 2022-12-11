@@ -250,9 +250,6 @@ double Graph :: PageRankofNode(string node){
         temp = temp/13000 * 100;
         weight += temp;
     }
-    if (outgoing == 0) {
-        outgoing++;
-    }
 
     vector<Node*> neighbors = getNodeNeighbors(node);
     for (Node* n : neighbors) {
@@ -266,16 +263,26 @@ double Graph :: PageRankofNode(string node){
             }
     }
     }
+
+    if (outgoing == 0) {
+        outgoing++;
+    }
+
     double pageRankDiv = (weight * (incoming/outgoing));
     return pageRankDiv;
 }
 
 vector<pair<string, double>> Graph::PageRank() {
     vector<pair<string, double>> output;
-    std::vector<std::pair<std::string, int>> allAirports = BFS("JFK");
-    for (unsigned i = 0; i < allAirports.size(); i++) {
+    //std::vector<std::pair<std::string, int>> allAirports = BFS(getNodeMap().begin()->first);
+    /* for (unsigned i = 0; i < allAirports.size(); i++) {
         double pscore = PageRankofNode(allAirports[i].first);
         pair<string, double> airport(allAirports[i].first, pscore);
+        output.push_back(airport);
+    } */
+    for (auto i : getNodeMap()) {
+        double pscore = PageRankofNode(i.first);
+        pair<string, double> airport(i.first, pscore);
         output.push_back(airport);
     }
     sort(output.begin(), output.end(), prcompare);

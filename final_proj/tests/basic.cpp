@@ -363,12 +363,11 @@ TEST_CASE("test case 1: check number of pagerank airports") {
     sg.scanCSV(g, airport_path, flights);
 
     vector<pair<string, double>> pr = g->PageRank();
-    std::vector<std::pair<std::string, int>> bfsnodes = g->BFS("JFK");
 
     cout << "There are " << pr.size() << " airports in the pagerank database" << endl;
 
     int pgsize = (int) pr.size();
-    int bfssize = bfsnodes.size();
+    int bfssize = g->getNodeMap().size();
 
     REQUIRE(bfssize == pgsize);
 }
