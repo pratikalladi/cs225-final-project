@@ -3,7 +3,6 @@
  * Contains code to run main
  */
 
-#include <unistd.h>
 #include <iostream>
 #include <queue>
 #include <sstream>
