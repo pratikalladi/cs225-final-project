@@ -76,12 +76,18 @@ void airports_subprogram(Graph* data) {
             //get other information
             Node* info = data->getNodeMap()[id];
             cout << "-------------------------------["<< info->name <<"(" << id << ")"<< " info" <<"]---------------------------------------------------" <<endl;
-            cout << endl << "This airport with code, " << id << ", has the full name: " << info->name << endl << endl;
-            cout << "It is located in: " << info->location_city <<", "<< info->location_country <<endl;
+            cout << endl << "This airport with code, " << id << ", has the full name: " << info->name << endl;
+            cout << "It is located in: " << info->location_city <<", "<< info->location_country <<endl << endl;
 
-            cout << "It has direct flights (with distance in km) to these airports: " << endl;
+            cout << "It has direct flights (with distance in km) to these ";
             auto n1 = data->getEdgeNeighbors(id);
-            for(Edge* x : n1) {
+            unordered_map<string, Edge*> filteredMap1; //this is needed so no new duplicate destination is inserted
+            for(Edge* x : n1) { //remove duplicate destinations which correspond to different airlines.
+                filteredMap1.insert({x->dest->id, x});
+            } 
+            cout << filteredMap1.size() << " airports: " << endl;
+            for(auto pair : filteredMap1) {
+                Edge* x = pair.second;
                 Node* direct = x->dest;
                 cout << direct->id <<"["<< direct->name<<"] "<<"("<< x->weight<<") " << ", ";
             } cout << endl; 
@@ -113,15 +119,20 @@ void airports_subprogram(Graph* data) {
             Node* info = data->getNodeMap()[id];
             cout << "-------------------------------["<< info->name <<"(" << id << ")"<< " info" <<"]---------------------------------------------------" <<endl;
             cout << endl << "This airport with code: " << id << " has the full name: " << info->name << endl;
-            cout << "It is located in: " << info->location_city <<", "<< info->location_country <<endl << endl;;
+            cout << "It is located in: " << info->location_city <<", "<< info->location_country <<endl << endl;
 
-            cout << "It has direct flights (with distance in km) to these airports: " << endl;
+            cout << "It has direct flights (with distance in km) to these ";
             auto n1 = data->getEdgeNeighbors(id);
-            for(Edge* x : n1) {
+            unordered_map<string, Edge*> filteredMap1; //this is needed so no new duplicate destination is inserted
+            for(Edge* x : n1) { //remove duplicate destinations which correspond to different airlines.
+                filteredMap1.insert({x->dest->id, x});
+            } 
+            cout << filteredMap1.size() << " airports: " << endl;
+            for(auto pair : filteredMap1) {
+                Edge* x = pair.second;
                 Node* direct = x->dest;
                 cout << direct->id <<"["<< direct->name<<"] "<<"("<< x->weight<<") " << ", ";
             } cout << endl; 
-
             cout << endl << "airport information for " << id << " printed above ^" << endl;
         }
         else if(input == "exit") {
