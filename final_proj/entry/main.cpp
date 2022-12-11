@@ -410,9 +410,8 @@ void data_subprogram(Graph* data) {
 
     auto stop = high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<microseconds>(stop - start);
-
     double runtime = duration.count();
-    cout << endl << "average runtime loading this data: " << runtime / (double) 1000000 << " seconds" << endl << endl;
+    cout << endl << "Time spent loading this data: " << runtime / (double) 1000000 << " seconds" << endl << endl;
 
     bool program_finished = false; //sets if the program is finished or not
     while(!program_finished) {
