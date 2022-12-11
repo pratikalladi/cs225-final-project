@@ -57,9 +57,9 @@ void airports_subprogram(Graph* data) {
     while(!program_finished) {
         cout <<"_______________________________________________________________________________________________________________________________________________________" << endl;
         cout << "Find information about a certain airport: " << endl;
-        cout << "type a listed option to begin:\n" << endl;
+        cout << "Type a listed option to begin:\n" << endl;
         print_options(options); 
-        cout << "\nhere, it is possible to search by either IATA code, or the city an airport is in, or exit to menu" << endl;
+        cout << "\nHere, it is possible to search by either IATA code, or the city an airport is in, or exit to menu" << endl;
 
         string input;
         getline(cin, input); //update input
@@ -98,12 +98,12 @@ void airports_subprogram(Graph* data) {
             cout << "enter an airport's city location fully, (for example, JFK is in New York)" << endl;
             getline(cin, city);
             while(data->getCityToNodes().count(city) == 0) {
-                cout << "spelling is incorrect or this city is not in our database, please try entering an airport's city again: " <<endl;
+                cout << "Spelling is incorrect or this city is not in our database, please try entering an airport's city again, using proper capitalization: " <<endl;
                 getline(cin, city);
             }
 
             auto list = data->getCityToNodes()[city];
-            cout << "these cities have these airports. Choose one of the listed airport's IATA codes(in brackets) to continue: " << endl;
+            cout << "These cities have these airports. Choose one of the listed airport's IATA codes (3 letters in brackets) to continue: " << endl;
             for(Node* n : list) {
                 cout << n->name << "[" << n->id << "]"<<", " << endl;
             }
@@ -247,6 +247,17 @@ void flights_subprogram(Graph* data) {
     }
 }
 
+void data_subprogram(Graph* data) {
+    /* vector<pair<string, double>> pr = data->PageRank();
+    for (unsigned i = 0; i < 51; i++) {
+        std::cout << pr[i].first << " -> " << pr[i].second <<std::endl;
+    } */
+   // std::cout << "JFK -> " << data->PageRankofNode("JFK") << std::endl;
+    //std::cout << "LAX -> " << data->PageRankofNode("LAX") << std::endl;
+    //std::cout << "CMI -> " << data->PageRankofNode("CMI") << std::endl;
+    std::cout << "BOS -> " << data->PageRankofNode("BOS") << std::endl;
+}
+
 int main()
 {   
 
@@ -278,8 +289,9 @@ int main()
         else if(input == "flights") {
             flights_subprogram(data);
         } 
-        else if(input == "data") {
+        else if(input == "stats") {
             //will display interesting statistics using pagerank and BFS algorithms
+            data_subprogram(data);
         }
 
         else if(input == "exit") {

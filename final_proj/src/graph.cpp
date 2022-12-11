@@ -190,18 +190,19 @@ double Graph::getDistance(Node* src, Node* dest){
 }
 
 
-std::vector<std::string> Graph::BFS(string src) {
+std::vector<std::pair<std::string, int>> Graph::BFS(std::string src) {
     Node* source = nodeMap[src];
-    
-    std::vector<std::string> result;
+    std::vector<std::pair<std::string, int>> result;
     std::vector<bool> visited(14111, false);
     std::queue<Graph::Node*> bfs;
     bfs.push(source);
     Graph::Node* current = source;
     visited.at(current->index) = true;
+    int hops = 0;
     while (!bfs.empty()) {
         current = bfs.front();
-        result.push_back(current->id);
+        std::pair<std::string, int> temp(current->id, hops);
+        result.push_back(temp);
         for (auto iter : getNodeNeighbors(current->id)) {
             if (visited.at(iter->index) == false) {
                 bfs.push(iter);
@@ -209,9 +210,11 @@ std::vector<std::string> Graph::BFS(string src) {
             }
         }
         bfs.pop();
+        hops++;
     }
     return result;
 }
+
 
 //no need for below code, keeping around as reference until not needed
 
@@ -240,31 +243,51 @@ double Graph :: Wout(int m,int o){
 double Graph :: PageRankofNode(string node){
     std::vector<Edge*> connections = getEdgeNeighbors(node);
     double weight = 0;
-    double pageRankScore = 0.85; //dampening factor
-    double numConnections = connections.size();
+    double outgoing = connections.size();
     double incoming = 0;
-    double outgoing = 0;
     for (Edge* e : connections) {
-        if (e->dest->id == node) {
-            incoming++;
-        } else {
-            outgoing++;
-        }
         weight += e->weight;
     }
-    double pageRankDiv = 0.85 * (weight * (incoming/outgoing));
-    pageRankScore += pageRankDiv;
-    return pageRankScore;
+    if (outgoing == 0) {
+        outgoing++;
+    }
+
+    vector<Node*> neighbors = getNodeNeighbors(node);
+    for (Node* n : neighbors) {
+        std::vector<Edge*> nc = getEdgeNeighbors(n->id);
+        for (Edge* e : nc) {
+            if ( e->dest->id == node) {
+                incoming++;
+                weight += e->weight;
+            }
+    }
+    }
+
+    double pageRankDiv =0.85 + 0.85 * (weight * (incoming/outgoing));
+    return pageRankDiv;
 }
 
-vector<pair<string, double>> Graph::PageRank(string input) {
+vector<pair<string, double>> Graph::PageRank() {
     vector<pair<string, double>> output;
-    std::vector<string> allAirports = BFS(input);
-    for (string node : allAirports) {
-        double pscore = PageRankofNode(node);
+    std::vector<std::pair<std::string, int>> allAirports = BFS("JFK");
+    for (unsigned i = 0; i < allAirports.size(); i++) {
+        double pscore = PageRankofNode(allAirports[i].first);
+        pair<string, double> airport(allAirports[i].first, pscore);
+        output.push_back(airport);
     }
+    sort(output.begin(), output.end(), prcompare);
+    reverse(output.begin(), output.end());
     return output;
 }
+
+bool prcompare(const pair<string, double> &p1, const pair<string, double> &p2) {
+    if (p1.second < p2.second) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
 Graph::Node* Graph::getNode(string abbr){
     return nodeMap[abbr];
