@@ -281,7 +281,7 @@ void data_subprogram(Graph* data) {
                 }
             }
 
-        cout << "Your selected airport, " << id << " , has a PageRank score of: " << finder.second << endl;
+        cout << "Your selected airport, " << id << ", has a PageRank score of: " << finder.second << endl;
         cout << "\n" << endl;
         cout << "This ranks it " << count << " out of " << pr.size() << " total airports." << endl;
         }
