@@ -246,7 +246,9 @@ double Graph :: PageRankofNode(string node){
     double outgoing = connections.size();
     double incoming = 0;
     for (Edge* e : connections) {
-        weight += e->weight;
+        double temp = e->weight;
+        temp = temp/13000 * 100;
+        weight += temp;
     }
     if (outgoing == 0) {
         outgoing++;
@@ -258,11 +260,12 @@ double Graph :: PageRankofNode(string node){
         for (Edge* e : nc) {
             if ( e->dest->id == node) {
                 incoming++;
-                weight += e->weight;
+                double temp = e->weight;
+                temp = temp/13000 * 100;
+                weight += temp;
             }
     }
     }
-    weight = weight / 13000 * 100;
     double pageRankDiv = (weight * (incoming/outgoing));
     return pageRankDiv;
 }

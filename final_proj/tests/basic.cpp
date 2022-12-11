@@ -350,4 +350,47 @@ TEST_CASE("test case 8: loading on the whole dataset, connecting flights ") {
     cout << endl; 
     delete g;
 }
+
+TEST_CASE("test case 1: check number of pagerank airports") {
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 1: check number of pagerank airports" << endl;
+    
+    Graph* g = new Graph();
+    string airport_path ="../data/airports.dat";
+    string flights = "../data/routes.dat";
+
+    ScanGraph sg;
+    sg.scanCSV(g, airport_path, flights);
+
+    vector<pair<string, double>> pr = g->PageRank();
+    std::vector<std::pair<std::string, int>> bfsnodes = g->BFS("JFK");
+
+    cout << "There are " << pr.size() << " airports in the pagerank database" << endl;
+
+    int pgsize = (int) pr.size();
+    int bfssize = bfsnodes.size();
+
+    REQUIRE(bfssize == pgsize);
+}
+
+TEST_CASE("test case 2: check pagerank importance algorithm") {
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 2: check pagerank importance algorithm" << endl;
+    
+    Graph* g = new Graph();
+    string airport_path ="../data/airports_pagerank_test.dat";
+    string flights = "../data/routes_pagerank_test.dat";
+
+    ScanGraph sg;
+    sg.scanCSV(g, airport_path, flights);
+
+    vector<pair<string, double>> pr = g->PageRank();
+
+    cout << "These are the importance of the airports in the pagerank test database" << endl;
+    for (auto a : pr) {
+        cout << a.first << " -> " << a.second << endl;
+    }
+
+    //REQUIRE(pr[0].first == "MAG");
+}
   
