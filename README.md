@@ -73,3 +73,9 @@ After running `./main`, the user will have 4 options:
 * exit
 
 Simply type the option you want to use.
+
+* airports:
+
+- user must type "code" or "city" depending on which option they want to use
+
+In all cases, user can type "exit" to quit program
