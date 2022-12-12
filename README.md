@@ -16,7 +16,7 @@ Documentation inside the `documents` folder
 
 `documents` folder:
 
-Includes Project Proposal, Team Contract, and Weekly Development Log
+Includes Project Proposal, Team Contract, Weekly Development Log, and Results.md written report
 
 `final_proj` folder:
 
