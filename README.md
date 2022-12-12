@@ -14,6 +14,11 @@ Documentation inside the `documents` folder
 
 ## Github Organization:
 
+'documents' folder:
+Includes Project Proposal, Team Contract, and Weekly Development Log
+
+'final_proj' folder:
+
 * ./data
 Includes datasets for airports, routes, and airlines as well as specialized versions to test them on algorithms
 
