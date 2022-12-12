@@ -15,23 +15,29 @@ Documentation inside the `documents` folder
 ## Github Organization:
 
 'documents' folder:
+
 Includes Project Proposal, Team Contract, and Weekly Development Log
 
 'final_proj' folder:
 
 * ./data
+
 Includes datasets for airports, routes, and airlines as well as specialized versions to test them on algorithms
 
 * ./entry
+
 Includes Jupyter notebook about test cases with visuals and main program (main.cpp)
 
 * ./lib
+
 Includes libraries such as cs225 and lodepng
 
 * ./src
+
 Includes source code for data ingestion algorithm, BFS, Dijkstra's, and PageRank
 
 * ./tests
+
 Includes test cases and Jupyter notebook about test cases
 
 ## To Run Program:
@@ -52,3 +58,16 @@ Alternatively, run `make test` to compile our test suite
 
 Run our main program by typing `./main` and our test suite by typing `./test`
 
+## Main Program:
+
+After running './main', the user will have 4 options:
+
+* airports
+
+* flights
+
+* stats
+
+* exit
+
+Simply type the option you want to use

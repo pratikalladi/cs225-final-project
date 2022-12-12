@@ -193,7 +193,6 @@ std::vector<std::pair<int, std::string>> Graph::BFS(std::string src) {
     visited.at(current->index) = true;
     int hops = 0;
     auto x = bfs.back();
-
     while (!bfs.empty()) {
         current = bfs.front();
         std::pair<int, std::string> temp(hops, current->id);
@@ -216,23 +215,19 @@ std::vector<std::pair<int, std::string>> Graph::BFS(std::string src) {
 //version of BFS that only finds the list of nodes that are a certain amount of edges (hops) from the source. Better for runtime in cases where all nodes for example, that are at most two edges from the source.
 std::vector<std::pair<int, std::string>> Graph::BFS(std::string src, unsigned int limit) {
     std::vector<std::pair<int, std::string>> result;
-    
     Node* source = nodeMap[src];
-    
     vector<bool> visited(nodeMap.size(), false);  //if a node's index is visited, it will be present in this set
     std::queue<Node*> bfs;
     bfs.push(source);
     Graph::Node* current = source;
     visited[current->index] = true; //insert int
-    
     unsigned int hops = 0;
     auto x = bfs.back();
-
     while (!bfs.empty()) {
         current = bfs.front();
-        if(hops > limit) {
+        if (hops > limit) {
             return result;
-        } else if(hops == limit) {
+        } else if (hops == limit) {
             result.push_back({hops, current->id}); //append only if the number of hops is the same as the limit
         }
         for (auto iter : getNodeNeighbors(current->id)) {
