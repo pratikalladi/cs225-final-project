@@ -315,7 +315,7 @@ void flights_subprogram(Graph* data) {
                 //if a direct flight is found
                 cout << "A direct flight has been found to your destination airport " << id2 << endl;
                 cout << "The airline is : " << data->getAirlinesMap()[n->airline_code] << endl; 
-                cout << "The flight distance in km is : " << n->weight << endl << endl; 
+                cout << "The flight distance is : " << n->weight <<" km or "<< n->weight/1.60934 << " miles"<< endl << endl; 
             }
         }
 
@@ -349,10 +349,12 @@ void flights_subprogram(Graph* data) {
                         connecting = n;
                     }
                 }
-                cout << "Flight distance in km is : " << connecting->weight << endl << endl; 
+                cout << "Flight distance is : " << connecting->weight <<" km or "<< connecting->weight/1.60934 <<" miles" << endl; 
             }
             cout << endl; 
             cout << "The least amount of connections possible is: " << path.size() - 1 << endl;
+            double shortest_distance = data->dijkstra_A_find_shortest_distance(id1, id2);
+            cout << "The total distance of all these connecting flights is: " << shortest_distance <<" km or "<< shortest_distance/1.60934 <<" miles" << endl;
         }
 
         string command;
