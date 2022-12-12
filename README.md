@@ -1,4 +1,5 @@
 # cs225-final-project
+
 Final project for CS225 FA2022
 
 **FastPairFinders Developers:**
@@ -10,6 +11,23 @@ Final project for CS225 FA2022
 - Pratik Alladi
 
 Documentation inside the `documents` folder
+
+## Github Organization:
+
+* ./data
+Includes datasets for airports, routes, and airlines as well as specialized versions to test them on algorithms
+
+* ./entry
+Includes Jupyter notebook about test cases with visuals and main program (main.cpp)
+
+* ./lib
+Includes libraries such as cs225 and lodepng
+
+* ./src
+Includes source code for data ingestion algorithm, BFS, Dijkstra's, and PageRank
+
+* ./tests
+Includes test cases and Jupyter notebook about test cases
 
 ## To Run Program:
 
