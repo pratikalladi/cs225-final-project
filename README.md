@@ -1,6 +1,14 @@
 # cs225-final-project
 Final project for CS225 FA2022
 
+**FastPairFinders Developers:**
+
+- William Deng
+
+- Max Jing
+
+- Pratik Alladi
+
 Documentation inside the `documents` folder
 
 ## To Run Program:
