@@ -1,5 +1,4 @@
 #define _USE_MATH_DEFINES
-
 #include <cmath>
 #include "graph.h"
 #include "ScanGraph.h"
@@ -7,38 +6,35 @@
 using namespace std;
 
 Graph::Graph(string airlines_path, string airports_path, string routes_path) { //constructor to build a graph from openflights airline paths and initialize the airlines database
- 
     //scan in the airline database
     ifstream airlines{airlines_path};
-
     unordered_map<int, string> local;
     string line, tmp;
+
     if (airlines.is_open()) {
         while (getline(airlines, line)) {
-            
             //from mp schedule SplitString()
             vector<string> vec;
             char sep = ',';
             std::string::size_type pos;
+
             while((pos = line.find(sep)) != std::string::npos) {
                 vec.push_back(line.substr(0, pos));
                 line.erase(0, pos + 1);  
             }
-            vec.push_back(line);
 
+            vec.push_back(line);
             string airline_name = vec[1]; //airline name  
             airline_name = airline_name.substr(1, airline_name.size() - 2); //remove parentheses and quotation marks
-
             //check if string is number before assigning
             int code = std::stoi(vec[0]);
             airlinesMap.insert({code, airline_name});
         }
     }
-
     ScanGraph sg; //scan in the routes and rest
+
     sg.scanCSV(this, airports_path, routes_path); 
 } 
-
 
 Graph::~Graph() {
     //delete all allocated nodes
@@ -59,21 +55,23 @@ Graph::~Graph() {
 };
 
 void Graph::addNode(Node* n) {
-    if (adjList.size() != adjListVector.size()) { cout << "insertion error!" << endl; return; }; 
+    if (adjList.size() != adjListVector.size()) {
+        cout << "insertion error!" << endl;
+        return;
+    };
+
     if (nodeMap.find(n->id) != nodeMap.end()) {  //if node name already exists, do not allow
         cout << "insertion error!" << endl; 
         cout << "node ids must be unique!" << endl << endl; 
         cout << "node with id: " <<  n->id << ", already exists" << endl;
         return;
     } 
-    n->index = adjList.size();
 
+    n->index = adjList.size();
     vector<Node*> new_nlist;
     new_nlist.push_back(n); 
     adjListVector.push_back(new_nlist); //insert into the index based adjacency list
 
-    
-    
      //insert into the to map of cities to nodes
     if (cityToNodes.count(n->location_city) == 0) { //if new, do something else
         vector<Node*> new_city_list;
@@ -85,9 +83,7 @@ void Graph::addNode(Node* n) {
 
     vector<Edge *> new_elist; 
     adjList.insert({n->id, new_elist});
-
     nodeMap.insert({n->id, n}); //insert into the node map
-    
     nodeCount++;
 }
 
@@ -99,16 +95,15 @@ void Graph::addEdge(Edge* e) {
 
     adjList[e->source->id].push_back(e); //map find
     edgeCount++;
-
     adjListVector[e->source->index].push_back(e->dest);
     //e->weight = distance(e->source, e->dest);
 }
 
 //function to print out the graph's basic structure and edge weights
-void Graph::print_graph() {   
+void Graph::print_graph() { 
+    //prints out each node and its neighbors  
     cout << "printing graph structure" << endl;
-    //prints out each node and its neighbors
-
+    
     //for cases when graph is not weighted
     for (unsigned int j = 0; j < adjListVector.size(); j++) { 
         //find the node based on the index alone
@@ -116,14 +111,15 @@ void Graph::print_graph() {
         string node_id = current_node->id; //find the node id
         cout << "node: " << node_id << ", neighbor(s): ";
         vector<Edge*> edges = adjList[node_id];
+
         for (unsigned int i = 0; i < edges.size(); i++) {
             double n_weight = edges[i]->weight;
-                
             cout << edges[i]->dest->id << "(" << n_weight << ")" << ", "; 
-
         }
+
         cout << endl;
     }
+
     cout << endl;
 } 
 
@@ -131,11 +127,11 @@ void Graph::print_graph() {
 void Graph::construct_basic_graph(const V2D_strings &relations, const V2D_numbers &weights) {
     for (unsigned int j = 0; j < relations.size(); j++) { 
         vector<string> related_classes = relations[j];
-
         string node_source = related_classes[0]; //the first will always be the new
         Node* source_node = new Node(node_source);
         addNode(source_node); //add node   
     }
+
     //then, iterate only among the edges, while keeping track of the source node
     for (unsigned int j = 0; j < relations.size(); j++) { 
         vector<string> related_classes = relations[j];
@@ -148,7 +144,6 @@ void Graph::construct_basic_graph(const V2D_strings &relations, const V2D_number
             //only add the edge if the end is a valid node
             if (nodeMap.count(node_end) != 0) {
                 Node* end_node = nodeMap[node_end];
-                
                 Edge* new_edge = new Edge(source_node, end_node, weights[j][i]); //create and add a new edge
                 addEdge(new_edge);
             }
@@ -182,7 +177,6 @@ double Graph::getDistance(Node* src, Node* dest) {
     return dist_out;
 }
 
-
 std::vector<std::pair<int, std::string>> Graph::BFS(std::string src) {
     Node* source = nodeMap[src];
     std::vector<std::pair<int, std::string>> result;
@@ -193,22 +187,27 @@ std::vector<std::pair<int, std::string>> Graph::BFS(std::string src) {
     visited.at(current->index) = true;
     int hops = 0;
     auto x = bfs.back();
+
     while (!bfs.empty()) {
         current = bfs.front();
         std::pair<int, std::string> temp(hops, current->id);
         result.push_back(temp);
+
         for (auto iter : getNodeNeighbors(current->id)) {
             if (visited.at(iter->index) == false) {
                 bfs.push(iter);
                 visited.at(iter->index) = true;
             }
         }
+
         if (x == bfs.front()) {
             x = bfs.back();
             hops++;
         }
+
         bfs.pop();
     }
+
     return result;
 }
 
@@ -223,25 +222,31 @@ std::vector<std::pair<int, std::string>> Graph::BFS(std::string src, unsigned in
     visited[current->index] = true; //insert int
     unsigned int hops = 0;
     auto x = bfs.back();
+
     while (!bfs.empty()) {
         current = bfs.front();
+
         if (hops > limit) {
             return result;
         } else if (hops == limit) {
             result.push_back({hops, current->id}); //append only if the number of hops is the same as the limit
         }
+
         for (auto iter : getNodeNeighbors(current->id)) {
             if (visited[iter->index] == false) {
                 bfs.push(iter);
                 visited[iter->index] = true;
             }
         }
+
         if (x == bfs.front()) {
             x = bfs.back();
             hops++;
         }
+
         bfs.pop();
     }
+
     return result;
 }
 
@@ -269,11 +274,12 @@ double Graph :: Wout(int m,int o){
 } */
 
 //adapt code
-double Graph :: PageRankofNode(string node) {
+double Graph::PageRankofNode(string node) {
     std::vector<Edge*> connections = getEdgeNeighbors(node);
     double weight = 0;
     double outgoing = connections.size() + 1;
     double incoming = 1;
+
     for (Edge* e : connections) {
         double temp = e->weight;
         temp = temp / 13000 * 100;
@@ -281,8 +287,10 @@ double Graph :: PageRankofNode(string node) {
     }
 
     vector<Node*> neighbors = getNodeNeighbors(node);
+
     for (Node* n : neighbors) {
         std::vector<Edge*> nc = getEdgeNeighbors(n->id);
+
         for (Edge* e : nc) {
             if (e->dest->id == node) {
                 incoming++;
@@ -310,6 +318,7 @@ vector<pair<string, double>> Graph::PageRank() {
         pair<string, double> airport(i.first, pscore);
         output.push_back(airport);
     }
+
     sort(output.begin(), output.end(), prcompare);
     reverse(output.begin(), output.end());
     return output;
@@ -336,9 +345,11 @@ vector<Edge*> Graph::getEdgeNeighbors(string input) {
 vector<Node*> Graph::getNodeNeighbors(string input) {
     vector<Edge*> edges = adjList[input];
     vector<Node*> to_return;
+
     for (Edge* edge : edges) {
         to_return.push_back(edge->dest);
     }
+
     return to_return;
 }
 
@@ -347,19 +358,20 @@ vector<string> Graph::dijkstra_A_find_shortest_path(string start, string end) {
     vector<string> to_return; //represents the optimal path taken
 
     //check if this graph is a valid, weighted graph
-    if (nodeMap.count(start) == 0 || nodeMap.count(end) == 0) {cout << "the starting or end points do not exist for this graph" <<endl; return to_return;}
+    if (nodeMap.count(start) == 0 || nodeMap.count(end) == 0) {
+        cout << "the starting or end points do not exist for this graph" <<endl;
+        return to_return;
+    }
 
     //naive implementation : this implementation is faster for much larger datasets
     unordered_map<string, double> distances; //hashmap of distances. A node essentially has infinite distance in terms of dijkstra's if the node is not in the map yet
     priority_queue<pair<double, string>> nodes_by_distance; //stores nodes that have been assigned distances but have not been visited. This should be empty by the end of dijkstra's
-    
     unordered_map<string, string> parents; //stores the parents nodes in order to keep track of the path. Its a map from the one node to the parents
-
     distances.insert({start, 0}); //intialize starting distance
     nodes_by_distance.push({0, start}); //special case for first node
     parents.insert({start, start});//the parent of the source is itself
-
     bool node_found = false;
+
     while (!nodes_by_distance.empty()) { //this is the condition since if the pq becomes empty, this means that a neighbor with less distance was unable to be found.
         string min_node = nodes_by_distance.top().second;  //find the minimum distance vertex
         nodes_by_distance.pop(); //remove the visited node
@@ -370,6 +382,7 @@ vector<string> Graph::dijkstra_A_find_shortest_path(string start, string end) {
         }
             
         vector<Edge*> neighbor_connections = getEdgeNeighbors(min_node);
+
         for (Edge* e : neighbor_connections) {
             string neighbor = e->dest->id; 
             double curr_distance = distances[min_node] + e->weight; //distance to source based on addition
@@ -383,6 +396,7 @@ vector<string> Graph::dijkstra_A_find_shortest_path(string start, string end) {
             }
         }
     }
+
     if (node_found == false) { //if the node has not been found
         cout << "the destination could not be found likely because the destination is not connected in any way to the source" << endl; //if the destination does not end up being found
         return to_return;
@@ -394,21 +408,26 @@ vector<string> Graph::dijkstra_A_find_shortest_path(string start, string end) {
     if (end != start) {
         to_return.insert(to_return.begin(), end);
     }
+
     string current_value = parents[end];  //set to the start
+
     while (current_value != start) {
         to_return.insert(to_return.begin(), current_value); //insert at front
         current_value = parents[current_value];
     }
+
     return to_return;
 }
 
 double Graph::dijkstra_A_find_shortest_distance (string start, string end) { //returns the shortest possible distance between two nodes
-    if (nodeMap.count(start) == 0 || nodeMap.count(end) == 0) {cout << "the starting or end points do not exist for this graph" <<endl; return -1;}
+    if (nodeMap.count(start) == 0 || nodeMap.count(end) == 0) {
+        cout << "the starting or end points do not exist for this graph" <<endl;
+        return -1;
+    }
 
     //naive implementation : this implementation is faster for much larger datasets
     unordered_map<string, double> distances; //hashmap of distances. A node essentially has infinite distance in terms of dijkstra's if the node is not in the map yet
     priority_queue<pair<double, string>> nodes_by_distance; //stores nodes that have been assigned distances but have not been visited. This should be empty by the end of dijkstra's
-     
     distances.insert({start, 0}); //intialize starting distance
     nodes_by_distance.push({0, start}); //special case for first node
 
@@ -421,6 +440,7 @@ double Graph::dijkstra_A_find_shortest_distance (string start, string end) { //r
         }
             
         vector<Edge*> neighbor_connections = getEdgeNeighbors(min_node);
+
         for (Edge* e : neighbor_connections) {
             string neighbor = e->dest->id; 
             double curr_distance = distances[min_node] + e->weight; //distance to source based on addition
@@ -439,20 +459,22 @@ double Graph::dijkstra_A_find_shortest_distance (string start, string end) { //r
 
 //returns the hashmap of shortest distances to every node in a connected graph from a source, represented as pair of the node id and distance. This is the classic dijkstra's algorithm.
 unordered_map<string, double> Graph::general_dijkstra(string start) { 
-    if (nodeMap.count(start) == 0) {cout << "the starting point does not exist for this graph" <<endl; return unordered_map<string, double>(); }
+    if (nodeMap.count(start) == 0) {
+        cout << "the starting point does not exist for this graph" <<endl;
+        return unordered_map<string, double>();
+    }
 
     //naive implementation : this implementation is faster for much larger datasets
     unordered_map<string, double> distances; //hashmap of distances. A node essentially has infinite distance in terms of dijkstra's if the node is not in the map yet
     priority_queue<pair<double, string>> nodes_by_distance; //stores nodes that have been assigned distances but have not been visited. This should be empty by the end of dijkstra's
-     
     distances.insert({start, 0}); //intialize starting distance
     nodes_by_distance.push({0, start}); //special case for first node
 
     while (!nodes_by_distance.empty()) { //this is the condition since if the pq becomes empty, this means that a neighbor with less distance was unable to be found.
         string min_node = nodes_by_distance.top().second;  //find the minimum distance vertex
         nodes_by_distance.pop(); //remove the visited node
-        
         vector<Edge*> neighbor_connections = getEdgeNeighbors(min_node);
+        
         for (Edge* e : neighbor_connections) {
             string neighbor = e->dest->id; 
             double curr_distance = distances[min_node] + e->weight; //distance to source based on addition
