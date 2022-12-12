@@ -42,23 +42,23 @@ Includes test cases and Jupyter notebook about test cases
 
 ## To Run Program:
 
-Make sure you are inside the cs225 docker container environment
+**Make sure you are inside the cs225 docker container environment**
 
-Navigate to directory using `cd cs225-final-project`
+1. Navigate to directory using `cd cs225-final-project`
 
-Go into code files using `cd final_proj`
+1. Go into code files using `cd final_proj`
 
-Create a build folder using `mkdir build `
+1. Create a build folder using `mkdir build `
 
-Navigate into that build folder using `cd build`
+1. Navigate into that build folder using `cd build`
 
-Run CMake to confgure makefile using `cmake ..`
+1. Run CMake to confgure makefile using `cmake ..`
 
-Finally, run `make` to compile our full program
+1. Finally, run `make` to compile our full program
 
-Alternatively, run `make test` to compile our test suite
+1. Alternatively, run `make test` to compile our test suite
 
-Run our main program by typing `./main` and our test suite by typing `./test`
+1. Run our main program by typing `./main` and our test suite by typing `./test`
 
 ## Main Program:
 
@@ -72,4 +72,4 @@ After running `./main`, the user will have 4 options:
 
 * exit
 
-Simply type the option you want to use
+Simply type the option you want to use.
