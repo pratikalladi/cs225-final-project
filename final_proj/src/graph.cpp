@@ -20,9 +20,9 @@ Graph::Graph(string airlines_path, string airports_path, string routes_path) { /
             vector<string> vec;
             char sep = ',';
             std::string::size_type pos;
-            while((pos=line.find(sep)) != std::string::npos) {
-                vec.push_back(line.substr(0,pos));
-                line.erase(0,pos+1);  
+            while((pos = line.find(sep)) != std::string::npos) {
+                vec.push_back(line.substr(0, pos));
+                line.erase(0, pos + 1);  
             }
             vec.push_back(line);
 
@@ -49,7 +49,7 @@ Graph::~Graph() {
     } 
 
     //delete all allocated edges
-    for(auto pair: adjList) {
+    for (auto pair: adjList) {
         for(Edge * e: pair.second) {
             Edge* to_delete = e;
             delete to_delete;
@@ -59,8 +59,8 @@ Graph::~Graph() {
 };
 
 void Graph::addNode(Node* n) {
-    if(adjList.size() != adjListVector.size()) { cout << "insertion error!" << endl; return; }; 
-    if(nodeMap.find(n->id) != nodeMap.end()) {  //if node name already exists, do not allow
+    if (adjList.size() != adjListVector.size()) { cout << "insertion error!" << endl; return; }; 
+    if (nodeMap.find(n->id) != nodeMap.end()) {  //if node name already exists, do not allow
         cout << "insertion error!" << endl; 
         cout << "node ids must be unique!" << endl << endl; 
         cout << "node with id: " <<  n->id << ", already exists" << endl;
@@ -75,7 +75,7 @@ void Graph::addNode(Node* n) {
     
     
      //insert into the to map of cities to nodes
-    if(cityToNodes.count(n->location_city) == 0) { //if new, do something else
+    if (cityToNodes.count(n->location_city) == 0) { //if new, do something else
         vector<Node*> new_city_list;
         new_city_list.push_back(n);
         cityToNodes.insert({n->location_city, new_city_list});
@@ -92,7 +92,7 @@ void Graph::addNode(Node* n) {
 }
 
 void Graph::addEdge(Edge* e) {
-    if(e->source->id == e->dest->id) { //do not allow self-loops
+    if (e->source->id == e->dest->id) { //do not allow self-loops
         delete e;
         return;
     }
@@ -106,20 +106,20 @@ void Graph::addEdge(Edge* e) {
 
 //function to print out the graph's basic structure and edge weights
 void Graph::print_graph() {   
-    cout <<"printing graph structure" << endl;
+    cout << "printing graph structure" << endl;
     //prints out each node and its neighbors
 
     //for cases when graph is not weighted
-    for(unsigned int j = 0; j < adjListVector.size(); j++) { 
+    for (unsigned int j = 0; j < adjListVector.size(); j++) { 
         //find the node based on the index alone
         Node* current_node = adjListVector[j][0];
         string node_id = current_node->id; //find the node id
         cout << "node: " << node_id << ", neighbor(s): ";
         vector<Edge*> edges = adjList[node_id];
-        for(unsigned int i = 0; i < edges.size(); i++) {
+        for (unsigned int i = 0; i < edges.size(); i++) {
             double n_weight = edges[i]->weight;
                 
-            cout << edges[i]->dest->id << "(" << n_weight << ")" <<", "; 
+            cout << edges[i]->dest->id << "(" << n_weight << ")" << ", "; 
 
         }
         cout << endl;
@@ -129,7 +129,7 @@ void Graph::print_graph() {
 
 //constructs graph. This is used for test purposes. The string relations are the node ids
 void Graph::construct_basic_graph(const V2D_strings &relations, const V2D_numbers &weights) {
-    for(unsigned int j = 0; j < relations.size(); j++) { 
+    for (unsigned int j = 0; j < relations.size(); j++) { 
         vector<string> related_classes = relations[j];
 
         string node_source = related_classes[0]; //the first will always be the new
@@ -137,16 +137,16 @@ void Graph::construct_basic_graph(const V2D_strings &relations, const V2D_number
         addNode(source_node); //add node   
     }
     //then, iterate only among the edges, while keeping track of the source node
-    for(unsigned int j = 0; j < relations.size(); j++) { 
+    for (unsigned int j = 0; j < relations.size(); j++) { 
         vector<string> related_classes = relations[j];
         string node_source = related_classes[0];
         Node* source_node = nodeMap[node_source];
 
-        for(unsigned int i = 1; i < related_classes.size(); i++) { 
+        for (unsigned int i = 1; i < related_classes.size(); i++) { 
             string node_end = related_classes[i];
             
             //only add the edge if the end is a valid node
-            if(nodeMap.count(node_end) != 0) {
+            if (nodeMap.count(node_end) != 0) {
                 Node* end_node = nodeMap[node_end];
                 
                 Edge* new_edge = new Edge(source_node, end_node, weights[j][i]); //create and add a new edge
@@ -157,13 +157,13 @@ void Graph::construct_basic_graph(const V2D_strings &relations, const V2D_number
 } //constructs an graph from a 2d vector of strings representing an adjacency list. Each row represents a node's connections, with the first element in each row being the actual node and the rest being nodes connected to it.  
 
 bool Graph::exists(string abbr) { //checks if the id is already present
-    if(nodeMap.count(abbr) == 0) {
+    if (nodeMap.count(abbr) == 0) {
         return false;
     }
     return true;
 }
 
-double Graph::getDistance(Node* src, Node* dest){
+double Graph::getDistance(Node* src, Node* dest) {
     long double radian_conversion = M_PI /180.0;
 
     long double source_long_rad = (src->longitude) * radian_conversion; //j\hard code 180/pi
@@ -269,14 +269,14 @@ double Graph :: Wout(int m,int o){
 } */
 
 //adapt code
-double Graph :: PageRankofNode(string node){
+double Graph :: PageRankofNode(string node) {
     std::vector<Edge*> connections = getEdgeNeighbors(node);
     double weight = 0;
     double outgoing = connections.size() + 1;
     double incoming = 1;
     for (Edge* e : connections) {
         double temp = e->weight;
-        temp = temp/13000 * 100;
+        temp = temp / 13000 * 100;
         weight += temp;
     }
 
@@ -284,16 +284,16 @@ double Graph :: PageRankofNode(string node){
     for (Node* n : neighbors) {
         std::vector<Edge*> nc = getEdgeNeighbors(n->id);
         for (Edge* e : nc) {
-            if ( e->dest->id == node) {
+            if (e->dest->id == node) {
                 incoming++;
                 double temp = e->weight;
-                temp = temp/13000 * 100;
+                temp = temp / 13000 * 100;
                 weight += temp;
             }
-    }
+        }
     }
 
-    double pageRankDiv = (weight * (incoming/outgoing));
+    double pageRankDiv = (weight * (incoming / outgoing));
     return pageRankDiv;
 }
 
@@ -326,7 +326,6 @@ bool prcompare(const pair<string, double> &p1, const pair<string, double> &p2) {
 
 Graph::Node* Graph::getNode(string abbr){
     return nodeMap[abbr];
-
 }
 
 //function to get a list of all neighbors
@@ -348,7 +347,7 @@ vector<string> Graph::dijkstra_A_find_shortest_path(string start, string end) {
     vector<string> to_return; //represents the optimal path taken
 
     //check if this graph is a valid, weighted graph
-    if(nodeMap.count(start) == 0 || nodeMap.count(end) == 0) {cout << "the starting or end points do not exist for this graph" <<endl; return to_return;}
+    if (nodeMap.count(start) == 0 || nodeMap.count(end) == 0) {cout << "the starting or end points do not exist for this graph" <<endl; return to_return;}
 
     //naive implementation : this implementation is faster for much larger datasets
     unordered_map<string, double> distances; //hashmap of distances. A node essentially has infinite distance in terms of dijkstra's if the node is not in the map yet
@@ -357,26 +356,26 @@ vector<string> Graph::dijkstra_A_find_shortest_path(string start, string end) {
     unordered_map<string, string> parents; //stores the parents nodes in order to keep track of the path. Its a map from the one node to the parents
 
     distances.insert({start, 0}); //intialize starting distance
-    nodes_by_distance.push({0 ,start}); //special case for first node
+    nodes_by_distance.push({0, start}); //special case for first node
     parents.insert({start, start});//the parent of the source is itself
 
     bool node_found = false;
-    while(!nodes_by_distance.empty()) { //this is the condition since if the pq becomes empty, this means that a neighbor with less distance was unable to be found.
+    while (!nodes_by_distance.empty()) { //this is the condition since if the pq becomes empty, this means that a neighbor with less distance was unable to be found.
         string min_node = nodes_by_distance.top().second;  //find the minimum distance vertex
         nodes_by_distance.pop(); //remove the visited node
         
-        if(min_node == end) {                //stop algorithm if the node has been found
+        if (min_node == end) {                //stop algorithm if the node has been found
             node_found = true; //set this to be true 
             break; //end the loop
         }
             
         vector<Edge*> neighbor_connections = getEdgeNeighbors(min_node);
-        for(Edge* e : neighbor_connections) {
+        for (Edge* e : neighbor_connections) {
             string neighbor = e->dest->id; 
             double curr_distance = distances[min_node] + e->weight; //distance to source based on addition
             
             //if the distance to source for the neighbor does not exist yet, meaning it has infinite distance, making the same situation apply as below
-            if(distances.count(neighbor) == 0 || curr_distance < distances[neighbor]) { //this does not cause a segmentation fault since in c++, the conditionals within an if statement are already evaluated left to right. Since this if an or statement, just one being true is
+            if (distances.count(neighbor) == 0 || curr_distance < distances[neighbor]) { //this does not cause a segmentation fault since in c++, the conditionals within an if statement are already evaluated left to right. Since this if an or statement, just one being true is
                 distances[neighbor] = curr_distance; //else if the new distance is shorter or new, change this
                 nodes_by_distance.push({curr_distance * -1, neighbor});   //do this to get the effects of a min-heap so that the sorted is reversed
                 //cout << "neighbor changed: " << neighbor << " to " << min_node<< endl;
@@ -392,11 +391,11 @@ vector<string> Graph::dijkstra_A_find_shortest_path(string start, string end) {
     //populate the path vector iteratively until the source node is reached
     
     //insert the end node if it does not equal start
-    if(end != start) {
+    if (end != start) {
         to_return.insert(to_return.begin(), end);
     }
     string current_value = parents[end];  //set to the start
-    while(current_value != start) {
+    while (current_value != start) {
         to_return.insert(to_return.begin(), current_value); //insert at front
         current_value = parents[current_value];
     }
@@ -404,30 +403,30 @@ vector<string> Graph::dijkstra_A_find_shortest_path(string start, string end) {
 }
 
 double Graph::dijkstra_A_find_shortest_distance (string start, string end) { //returns the shortest possible distance between two nodes
-    if(nodeMap.count(start) == 0 || nodeMap.count(end) == 0) {cout << "the starting or end points do not exist for this graph" <<endl; return -1;}
+    if (nodeMap.count(start) == 0 || nodeMap.count(end) == 0) {cout << "the starting or end points do not exist for this graph" <<endl; return -1;}
 
     //naive implementation : this implementation is faster for much larger datasets
     unordered_map<string, double> distances; //hashmap of distances. A node essentially has infinite distance in terms of dijkstra's if the node is not in the map yet
     priority_queue<pair<double, string>> nodes_by_distance; //stores nodes that have been assigned distances but have not been visited. This should be empty by the end of dijkstra's
      
     distances.insert({start, 0}); //intialize starting distance
-    nodes_by_distance.push({0 ,start}); //special case for first node
+    nodes_by_distance.push({0, start}); //special case for first node
 
-    while(!nodes_by_distance.empty()) { //this is the condition since if the pq becomes empty, this means that a neighbor with less distance was unable to be found.
+    while (!nodes_by_distance.empty()) { //this is the condition since if the pq becomes empty, this means that a neighbor with less distance was unable to be found.
         string min_node = nodes_by_distance.top().second;  //find the minimum distance vertex
         nodes_by_distance.pop(); //remove the visited node
         
-        if(min_node == end) {                //stop algorithm if the node has been found
+        if (min_node == end) {                //stop algorithm if the node has been found
             return distances[end]; 
         }
             
         vector<Edge*> neighbor_connections = getEdgeNeighbors(min_node);
-        for(Edge* e : neighbor_connections) {
+        for (Edge* e : neighbor_connections) {
             string neighbor = e->dest->id; 
             double curr_distance = distances[min_node] + e->weight; //distance to source based on addition
 
             //if the distance to source for the neighbor does not exist yet, meaning it has infinite distance, making the same situation apply as below
-            if(distances.count(neighbor) == 0 || curr_distance < distances[neighbor]) { //this does not cause a segmentation fault since in c++, the conditionals within an if statement are already evaluated left to right. Since this if an or statement, just one being true is
+            if (distances.count(neighbor) == 0 || curr_distance < distances[neighbor]) { //this does not cause a segmentation fault since in c++, the conditionals within an if statement are already evaluated left to right. Since this if an or statement, just one being true is
                 distances[neighbor] = curr_distance; //else if the new distance is shorter or new, change this. //this operator also inserts a new key if the key did not already exist
                 nodes_by_distance.push({curr_distance * -1, neighbor});   //do this to get the effects of a min-heap so that the sorted is reversed.
             }
@@ -440,26 +439,26 @@ double Graph::dijkstra_A_find_shortest_distance (string start, string end) { //r
 
 //returns the hashmap of shortest distances to every node in a connected graph from a source, represented as pair of the node id and distance. This is the classic dijkstra's algorithm.
 unordered_map<string, double> Graph::general_dijkstra(string start) { 
-    if(nodeMap.count(start) == 0) {cout << "the starting point does not exist for this graph" <<endl; return unordered_map<string, double>(); }
+    if (nodeMap.count(start) == 0) {cout << "the starting point does not exist for this graph" <<endl; return unordered_map<string, double>(); }
 
     //naive implementation : this implementation is faster for much larger datasets
     unordered_map<string, double> distances; //hashmap of distances. A node essentially has infinite distance in terms of dijkstra's if the node is not in the map yet
     priority_queue<pair<double, string>> nodes_by_distance; //stores nodes that have been assigned distances but have not been visited. This should be empty by the end of dijkstra's
      
     distances.insert({start, 0}); //intialize starting distance
-    nodes_by_distance.push({0 ,start}); //special case for first node
+    nodes_by_distance.push({0, start}); //special case for first node
 
-    while(!nodes_by_distance.empty()) { //this is the condition since if the pq becomes empty, this means that a neighbor with less distance was unable to be found.
+    while (!nodes_by_distance.empty()) { //this is the condition since if the pq becomes empty, this means that a neighbor with less distance was unable to be found.
         string min_node = nodes_by_distance.top().second;  //find the minimum distance vertex
         nodes_by_distance.pop(); //remove the visited node
         
         vector<Edge*> neighbor_connections = getEdgeNeighbors(min_node);
-        for(Edge* e : neighbor_connections) {
+        for (Edge* e : neighbor_connections) {
             string neighbor = e->dest->id; 
             double curr_distance = distances[min_node] + e->weight; //distance to source based on addition
 
             //if the distance to source for the neighbor does not exist yet, meaning it has infinite distance, making the same situation apply as below
-            if(distances.count(neighbor) == 0 || curr_distance < distances[neighbor]) { //this does not cause a segmentation fault since in c++, the conditionals within an if statement are already evaluated left to right. Since this if an or statement, just one being true is
+            if (distances.count(neighbor) == 0 || curr_distance < distances[neighbor]) { //this does not cause a segmentation fault since in c++, the conditionals within an if statement are already evaluated left to right. Since this if an or statement, just one being true is
                 distances[neighbor] = curr_distance; //else if the new distance is shorter or new, change this. //this operator also inserts a new key if the key did not already exist
                 nodes_by_distance.push({curr_distance * -1, neighbor});   //do this to get the effects of a min-heap so that the sorted is reversed.
             }
