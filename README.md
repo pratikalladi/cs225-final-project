@@ -42,6 +42,8 @@ Includes test cases and Jupyter notebook about test cases
 
 ## To Run Program:
 
+Make sure you are inside the cs225 docker container environment
+
 Navigate to directory using `cd cs225-final-project`
 
 Go into code files using `cd final_proj`
