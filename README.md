@@ -14,11 +14,11 @@ Documentation inside the `documents` folder
 
 ## Github Organization:
 
-'documents' folder:
+`documents` folder:
 
 Includes Project Proposal, Team Contract, and Weekly Development Log
 
-'final_proj' folder:
+`final_proj` folder:
 
 * ./data
 
@@ -60,7 +60,7 @@ Run our main program by typing `./main` and our test suite by typing `./test`
 
 ## Main Program:
 
-After running './main', the user will have 4 options:
+After running `./main`, the user will have 4 options:
 
 * airports
 
