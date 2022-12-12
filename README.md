@@ -12,6 +12,12 @@ Final project for CS225 FA2022
 
 Documentation inside the `documents` folder
 
+Results.md file found here:
+(https://github.com/pratikalladi/cs225-final-project/blob/main/documents/Results.md)
+
+Video Presentation found here:
+(https://youtu.be/btaWNC3K8Pc)
+
 ## Github Organization:
 
 `documents` folder:
