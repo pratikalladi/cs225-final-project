@@ -410,3 +410,20 @@ TEST_CASE("test case 13: check flight route validation") {
     REQUIRE(tester == 0);
     cout << "There are no routes to MAG, as the only one in the CSV was cyclic" << endl;
 }
+
+TEST_CASE("test case 14: check graph construction and getNeighbors()") {
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 14: check graph construction and getNeighbors()" << endl;
+    Graph* g = new Graph();
+    string airport_path = "../data/airports_test.dat";
+    string flights = "../data/routes_test.dat";
+    ScanGraph sg;
+    sg.scanCSV(g, airport_path, flights);
+    vector<Node*> n = g->getNodeNeighbors("GKA");
+    for (Node* node : n) {
+        cout << "Neighbor of GKA: " << node->id << endl;
+    }
+
+    REQUIRE(n.size() == 1);
+    REQUIRE(n[0]->id == "MAG");
+}

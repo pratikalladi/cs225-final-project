@@ -201,7 +201,7 @@ Here is a quick rundown for simpler visualization:
   * `exit`
 
 * `exit`
-***
+
 ## Tests:
 
 * type `make` or `make test` into terminal while in `build folder`
@@ -235,3 +235,5 @@ Here is a quick rundown for simpler visualization:
 * Test Case 12: tests that flight routes were scanned in successfully
 
 * Test Case 13: checks validity of flight routes and whether invalid are rejected
+
+* Test case 14: check graph construction and getNeighbors()
