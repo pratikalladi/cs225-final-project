@@ -162,7 +162,7 @@ Here is a quick rundown for simpler visualization:
 
             * `e`
 
-  * `exit
+  * `exit`
 
 * `flights`
 
@@ -207,3 +207,31 @@ Here is a quick rundown for simpler visualization:
 * type `make` or `make test` into terminal while in `build folder`
 
 * run `./test` to run test cases
+
+Test Cases are as follows:
+
+* Test Case 1: tests that distance function works properly
+
+* Test Case 2: tests that Dijkstra's algorithm works on a basic graph
+
+* Test Case 3: tests that Dijkstra's algorithm works on a medium complexity graph
+
+* Test Case 4: tests that Dijkstra's algorithm and BFS work on a doubly cyclic graph
+
+* Test Case 5: tests that BFS works on a medium complexity graph
+
+* Test Case 6: tests loading on a subset of dataset
+
+* Test Case 7: tests loading on entire dataset
+
+* Test Case 8: tests loading on entire dataset and connecting flights
+
+* Test Case 9: checks number of PageRank airports
+
+* Test Case 10: tests PageRank importance algorithm
+
+* Test Case 11: tests that airports were scanned in successfully
+
+* Test Case 12: tests that flight routes were scanned in successfully
+
+* Test Case 13: checks flight routes are valid
