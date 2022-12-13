@@ -190,6 +190,9 @@ bool Graph::exists(string abbr) {
     return true;
 }
 
+
+//CITATION: adapted from Geeks4Geeks Haversine Formula guide
+// https://www.geeksforgeeks.org/program-distance-two-points-earth/
 double Graph::getDistance(Node* src, Node* dest) {
     long double radian_conversion = M_PI /180.0;
 
@@ -294,29 +297,6 @@ vector<pair<int, string>> Graph::BFS(string src, unsigned int limit) {
     return result;
 }
 
-//no need for below code, keeping around as reference until not needed
-/* 
-double Graph :: Wout(int m,int o) {
-    int k = 0;
-    for (int i=0;i<adjSize;i++){
-        if (adjMatrix[0][i] != INT_MAX){
-            k++;
-        }
-    }
-    int l = 0;
-    for (int i=0;i<adjSize;i++){
-        if (adjMatrix[o][i] != INT_MAX){
-            for (int j=0;j<adjSize;j++){
-                if (adjMatrix[i][j] != INT_MAX){
-                    l++;
-                }
-            }
-        }
-    }
-    return (double) k / (double) l;
-} */
-
-//adapt code
 double Graph::PageRankofNode(string node) {
     vector<Edge*> connections = getEdgeNeighbors(node);
     double weight = 0;
@@ -350,13 +330,6 @@ double Graph::PageRankofNode(string node) {
 
 vector<pair<string, double>> Graph::PageRank() {
     vector<pair<string, double>> output;
-
-    //std::vector<std::pair<std::string, int>> allAirports = BFS(getNodeMap().begin()->first);
-    /* for (unsigned i = 0; i < allAirports.size(); i++) {
-        double pscore = PageRankofNode(allAirports[i].first);
-        pair<string, double> airport(allAirports[i].first, pscore);
-        output.push_back(airport);
-    } */
 
     for (auto i : getNodeMap()) {
         double pscore = PageRankofNode(i.first);
