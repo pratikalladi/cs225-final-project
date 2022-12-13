@@ -40,7 +40,7 @@ Includes libraries such as cs225 and lodepng
 
 * #### ./src
 
-Includes source code for data ingestion algorithm, BFS, Dijkstra's, and PageRank
+Includes source code for data ingestion algorithm, BFS, Dijkstra`s, and PageRank
 
 * #### ./tests
 
@@ -70,17 +70,17 @@ Includes test cases and Jupyter notebook about test cases
 
 After running `./main`, the user will have 4 options:
 
-* 'airports'
+* `airports`
 
-* 'flights'
+* `flights`
 
-* 'stats'
+* `stats`
 
-* 'exit'
+* `exit`
 
 Simply type the option you want to use.
 
-'airports' can be used to find the following:
+`airports` can be used to find the following:
 
 * direct and indirect destinations
 
@@ -88,13 +88,13 @@ Simply type the option you want to use.
 
 * indirect destinations only
 
-'flights' can be used to find the following:
+`flights` can be used to find the following:
 
 * direct flights between 2 airports
 
-'stats' can be used to find the following:
+`stats` can be used to find the following:
 
-* Find an airport's PageRank
+* Find an airport`s PageRank
 
 * List top 50 airports by PageRank
 
@@ -110,100 +110,100 @@ The main program will tell users exactly what input and format are needed
 
 Here is a quick rundown for simpler visualization:
 
-* 'airports'
+* `airports`
 
-  * 'code'
+  * `code`
 
     * [3 letter IATA code]
 
-      * 'y'
+      * `y`
 
-        * 'y'
+        * `y`
 
-          * 'e'
+          * `e`
 
-        * 'n'
+        * `n`
 
-          * 'e'
+          * `e`
 
-      * 'n'
+      * `n`
 
-        * 'y'
+        * `y`
 
-          * 'e'
+          * `e`
 
-        * 'n'
+        * `n`
 
-          * 'e'
+          * `e`
 
-  * 'city'
+  * `city`
 
     * [city name with proper capitalization]
 
       * [3 letter IATA code]
 
-        * 'y'
+        * `y`
 
-          * 'y'
+          * `y`
 
-            * 'e'
+            * `e`
 
-          * 'n'
+          * `n`
 
-            * 'e'
+            * `e`
 
-        * 'n'
+        * `n`
 
-          * 'y'
+          * `y`
 
-            * 'e'
+            * `e`
 
-          * 'n'
+          * `n`
 
-            * 'e'
+            * `e`
 
-  * 'exit
+  * `exit
 
-* 'flights'
+* `flights`
 
   * [3 letter IATA code]
 
     * [3 letter IATA code]
 
-      * 'e'
+      * `e`
 
-  * 'exit'
+  * `exit`
 
-* 'stats'
+* `stats`
 
-  * '1'
+  * `1`
 
     * [3 letter IATA code / 4 letter ICAO code]
 
-      * 'e'
+      * `e`
 
-  * '2'
+  * `2`
 
-    * 'e'
+    * `e`
 
-  * '3'
+  * `3`
 
-    * 'e'
+    * `e`
 
-  * '4'
+  * `4`
 
-    * 'e'
+    * `e`
 
-  * '5'
+  * `5`
 
-    * 'e'
+    * `e`
 
-  * 'exit'
+  * `exit`
 
-* 'exit'
+* `exit`
 
 ## Tests:
 
-* type 'make' or 'make test' into terminal while in 'build folder'
+* type `make` or `make test` into terminal while in `build folder`
 
-* run './test' to run test cases
+* run `./test` to run test cases
