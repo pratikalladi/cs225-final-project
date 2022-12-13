@@ -70,13 +70,13 @@ Includes test cases and Jupyter notebook about test cases
 
 After running `./main`, the user will have 4 options:
 
-* airports
+* 'airports'
 
-* flights
+* 'flights'
 
-* stats
+* 'stats'
 
-* exit
+* 'exit'
 
 Simply type the option you want to use.
 
@@ -107,6 +107,100 @@ Simply type the option you want to use.
 In all cases, user can type "exit" to quit program
 
 The main program will tell users exactly what input and format are needed
+
+Here is a quick rundown for simpler visualization:
+
+* 'airports'
+
+  * 'code'
+
+    * [3 letter IATA code]
+
+      * 'y'
+
+        * 'y'
+
+          * 'e'
+
+        * 'n'
+
+          * 'e'
+
+      * 'n'
+
+        * 'y'
+
+          * 'e'
+
+        * 'n'
+
+          * 'e'
+
+  * 'city'
+
+    * [city name with proper capitalization]
+
+      * [3 letter IATA code]
+
+        * 'y'
+
+          * 'y'
+
+            * 'e'
+
+          * 'n'
+
+            * 'e'
+
+        * 'n'
+
+          * 'y'
+
+            * 'e'
+
+          * 'n'
+
+            * 'e'
+
+  * 'exit
+
+* 'flights'
+
+  * [3 letter IATA code]
+
+    * [3 letter IATA code]
+
+      * 'e'
+
+  * 'exit'
+
+* 'stats'
+
+  * '1'
+
+    * [3 letter IATA code / 4 letter ICAO code]
+
+      * 'e'
+
+  * '2'
+
+    * 'e'
+
+  * '3'
+
+    * 'e'
+
+  * '4'
+
+    * 'e'
+
+  * '5'
+
+    * 'e'
+
+  * 'exit'
+
+* 'exit'
 
 ## Tests:
 
