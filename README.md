@@ -237,3 +237,5 @@ Here is a quick rundown for simpler visualization:
 * Test Case 13: checks validity of flight routes and whether invalid are rejected
 
 * Test case 14: check graph construction and getNeighbors()
+
+* Test case 15: check graph size on a small dataset

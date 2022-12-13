@@ -420,10 +420,27 @@ TEST_CASE("test case 14: check graph construction and getNeighbors()") {
     ScanGraph sg;
     sg.scanCSV(g, airport_path, flights);
     vector<Node*> n = g->getNodeNeighbors("GKA");
+    
+    cout << "Number of GKA neighbors: " << n.size() << endl;
     for (Node* node : n) {
         cout << "Neighbor of GKA: " << node->id << endl;
     }
 
     REQUIRE(n.size() == 1);
     REQUIRE(n[0]->id == "MAG");
+}
+
+TEST_CASE("test case 15: check graph size on a small dataset") {
+    cout << "____________________________________________________________" << endl;
+    cout << "test case 15: check graph size on a small dataset" << endl;
+    Graph* g = new Graph();
+    string airport_path = "../data/airports_test.dat";
+    string flights = "../data/routes_test.dat";
+    ScanGraph sg;
+    sg.scanCSV(g, airport_path, flights);
+    int n = g->getNodeCount();
+
+    cout << "The number of airports in the test dataset that were sucessfully read into the graph is: " << n << endl;
+
+    REQUIRE(n == 3);
 }
