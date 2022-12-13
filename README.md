@@ -80,8 +80,36 @@ After running `./main`, the user will have 4 options:
 
 Simply type the option you want to use.
 
-airports:
+'airports' can be used to find the following:
 
-* user must type "code" or "city" depending on which option they want to use
+* direct and indirect destinations
+
+* direct destinations only
+
+* indirect destinations only
+
+'flights' can be used to find the following:
+
+* direct flights between 2 airports
+
+'stats' can be used to find the following:
+
+* Find an airport's PageRank
+
+* List top 50 airports by PageRank
+
+* List top 100 airports by international destinations
+
+* List top 100 airports by total destinations
+
+* List top 100 most connected airports
 
 In all cases, user can type "exit" to quit program
+
+The main program will tell users exactly what input and format are needed
+
+## Tests:
+
+* type 'make' or 'make test' into terminal while in 'build folder'
+
+* run './test' to run test cases

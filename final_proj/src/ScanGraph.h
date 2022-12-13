@@ -5,8 +5,6 @@
 #include <algorithm>
 #include <fstream>
 #include "ScanGraph.h"
-
-
 using namespace std;
 
 class ScanGraph {
@@ -14,14 +12,10 @@ class ScanGraph {
         void scanCSV(Graph *g, string airport_ifs, string route_ifs);
 
     private:
-           
         void scanCSV_helper(Graph *g, ifstream &airport_ifs, ifstream &route_ifs);
-
         bool is_number(string s);
-
-        std::string TrimRight(const std::string & str);
-        std::string TrimLeft(const std::string & str);
-        std::string Trim(const std::string & str);
-
+        string TrimRight(const string & str);
+        string TrimLeft(const string & str);
+        string Trim(const string & str);
         int SplitString(const std::string & str1, char sep, std::vector<std::string> &fields);
 };
