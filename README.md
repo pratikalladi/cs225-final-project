@@ -12,7 +12,7 @@ Final project for CS225 FA2022
 ***
 ## Deliverables Quick Links:
 
-Results.md file found here:
+Results.md written report found here:
 (https://github.com/pratikalladi/cs225-final-project/blob/main/documents/Results.md)
 
 Video Presentation found here:
@@ -22,13 +22,13 @@ Video Presentation found here:
 
 `documents` folder:
 
-Includes Project Proposal, Team Contract, Weekly Development Log, and Results.md written report
+Includes Project Proposal, Team Contract, Weekly Development Log, and Results.md Written Report
 
 `final_proj` folder:
 
 * #### ./data
 
-Includes datasets for airports, routes, and airlines as well as specialized versions to test them on algorithms
+Includes datasets for airports, routes, and airlines from OpenFlights as well as specialized versions to test them on algorithms
 
 * #### ./entry
 
