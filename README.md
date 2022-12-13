@@ -208,7 +208,7 @@ Here is a quick rundown for simpler visualization:
 
 * run `./test` to run test cases
 
-Test Cases are as follows:
+**Test Cases are as follows:**
 
 * Test Case 1: tests that Haversine distance function works properly
 
