@@ -25,6 +25,7 @@ TEST_CASE("test case 1: test distance function"){
     std::cout << "\n" << std::endl;
     bool out; */
     double d = test->getDistance(start, dest);
+    cout << "Distance between coordinates is " << d << " kilometers" << endl;
     REQUIRE(abs((d - 2886)) < 1);
 
     //delete test graph
