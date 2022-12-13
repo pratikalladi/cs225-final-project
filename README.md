@@ -210,7 +210,7 @@ Here is a quick rundown for simpler visualization:
 
 Test Cases are as follows:
 
-* Test Case 1: tests that distance function works properly
+* Test Case 1: tests that Haversine distance function works properly
 
 * Test Case 2: tests that Dijkstra's algorithm works on a basic graph
 
@@ -234,4 +234,4 @@ Test Cases are as follows:
 
 * Test Case 12: tests that flight routes were scanned in successfully
 
-* Test Case 13: checks flight routes are valid
+* Test Case 13: checks validity of flight routes and whether invalid are rejected
