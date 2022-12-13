@@ -9,7 +9,7 @@ Final project for CS225 FA2022
 - Max Jing
 
 - Pratik Alladi
-
+***
 ## Deliverables Quick Links:
 
 Results.md file found here:
@@ -17,7 +17,7 @@ Results.md file found here:
 
 Video Presentation found here:
 (https://youtu.be/btaWNC3K8Pc)
-
+***
 ## Github Organization:
 
 `documents` folder:
@@ -45,7 +45,7 @@ Includes source code for data ingestion algorithm, BFS, Dijkstra`s, and PageRank
 * #### ./tests
 
 Includes test cases and Jupyter notebook about test cases
-
+***
 ## To Run Program:
 
 **Make sure you are inside the cs225 docker container environment**
@@ -201,7 +201,7 @@ Here is a quick rundown for simpler visualization:
   * `exit`
 
 * `exit`
-
+***
 ## Tests:
 
 * type `make` or `make test` into terminal while in `build folder`
